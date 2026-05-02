@@ -1,0 +1,65 @@
+---
+import { site, navLinks } from "~/data/site";
+
+const path = Astro.url.pathname.replace(/\/$/, "");
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-stroke-soft bg-bg/80 backdrop-blur-md backdrop-saturate-150"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <a
+      href="/"
+      class="flex items-center gap-2.5 text-text transition-opacity hover:opacity-80"
+      aria-label={`${site.name} home`}
+    >
+      <span
+        class="grid h-7 w-7 place-items-center rounded-md bg-surface ring-1 ring-stroke-strong"
+      >
+        <!-- Inline pulse glyph: a small concentric ring + dot, infrastructure-grade -->
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-opacity="0.3" />
+          <circle cx="7" cy="7" r="2.5" fill="currentColor" />
+        </svg>
+      </span>
+      <span class="text-[15px] font-semibold tracking-tight">{site.name}</span>
+    </a>
+
+    <nav class="flex items-center gap-1 text-sm" aria-label="Primary">
+      {
+        navLinks.map((link) => {
+          const active = path === link.href.replace(/\/$/, "");
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                "rounded-md px-3 py-1.5 transition-colors",
+                active
+                  ? "text-text bg-surface"
+                  : "text-text-secondary hover:text-text hover:bg-surface/60",
+              ]}
+              aria-current={active ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+      <a
+        href={site.appStoreUrl}
+        target="_blank"
+        rel="noopener"
+        class="ml-2 rounded-md bg-text px-3 py-1.5 text-[13px] font-medium text-bg transition-opacity hover:opacity-90"
+      >
+        App Store
+      </a>
+    </nav>
+  </div>
+</header>

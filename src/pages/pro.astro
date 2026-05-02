@@ -1,0 +1,82 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import TierCompare from "~/components/TierCompare.astro";
+import MotionReveal from "~/components/MotionReveal.astro";
+---
+
+<BaseLayout
+  title="Pro"
+  description="TrueNAS Pulse Pro is a one-time, lifetime purchase that unlocks the complete operator toolset — fleet view, lifecycle controls, terminal, and 30 days of historical reporting."
+>
+  <Section
+    eyebrow="One purchase. No subscription."
+    heading="Pay once. Operate forever."
+    lede="Pro covers the ongoing development of the app and keeps it independent, ad-free, and without telemetry."
+  >
+    <TierCompare />
+  </Section>
+
+  <Section eyebrow="Why Pro exists" heading="Because subscriptions for a tool you already own are wrong." width="narrow">
+    <MotionReveal>
+      <div class="space-y-6 text-base leading-relaxed text-text-secondary">
+        <p>
+          You already pay for the hardware. You already pay for the disks, the
+          power, and the bandwidth. The premise that monitoring your own
+          servers should be a recurring cloud charge has always been backwards.
+        </p>
+        <p>
+          TrueNAS Pulse Pro is one purchase, kept simple on purpose. The price
+          covers the work, the App Review cycles, and the next year of
+          development — not access to your own infrastructure.
+        </p>
+        <blockquote class="border-l-2 border-stroke-strong pl-4 text-text">
+          "Pro covers ongoing development and keeps the app independent,
+          ad-free, and without telemetry."
+        </blockquote>
+        <p>
+          The Free tier is genuinely usable. Live monitoring, alerts, storage
+          health, jobs, services view, one local monitor, the Home Screen
+          widget, and the audit log viewer — none of it is paywalled. Critical
+          alerts and pool health are always visible. Gating those would be
+          ethically wrong.
+        </p>
+        <p>
+          What Pro adds is leverage: fleet view across every system, 30 days
+          of historical reporting to trace incidents, lifecycle controls,
+          unlimited monitors, log streaming, terminal, batch actions, and the
+          full configuration mutation surface — all behind the same Control
+          Mode gate that exists in Free.
+        </p>
+      </div>
+    </MotionReveal>
+  </Section>
+
+  <Section eyebrow="What you actually get" heading="Pro at a glance." width="narrow" tight>
+    <MotionReveal>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {
+          [
+            "Fleet view across every server",
+            "Unlimited proactive monitors",
+            "30 days of historical reporting",
+            "Live system log streaming",
+            "Disk & VDEV management",
+            "Manual ZFS snapshots",
+            "Service / app / VM lifecycle",
+            "Network, share, and service config",
+            "Data protection editing & batch",
+            "Terminal — SSH from your phone",
+            "Config backup, restore, support bundle",
+            "iCloud Sync · Live Activities · 8 servers",
+          ].map((item) => (
+            <li class="flex items-start gap-2.5 rounded-lg border border-stroke-soft bg-surface/40 p-4 text-sm text-text-secondary">
+              <span class="mt-1 text-accent">✓</span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </MotionReveal>
+  </Section>
+</BaseLayout>

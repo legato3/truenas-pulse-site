@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+/*
+ * Brand tokens — derived from TrueNAS Pulse iOS app (Design.swift)
+ * Authoritative source: /app/repos/TrueNAS-Pulse/TrueNAS Pulse/Design/Design.swift
+ *
+ * Voice: calm, deliberate, infrastructure-grade. Never playful or experimental.
+ * Surfaces use a near-black hierarchy. Color is reserved for semantic meaning.
+ */
+@theme {
+  /* ── Surface hierarchy (dark-first) ─────────────────────────── */
+  --color-bg: oklch(0.13 0 0);                /* near-black, app background analogue */
+  --color-bg-elevated: oklch(0.165 0 0);      /* groupedBackground */
+  --color-surface: oklch(0.20 0 0);           /* card / row fill */
+  --color-surface-raised: oklch(0.245 0 0);   /* sheets, modal cards */
+  --color-surface-membership: oklch(0.225 0 0); /* monetization cards */
+
+  --color-stroke-soft: oklch(1 0 0 / 0.06);
+  --color-stroke-strong: oklch(1 0 0 / 0.10);
+
+  /* ── Text ───────────────────────────────────────────────────── */
+  --color-text: oklch(1 0 0 / 0.96);
+  --color-text-secondary: oklch(0.74 0.01 250 / 0.88);
+  --color-text-tertiary: oklch(0.62 0.01 250 / 0.66);
+  --color-text-disabled: oklch(0.45 0 0 / 0.55);
+
+  /* ── Interactive accent ─────────────────────────────────────── */
+  --color-accent: oklch(0.62 0.16 235);       /* iOS systemBlue echo */
+  --color-accent-hover: oklch(0.68 0.17 235);
+
+  /* ── Semantic state (never decorative) ──────────────────────── */
+  --color-ok: oklch(0.66 0.14 150);           /* calm green: rgb(0.22, 0.68, 0.44) */
+  --color-warning: oklch(0.72 0.14 60);       /* amber:     rgb(0.88, 0.60, 0.22) */
+  --color-critical: oklch(0.62 0.18 22);      /* serious red: rgb(0.84, 0.28, 0.36) */
+  --color-inactive: oklch(0.55 0.01 250);
+
+  /* ── Data-light (chart-only — encode meaning) ───────────────── */
+  --color-data-blue: oklch(0.74 0.12 240);    /* flow */
+  --color-data-violet: oklch(0.65 0.14 290);  /* highLoad */
+  --color-data-magenta: oklch(0.65 0.21 340); /* acid */
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "IBM Plex Mono", "SFMono-Regular",
+    Menlo, Monaco, Consolas, monospace;
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ── Radius ─────────────────────────────────────────────────── */
+  --radius-xs: 0.25rem; /* compact */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.375rem; /* xLarge=22 */
+
+  /* ── Motion (mirrors Design.Motion) ─────────────────────────── */
+  --ease-pulse: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Defaults — calm, infrastructure-grade dark mode by default ── */
+:root {
+  color-scheme: dark;
+  font-feature-settings: "ss01", "cv11", "cv02", "cv03";
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background:
+    radial-gradient(circle at 6% 2%, oklch(1 0 0 / 0.06), transparent 60%),
+    radial-gradient(circle at 96% 98%, oklch(0 0 0 / 0.30), transparent 55%),
+    var(--color-bg);
+  background-attachment: fixed;
+  min-height: 100dvh;
+}
+
+/* Section + reveal helpers — used by MotionReveal */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: opacity, transform;
+}
+
+/* Respect reduce-motion users: skip the reveal animation entirely */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Status dot — used in hero + status copy */
+.status-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: var(--color-ok);
+  box-shadow: 0 0 12px var(--color-ok);
+  vertical-align: middle;
+}
+
+/* Hairline divider that matches the iOS app's separator treatment */
+.hairline {
+  border-color: var(--color-stroke-soft);
+}
+
+/* Hero gradient backstop for the iPhone frame */
+.device-stage {
+  background:
+    radial-gradient(ellipse at 50% 0%, oklch(0.74 0.12 240 / 0.16), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, oklch(0.65 0.21 340 / 0.10), transparent 70%);
+}
+
+/* Selection — match the calm-blue accent without violating brand */
+::selection {
+  background: oklch(0.62 0.16 235 / 0.32);
+  color: var(--color-text);
+}

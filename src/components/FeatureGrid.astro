@@ -1,0 +1,112 @@
+---
+import { features, featureCategories, type Feature } from "~/data/features";
+import MotionReveal from "~/components/MotionReveal.astro";
+
+interface Props {
+  /** Limit to a single category (omit to render all three). */
+  category?: (typeof featureCategories)[number];
+  /** Max number of features to render — handy for the Home page teaser. */
+  limit?: number;
+  /** When true, hide the Enterprise (reserved) row to avoid teasing the un-purchasable tier. */
+  hideEnterprise?: boolean;
+  /** When true, render the category headings inline (used on /features). */
+  withHeadings?: boolean;
+}
+
+const { category, limit, hideEnterprise = false, withHeadings = false } = Astro.props;
+
+const filterCat = (f: Feature): boolean =>
+  !category ? true : f.category === category;
+
+const filterEnt = (f: Feature): boolean =>
+  hideEnterprise ? f.tier !== "Enterprise (reserved)" : true;
+
+const visible = features.filter((f) => filterCat(f) && filterEnt(f));
+const cards = limit ? visible.slice(0, limit) : visible;
+
+const grouped: Record<string, typeof features> = {};
+for (const cat of featureCategories) {
+  const list = cards.filter((c) => c.category === cat);
+  if (list.length) grouped[cat] = list;
+}
+
+const tierClass = (tier: Feature["tier"]) => {
+  switch (tier) {
+    case "Free":
+      return "bg-ok/12 text-ok";
+    case "Pro":
+      return "bg-accent/14 text-accent";
+    case "Enterprise (reserved)":
+      return "bg-warning/12 text-warning";
+  }
+};
+---
+
+{
+  withHeadings
+    ? Object.entries(grouped).map(([cat, list]) => (
+        <div class="mb-16 last:mb-0">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-text">
+            {cat}
+          </h3>
+          <p class="mb-6 text-sm text-text-tertiary">
+            {cat === "Scale" &&
+              "Visibility and monitor reach across every TrueNAS you operate."}
+            {cat === "Advanced Control" &&
+              "Lifecycle and configuration mutation, gated by Control Mode and biometric confirmation."}
+            {cat === "Operator Productivity" &&
+              "Everyday leverage — debugging, history, sync, and live insight."}
+          </p>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {list.map((f, i) => (
+              <MotionReveal delay={i * 30}>
+                <article class="group h-full rounded-lg border border-stroke-soft bg-surface/70 p-5 transition-colors hover:border-stroke-strong hover:bg-surface">
+                  <header class="mb-2 flex items-start justify-between gap-3">
+                    <h4 class="text-[15px] font-semibold text-text">
+                      {f.name}
+                    </h4>
+                    <span
+                      class:list={[
+                        "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider",
+                        tierClass(f.tier),
+                      ]}
+                    >
+                      {f.tier === "Enterprise (reserved)" ? "Reserved" : f.tier}
+                    </span>
+                  </header>
+                  <p class="text-sm leading-relaxed text-text-secondary">
+                    {f.description}
+                  </p>
+                </article>
+              </MotionReveal>
+            ))}
+          </div>
+        </div>
+      ))
+    : (
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((f, i) => (
+          <MotionReveal delay={i * 30}>
+            <article class="group h-full rounded-lg border border-stroke-soft bg-surface/70 p-5 transition-colors hover:border-stroke-strong hover:bg-surface">
+              <header class="mb-2 flex items-start justify-between gap-3">
+                <h4 class="text-[15px] font-semibold text-text">
+                  {f.name}
+                </h4>
+                <span
+                  class:list={[
+                    "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider",
+                    tierClass(f.tier),
+                  ]}
+                >
+                  {f.tier === "Enterprise (reserved)" ? "Reserved" : f.tier}
+                </span>
+              </header>
+              <p class="text-sm leading-relaxed text-text-secondary">
+                {f.description}
+              </p>
+            </article>
+          </MotionReveal>
+        ))}
+      </div>
+    )
+}

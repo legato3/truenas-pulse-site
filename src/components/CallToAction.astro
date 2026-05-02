@@ -1,0 +1,30 @@
+---
+import AppStoreButton from "~/components/AppStoreButton.astro";
+import { site } from "~/data/site";
+---
+
+<section class="px-5 py-20 sm:py-28">
+  <div
+    class="reveal-init mx-auto max-w-3xl rounded-3xl border border-stroke-soft bg-surface-membership/70 p-10 text-center sm:p-14"
+  >
+    <h2 class="text-balance text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tight text-text">
+      Calm, deliberate, infrastructure-grade.
+    </h2>
+    <p class="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-text-secondary">
+      A native iPhone client for TrueNAS SCALE — built for sysadmins, operators,
+      and homelab users who want their server in one calm place.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <AppStoreButton size="lg" />
+      <a
+        href="/pro"
+        class="inline-flex items-center justify-center rounded-lg border border-stroke-strong px-5 py-3.5 text-sm font-medium text-text transition-colors hover:bg-surface/60"
+      >
+        See Pro features
+      </a>
+    </div>
+    <p class="mt-6 text-xs text-text-tertiary">
+      {site.trustLine}
+    </p>
+  </div>
+</section>

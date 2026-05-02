@@ -1,0 +1,113 @@
+---
+/**
+ * Pure-CSS iPhone-shaped device frame. No raster mock, no licensed Apple PNG.
+ * Approximates iPhone 17 (393×852pt) at 2.5× CSS scale.
+ *
+ * The slot is rendered inside the screen area. Pass an <img> or any node;
+ * we clip to the screen radius.
+ *
+ * Wrap with <DeviceFrame caption="..."> for the screenshot label.
+ */
+interface Props {
+  caption?: string;
+  /** Optional alt text for the screenshot loaded inside the frame. */
+  ariaLabel?: string;
+}
+const { caption, ariaLabel } = Astro.props;
+---
+
+<figure class="device-frame" role="img" aria-label={ariaLabel || caption}>
+  <div class="device-shell">
+    <!-- Bezel highlight (top edge gloss) -->
+    <span class="device-gloss" aria-hidden="true"></span>
+    <!-- Screen + content slot -->
+    <div class="device-screen">
+      <slot />
+    </div>
+    <!-- Dynamic Island -->
+    <span class="device-island" aria-hidden="true"></span>
+  </div>
+  {caption && <figcaption class="device-caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .device-frame {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .device-shell {
+    --frame-w: clamp(240px, 38vw, 320px);
+    --frame-radius: 12.5%;
+    --bezel: 9px;
+
+    position: relative;
+    width: var(--frame-w);
+    aspect-ratio: 9 / 19.5;
+    border-radius: var(--frame-radius);
+    background: linear-gradient(
+      180deg,
+      oklch(0.32 0.005 250),
+      oklch(0.20 0.005 250) 35%,
+      oklch(0.14 0.005 250) 100%
+    );
+    padding: var(--bezel);
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.08) inset,
+      0 0 0 1px oklch(0 0 0 / 0.5),
+      0 30px 60px -20px oklch(0 0 0 / 0.7),
+      0 0 60px oklch(0.74 0.12 240 / 0.10);
+  }
+
+  .device-gloss {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--frame-radius);
+    background: linear-gradient(
+      180deg,
+      oklch(1 0 0 / 0.07) 0%,
+      transparent 18%
+    );
+    pointer-events: none;
+  }
+
+  .device-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: calc(var(--frame-radius) - 1.4%);
+    background: oklch(0.07 0 0);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .device-screen :global(img),
+  .device-screen :global(video) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Dynamic Island — sits inside the bezel, on top of the screen */
+  .device-island {
+    position: absolute;
+    top: calc(var(--bezel) + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28%;
+    height: 22px;
+    border-radius: 999px;
+    background: oklch(0 0 0);
+    box-shadow: 0 0 0 1px oklch(0 0 0 / 0.6);
+  }
+
+  .device-caption {
+    color: var(--color-text-tertiary);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>

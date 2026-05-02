@@ -1,0 +1,88 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pulse-site-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        run: |
+          set -euo pipefail
+          rm -rf /opt/act-runner/workspace/truenas-pulse-site
+          mkdir -p /opt/act-runner/workspace
+          git clone http://192.168.0.73:3030/phobos/truenas-pulse-site.git /opt/act-runner/workspace/truenas-pulse-site
+          cd /opt/act-runner/workspace/truenas-pulse-site
+          git checkout ${{ github.sha }}
+
+      - name: Install Bun
+        run: |
+          set -euo pipefail
+          if ! command -v bun >/dev/null 2>&1; then
+            curl -fsSL https://bun.sh/install | bash
+          fi
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun --version
+
+      - name: Install deps
+        working-directory: /opt/act-runner/workspace/truenas-pulse-site
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun install --frozen-lockfile
+
+      - name: Build site
+        working-directory: /opt/act-runner/workspace/truenas-pulse-site
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run scripts/generate-assets.mjs || true   # falls back to existing /public assets if master image missing on runner
+          bun run build
+
+      - name: Stage deploy SSH key
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/pulse-deploy
+          chmod 600 ~/.ssh/pulse-deploy
+
+      - name: Probe SSH host
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Rsync deploy
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        working-directory: /opt/act-runner/workspace/truenas-pulse-site
+        run: |
+          set -euo pipefail
+          rsync -az --delete \
+            -e "ssh -i $HOME/.ssh/pulse-deploy -o StrictHostKeyChecking=no" \
+            dist/ "root@${DEPLOY_HOST}:/var/www/pulse-site/"
+
+      - name: Fix ownership and reload Caddy
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          ssh -i "$HOME/.ssh/pulse-deploy" -o StrictHostKeyChecking=no "root@${DEPLOY_HOST}" \
+            "chown -R caddy:caddy /var/www/pulse-site && systemctl restart caddy"
+
+      - name: Smoke probe
+        run: |
+          set -euo pipefail
+          for path in / /features /pro /privacy /faq; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' "https://pulse.phobos-cc.be$path")
+            echo "  $path -> $code"
+            test "$code" = "200"
+          done

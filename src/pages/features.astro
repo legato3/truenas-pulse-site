@@ -1,0 +1,21 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import FeatureGrid from "~/components/FeatureGrid.astro";
+import CallToAction from "~/components/CallToAction.astro";
+---
+
+<BaseLayout
+  title="Features"
+  description="The full 26-feature inventory of TrueNAS Pulse — Free, Pro, and what's reserved."
+>
+  <Section
+    eyebrow="The complete inventory"
+    heading="Every feature, every tier."
+    lede="Free covers live monitoring and read-only operational visibility. Pro unlocks the complete operator toolset — fleet view, lifecycle controls, advanced reporting, log streaming, terminal, and more."
+  >
+    <FeatureGrid withHeadings />
+  </Section>
+
+  <CallToAction />
+</BaseLayout>

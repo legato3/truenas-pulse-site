@@ -1,0 +1,62 @@
+---
+/**
+ * Calm reveal: 12px translate + opacity fade, 0.5s duration, smooth easing.
+ * Only fires when the element enters the viewport.
+ * Respects prefers-reduced-motion via the .reveal-init CSS guard in global.css.
+ *
+ * Why hand-rolled instead of Motion library: this site has ONE motion primitive.
+ * Pulling in framer-motion / Motion One adds 10kb+ for what is 30 lines of IO + WAAPI.
+ */
+interface Props {
+  /** Stagger delay in ms when used inside a list. */
+  delay?: number;
+  /** Wrap as a different element (default: div). */
+  as?: keyof HTMLElementTagNameMap;
+  className?: string;
+}
+
+const { delay = 0, as = "div", className } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={["reveal-init", className]} data-reveal-delay={delay}>
+  <slot />
+</Tag>
+
+<script>
+  // One IntersectionObserver, shared across the page. Cheap.
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const targets = document.querySelectorAll<HTMLElement>(".reveal-init");
+
+  if (reduced) {
+    targets.forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+    });
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          const delay = Number(el.dataset.revealDelay || 0);
+          el.animate(
+            [
+              { opacity: 0, transform: "translateY(12px)" },
+              { opacity: 1, transform: "translateY(0)" },
+            ],
+            {
+              duration: 520,
+              delay,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+              fill: "forwards",
+            },
+          );
+          io.unobserve(el);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
+    );
+    targets.forEach((el) => io.observe(el));
+  }
+</script>

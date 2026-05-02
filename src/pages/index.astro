@@ -1,0 +1,81 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Hero from "~/components/Hero.astro";
+import Section from "~/components/Section.astro";
+import PillarStrip from "~/components/PillarStrip.astro";
+import FeatureGrid from "~/components/FeatureGrid.astro";
+import CallToAction from "~/components/CallToAction.astro";
+import MotionReveal from "~/components/MotionReveal.astro";
+import { site } from "~/data/site";
+---
+
+<BaseLayout description={site.tagline}>
+  <Hero />
+
+  <Section
+    eyebrow="Why TrueNAS Pulse"
+    heading="Built the way an operator's tool should feel."
+    lede="A calm dashboard, careful actions, and zero noise. Designed for the moments when something matters and you're not at your desk."
+  >
+    <PillarStrip />
+  </Section>
+
+  <Section
+    eyebrow="Feature highlights"
+    heading="Everything you need from the dashboard to the disk."
+    lede="A quick tour. The full 26-feature inventory lives on the Features page."
+  >
+    <FeatureGrid limit={6} hideEnterprise />
+    <div class="mt-10 flex justify-center">
+      <a
+        href="/features"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-stroke-strong px-5 py-3 text-sm font-medium text-text transition-colors hover:bg-surface/60"
+      >
+        See all 26 features
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M5 3l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="Security model"
+    heading="Your servers, your credentials, your data."
+    lede="No accounts. No cloud. No analytics. No third-party SDKs. The app talks only to the servers you configure — full stop."
+  >
+    <MotionReveal>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
+          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+            Credential storage
+          </h3>
+          <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
+            <li>API tokens stored exclusively in the iOS Keychain.</li>
+            <li>Strict TLS validation by default.</li>
+            <li>Per-server self-signed certificate opt-in (SHA-256 fingerprint pinning).</li>
+            <li>No tokens or secrets are ever logged.</li>
+          </ul>
+        </div>
+        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
+          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+            Action safety
+          </h3>
+          <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
+            <li>Control Mode gate before any state-changing action.</li>
+            <li>Biometric confirmation required for high-risk actions.</li>
+            <li>5-minute auto-expire on Control Mode sessions.</li>
+            <li>Local action log — nothing leaves the device.</li>
+          </ul>
+        </div>
+      </div>
+    </MotionReveal>
+  </Section>
+
+  <CallToAction />
+</BaseLayout>

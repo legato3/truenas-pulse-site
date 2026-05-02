@@ -1,0 +1,63 @@
+---
+interface Props {
+  /** Optional eyebrow label above the heading. */
+  eyebrow?: string;
+  heading?: string;
+  lede?: string;
+  /** Maximum content width: "narrow" for prose, "wide" for full-bleed. */
+  width?: "narrow" | "wide";
+  /** Tighten vertical padding for stacked sections. */
+  tight?: boolean;
+  id?: string;
+  className?: string;
+}
+
+const {
+  eyebrow,
+  heading,
+  lede,
+  width = "wide",
+  tight = false,
+  id,
+  className,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    "px-5",
+    tight ? "py-12 sm:py-16" : "py-16 sm:py-24 lg:py-32",
+    className,
+  ]}
+>
+  <div
+    class:list={[
+      "mx-auto",
+      width === "narrow" ? "max-w-3xl" : "max-w-6xl",
+    ]}
+  >
+    {
+      (eyebrow || heading || lede) && (
+        <div class="mb-10 sm:mb-14">
+          {eyebrow && (
+            <p class="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-text-tertiary">
+              {eyebrow}
+            </p>
+          )}
+          {heading && (
+            <h2 class="text-balance text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight text-text">
+              {heading}
+            </h2>
+          )}
+          {lede && (
+            <p class="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-text-secondary sm:text-lg">
+              {lede}
+            </p>
+          )}
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</section>

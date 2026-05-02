@@ -1,0 +1,39 @@
+---
+import { site } from "~/data/site";
+
+interface Props {
+  variant?: "primary" | "ghost";
+  size?: "sm" | "md" | "lg";
+}
+
+const { variant = "primary", size = "md" } = Astro.props;
+---
+
+<a
+  href={site.appStoreUrl}
+  target="_blank"
+  rel="noopener"
+  class:list={[
+    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all",
+    variant === "primary"
+      ? "bg-text text-bg shadow-lg shadow-black/40 hover:opacity-90"
+      : "bg-surface text-text ring-1 ring-stroke-strong hover:bg-surface-raised",
+    size === "sm" && "px-3.5 py-2 text-[13px]",
+    size === "md" && "px-5 py-2.5 text-sm",
+    size === "lg" && "px-6 py-3.5 text-base",
+  ]}
+  aria-label="Download TrueNAS Pulse on the App Store"
+>
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      d="M11.39 8.31a3.04 3.04 0 0 1 1.45-2.55c-.79-1.13-2-1.79-3.18-1.81-1.36-.14-2.66.79-3.36.79-.7 0-1.79-.78-2.94-.76-1.51.02-2.91.88-3.69 2.23C-.92 9.22.13 13 1.7 15.07c.78.99 1.7 2.1 2.91 2.06 1.16-.05 1.61-.74 3.02-.74 1.4 0 1.81.74 3.04.71 1.26-.02 2.06-1 2.83-1.99.66-.85 1.16-1.79 1.5-2.81-1.83-.7-2.61-2.99-1.61-3.99zM9.31 2.6c.62-.74 1.05-1.78 1-2.6-.84.04-1.86.55-2.5 1.29-.57.66-1.09 1.74-.95 2.55.94.07 1.83-.48 2.45-1.24z"
+    ></path>
+  </svg>
+  <span>Download on the App Store</span>
+</a>

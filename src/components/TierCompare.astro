@@ -1,0 +1,145 @@
+---
+/**
+ * Free vs Pro comparison — two columns, no enterprise (reserved column would
+ * dilute the conversion focus on the only purchasable tier).
+ *
+ * Copy lifted from MONETIZATION.md §1 Value Split, condensed to scannable
+ * one-liners. The trust footer language matches MONETIZATION.md verbatim.
+ */
+import { site } from "~/data/site";
+import AppStoreButton from "~/components/AppStoreButton.astro";
+
+interface Row {
+  label: string;
+  free: string | true;
+  pro: string | true;
+}
+
+const rows: Row[] = [
+  { label: "Live monitoring", free: true, pro: true },
+  { label: "Reporting history", free: "Live + 1H", pro: "Live + 1H, 6H, 24H, 7D, 30D" },
+  { label: "Servers", free: "Up to 2", pro: "Up to 8" },
+  { label: "Local monitor", free: "1 on active server", pro: "Unlimited across servers" },
+  { label: "Pool, disk, dataset health", free: true, pro: true },
+  { label: "Alerts (read + acknowledge)", free: true, pro: true },
+  { label: "Home Screen widget", free: true, pro: true },
+  { label: "Filesystem browser & audit log", free: "Read-only", pro: "Read-only" },
+  { label: "Fleet view & server comparison", free: "—", pro: true },
+  { label: "Config drift comparison", free: "—", pro: true },
+  { label: "Service / app / VM lifecycle", free: "—", pro: true },
+  { label: "Disk & VDEV management", free: "—", pro: true },
+  { label: "Manual snapshots (delete, clone, rollback)", free: "Create only", pro: true },
+  { label: "Network editing", free: "—", pro: true },
+  { label: "Share management (SMB / NFS)", free: "—", pro: true },
+  { label: "Data protection controls", free: "View only", pro: true },
+  { label: "Power operations & system update install", free: "—", pro: true },
+  { label: "Live log streaming", free: "—", pro: true },
+  { label: "Terminal (web shell)", free: "—", pro: true },
+  { label: "Config backup / restore / support bundle", free: "—", pro: true },
+  { label: "Batch actions", free: "—", pro: true },
+  { label: "iCloud Sync · Live Activities", free: "—", pro: true },
+];
+
+const cell = (val: string | true) => (val === true ? "✓" : val);
+---
+
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  {/* Free */}
+  <div class="rounded-2xl border border-stroke-soft bg-surface/60 p-7">
+    <header class="mb-5">
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-text-tertiary">
+        Free
+      </p>
+      <h3 class="text-2xl font-semibold tracking-tight text-text">
+        Live monitoring · 1H history
+      </h3>
+      <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+        Read-only operational visibility for up to 2 servers. Genuinely usable —
+        not a demo trap.
+      </p>
+    </header>
+    <div class="mb-6 flex items-baseline gap-2">
+      <span class="font-mono text-5xl font-medium text-text">$0</span>
+      <span class="text-sm text-text-tertiary">forever</span>
+    </div>
+    <p class="text-sm leading-relaxed text-text-secondary">
+      Includes the dashboard, alerts, storage health, jobs, services view,
+      one local monitor, the Home Screen widget, and the audit log viewer.
+    </p>
+  </div>
+
+  {/* Pro */}
+  <div
+    class="relative rounded-2xl border border-accent/40 bg-surface-membership p-7 shadow-[0_0_60px_-20px_oklch(0.62_0.16_235/0.6)]"
+  >
+    <span
+      class="absolute right-4 top-4 rounded-full bg-accent/14 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-accent"
+    >
+      Lifetime · Pay once
+    </span>
+    <header class="mb-5">
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-text-tertiary">
+        TrueNAS Pulse Pro
+      </p>
+      <h3 class="text-2xl font-semibold tracking-tight text-text">
+        Full operator toolkit
+      </h3>
+      <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+        Everything in Free plus the complete admin surface. One-time purchase —
+        no subscription, no expiry.
+      </p>
+    </header>
+    <div class="mb-6 flex items-baseline gap-2">
+      <span class="font-mono text-5xl font-medium text-text">$9.99</span>
+      <span class="text-sm text-text-tertiary">localized via App Store</span>
+    </div>
+    <AppStoreButton size="md" />
+    <p class="mt-3 text-xs text-text-tertiary">
+      Pricing anchor: Grafana Cloud Pro starts at $19/month plus usage.
+      TrueNAS Pulse Pro is a one-time purchase.
+    </p>
+  </div>
+</div>
+
+<div
+  class="mt-10 overflow-hidden rounded-2xl border border-stroke-soft bg-surface/40"
+>
+  <table class="w-full text-sm">
+    <thead class="border-b border-stroke-soft bg-surface/60 text-xs uppercase tracking-[0.12em] text-text-tertiary">
+      <tr>
+        <th class="px-5 py-3 text-left font-medium">Feature</th>
+        <th class="w-32 px-5 py-3 text-center font-medium">Free</th>
+        <th class="w-48 px-5 py-3 text-center font-medium">Pro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row, i) => (
+          <tr
+            class:list={[
+              "border-t border-stroke-soft/60",
+              i % 2 === 1 && "bg-surface/20",
+            ]}
+          >
+            <td class="px-5 py-3 text-text-secondary">{row.label}</td>
+            <td
+              class:list={[
+                "px-5 py-3 text-center font-mono text-[13px]",
+                row.free === "—" ? "text-text-tertiary" : "text-text",
+              ]}
+            >
+              {cell(row.free)}
+            </td>
+            <td class="px-5 py-3 text-center font-mono text-[13px] text-text">
+              {cell(row.pro)}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<p class="mt-6 text-center text-xs text-text-tertiary">
+  {site.trustLine}
+</p>

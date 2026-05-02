@@ -1,0 +1,55 @@
+---
+layout: ~/components/BaseLayout.astro
+title: Privacy Policy
+description: TrueNAS Pulse does not collect, store, or transmit any personal data.
+prose: true
+---
+
+# Privacy Policy
+
+_Last updated: 2026-05-02_
+
+TrueNAS Pulse does not collect, store, or transmit any personal data.
+
+## What the app does
+
+TrueNAS Pulse communicates **exclusively** with TrueNAS servers that you
+configure. There is no developer-operated cloud service. The app contains
+no analytics, tracking, advertising, or third-party SDKs.
+
+## Data not collected
+
+- No analytics or tracking SDKs
+- No crash reporting services
+- No advertising identifiers
+- No data shared with third parties
+- No network requests except direct communication with the TrueNAS servers
+  you configure
+
+## Where your data lives
+
+- **API tokens** are stored in the iOS Keychain on your device.
+- **Server metadata** (URLs, names, ordering) is stored locally using
+  `UserDefaults` on your device.
+- **Local diagnostics**, when present, stay on the device and are never
+  uploaded.
+- If you enable **iCloud Sync** (Pro), your monitor configurations and server
+  list sync across your devices via Apple's iCloud Key-Value Store. API
+  tokens never leave the Keychain — iCloud Sync does not transport
+  credentials.
+
+## App Store privacy details
+
+For App Store Connect's "Data Not Collected" disclosure: TrueNAS Pulse
+collects no data from users, links no data to identity, and does no tracking.
+
+## Changes to this policy
+
+If this policy ever changes, the change will be summarised here with a new
+"last updated" date. The app itself does not have the means to notify you of
+a change because there is no telemetry channel — please check this page when
+updating to a new version if you want to review what (if anything) changed.
+
+## Contact
+
+Questions about this policy: [support@phobos-cc.be](mailto:support@phobos-cc.be).

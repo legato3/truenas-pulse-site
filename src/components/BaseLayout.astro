@@ -1,0 +1,163 @@
+---
+import "~/styles/global.css";
+import { site } from "~/data/site";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  /** Set true for legal pages: max-width prose, simpler chrome. */
+  prose?: boolean;
+  /** Set true to suppress indexing (e.g. /press for now). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = site.tagline,
+  ogImage = "/og-image.png",
+  prose = false,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.subtitle}`;
+const canonical = new URL(Astro.url.pathname, site.origin).toString();
+const og = new URL(ogImage, site.origin).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0a0a0b" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Structured data — calm, brand-only, no fake reviews -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        name: site.name,
+        applicationCategory: "UtilitiesApplication",
+        operatingSystem: "iOS",
+        url: site.origin,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          description: "Free tier with optional Pro one-time purchase.",
+        },
+      })}
+    />
+  </head>
+  <body class="font-sans text-text antialiased">
+    <a
+      href="#content"
+      class="absolute left-2 top-2 z-50 -translate-y-16 rounded-md bg-surface px-3 py-2 text-sm focus:translate-y-0 focus:outline focus:outline-2 focus:outline-accent transition-transform"
+    >
+      Skip to content
+    </a>
+
+    <Header />
+
+    <main id="content" class:list={[prose ? "prose-page" : ""]}>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <style>
+      .prose-page {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding-block: clamp(2.5rem, 6vw, 5rem);
+        padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+      }
+      .prose-page :global(h1) {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-block: 0 1.25rem;
+      }
+      .prose-page :global(h2) {
+        font-size: 1.375rem;
+        font-weight: 600;
+        margin-block: 2.5rem 0.75rem;
+        letter-spacing: -0.01em;
+      }
+      .prose-page :global(h3) {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-block: 1.75rem 0.5rem;
+      }
+      .prose-page :global(p),
+      .prose-page :global(li) {
+        line-height: 1.7;
+        color: var(--color-text-secondary);
+      }
+      .prose-page :global(p) { margin-block: 0 1rem; }
+      .prose-page :global(ul), .prose-page :global(ol) { padding-inline-start: 1.5rem; margin-block: 0 1rem; }
+      .prose-page :global(li) { margin-block: 0 0.5rem; }
+      .prose-page :global(a) {
+        color: var(--color-accent);
+        text-underline-offset: 3px;
+      }
+      .prose-page :global(a:hover) {
+        color: var(--color-accent-hover);
+      }
+      .prose-page :global(code) {
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        background: var(--color-surface);
+        padding: 0.15em 0.4em;
+        border-radius: var(--radius-xs);
+      }
+      .prose-page :global(blockquote) {
+        border-inline-start: 2px solid var(--color-stroke-strong);
+        padding-inline-start: 1rem;
+        color: var(--color-text-secondary);
+        font-style: italic;
+        margin-block: 1.25rem;
+      }
+      .prose-page :global(hr) {
+        border: 0;
+        border-top: 1px solid var(--color-stroke-soft);
+        margin-block: 2.5rem;
+      }
+    </style>
+  </body>
+</html>

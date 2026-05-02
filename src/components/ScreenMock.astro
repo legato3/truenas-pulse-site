@@ -1,0 +1,289 @@
+---
+/**
+ * Placeholder dashboard rendering used inside the DeviceFrame until real
+ * screenshots arrive. Pure CSS + tiny inline SVG — no raster assets, no PNGs
+ * to maintain. The numbers and pool names mirror the App Store metadata
+ * "data quality rule" (CPU 23.4%, memory 61.2/128 GB, uptime 47d 13h 22m).
+ *
+ * When real screenshots arrive at /public/screenshots/dashboard.webp, swap
+ * this component out at the call site for a plain <img>.
+ */
+---
+
+<div class="mock">
+  <header class="mock-status">
+    <span class="mock-time">21:42</span>
+    <div class="mock-status-glyphs" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span class="mock-battery"></span>
+    </div>
+  </header>
+
+  <section class="mock-hero">
+    <div class="mock-hero-row">
+      <span class="mock-eyebrow">Dashboard</span>
+      <span class="mock-server-chip">tank · primary</span>
+    </div>
+    <h1 class="mock-title">Goldeye</h1>
+    <div class="mock-status-row">
+      <span class="mock-dot mock-dot-ok" aria-hidden="true"></span>
+      <span class="mock-status-label">Healthy</span>
+      <span class="mock-status-meta">47d 13h 22m</span>
+    </div>
+  </section>
+
+  <section class="mock-grid">
+    <div class="mock-card">
+      <span class="mock-label">CPU</span>
+      <span class="mock-value">23.4<i>%</i></span>
+      <div class="mock-bar mock-bar-ok"></div>
+    </div>
+    <div class="mock-card">
+      <span class="mock-label">Memory</span>
+      <span class="mock-value">61.2<i>GB</i></span>
+      <span class="mock-meta">of 128 GB</span>
+    </div>
+    <div class="mock-card">
+      <span class="mock-label">Network</span>
+      <span class="mock-value">412<i>Mb/s</i></span>
+      <span class="mock-meta-warn">↑ 184 ↓ 228</span>
+    </div>
+    <div class="mock-card">
+      <span class="mock-label">Pools</span>
+      <span class="mock-value">3</span>
+      <span class="mock-meta">14 disks · 2 alerts</span>
+    </div>
+  </section>
+
+  <section class="mock-pool">
+    <div class="mock-pool-row">
+      <div>
+        <strong>tank</strong>
+        <small>RAID-Z2 · 6 × 12 TB</small>
+      </div>
+      <span class="mock-pct">68%</span>
+    </div>
+    <div class="mock-bar mock-bar-warn" style="--w:68%"></div>
+    <div class="mock-pool-row">
+      <div>
+        <strong>archive</strong>
+        <small>Mirror · 2 × 18 TB</small>
+      </div>
+      <span class="mock-pct">42%</span>
+    </div>
+    <div class="mock-bar mock-bar-ok" style="--w:42%"></div>
+  </section>
+
+  <section class="mock-alert">
+    <span class="mock-alert-dot"></span>
+    <div>
+      <strong>1 active alert</strong>
+      <small>Disk temperature elevated · ada3 · 47°C</small>
+    </div>
+  </section>
+</div>
+
+<style>
+  .mock {
+    background:
+      radial-gradient(ellipse at 50% 0%, oklch(0.74 0.12 240 / 0.10), transparent 70%),
+      oklch(0.07 0 0);
+    color: var(--color-text);
+    width: 100%;
+    height: 100%;
+    padding: 22px 16px 16px;
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 11px;
+  }
+  .mock-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-end: 4px;
+    padding-inline: 10px;
+    font-feature-settings: "tnum";
+    font-size: 11px;
+  }
+  .mock-time { font-weight: 600; }
+  .mock-status-glyphs { display: flex; gap: 5px; align-items: center; }
+  .mock-status-glyphs span {
+    display: block;
+    width: 14px;
+    height: 8px;
+    background: var(--color-text);
+    border-radius: 1px;
+    opacity: 0.85;
+  }
+  .mock-battery {
+    width: 22px !important;
+    border-radius: 2px !important;
+  }
+  .mock-hero {
+    padding: 12px 14px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-stroke-soft);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mock-hero-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mock-eyebrow {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-tertiary);
+  }
+  .mock-server-chip {
+    font-size: 9.5px;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-raised);
+    border-radius: 999px;
+    padding: 2px 8px;
+    border: 1px solid var(--color-stroke-soft);
+  }
+  .mock-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .mock-status-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    color: var(--color-text-secondary);
+  }
+  .mock-status-row .mock-status-label { color: var(--color-ok); }
+  .mock-status-row .mock-status-meta {
+    margin-inline-start: auto;
+    font-family: var(--font-mono);
+    color: var(--color-text-tertiary);
+  }
+  .mock-dot {
+    width: 7px; height: 7px; border-radius: 999px;
+  }
+  .mock-dot-ok { background: var(--color-ok); box-shadow: 0 0 8px var(--color-ok); }
+  .mock-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .mock-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-stroke-soft);
+    border-radius: 12px;
+    padding: 10px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .mock-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-tertiary);
+  }
+  .mock-value {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .mock-value i {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-inline-start: 2px;
+  }
+  .mock-meta {
+    font-size: 9.5px;
+    color: var(--color-text-tertiary);
+  }
+  .mock-meta-warn {
+    font-size: 9.5px;
+    color: var(--color-data-blue);
+    font-family: var(--font-mono);
+  }
+  .mock-bar {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--color-stroke-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .mock-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: var(--w, 35%);
+    border-radius: 999px;
+  }
+  .mock-bar-ok::after { background: var(--color-ok); }
+  .mock-bar-warn::after { background: var(--color-warning); }
+  .mock-pool {
+    background: var(--color-surface);
+    border: 1px solid var(--color-stroke-soft);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mock-pool-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 10.5px;
+  }
+  .mock-pool-row strong {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .mock-pool-row small {
+    color: var(--color-text-tertiary);
+    margin-inline-start: 6px;
+    font-size: 9.5px;
+  }
+  .mock-pct {
+    font-family: var(--font-mono);
+    color: var(--color-text-secondary);
+  }
+  .mock-alert {
+    background: oklch(0.62 0.18 22 / 0.10);
+    border: 1px solid oklch(0.62 0.18 22 / 0.32);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text);
+  }
+  .mock-alert-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--color-critical);
+    box-shadow: 0 0 10px var(--color-critical);
+    flex-shrink: 0;
+  }
+  .mock-alert strong {
+    font-size: 11px;
+    display: block;
+  }
+  .mock-alert small {
+    font-size: 9.5px;
+    color: var(--color-text-secondary);
+    display: block;
+  }
+</style>

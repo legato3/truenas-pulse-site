@@ -1,0 +1,36 @@
+---
+/**
+ * Three-up "why this exists" strip used directly under the hero. Pure copy,
+ * no icons — keeps the calm, infrastructure-grade tone.
+ */
+const pillars = [
+  {
+    head: "Native, not a wrapper",
+    body: "Built in SwiftUI. WebSocket transport, MVVM, Live Activities, Dynamic Island, Home Screen widgets. No third-party SDK; nothing to ship cross-platform.",
+  },
+  {
+    head: "Read first, act second",
+    body: "Every action passes through Control Mode — confirmation gate, persistent banner, 5-minute auto-expire. High-risk operations also require biometric authentication.",
+  },
+  {
+    head: "Your data stays yours",
+    body: "API tokens live in the iOS Keychain. Strict TLS validation by default; per-server self-signed cert opt-in. No analytics. No telemetry. No accounts.",
+  },
+] as const;
+---
+
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+  {
+    pillars.map((p, i) => (
+      <div
+        class="reveal-init rounded-xl border border-stroke-soft bg-surface/60 p-6"
+        data-reveal-delay={i * 80}
+      >
+        <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+          {p.head}
+        </h3>
+        <p class="text-sm leading-relaxed text-text-secondary">{p.body}</p>
+      </div>
+    ))
+  }
+</div>

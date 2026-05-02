@@ -1,0 +1,101 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import MotionReveal from "~/components/MotionReveal.astro";
+
+const faqs = [
+  {
+    q: "Is this an official iXsystems app?",
+    a: "No. TrueNAS Pulse is an independent third-party application developed by Christophe Cornelis. It is not affiliated with, endorsed by, or sponsored by iXsystems. TrueNAS® is a registered trademark of iXsystems, Inc.",
+  },
+  {
+    q: "Which TrueNAS versions are supported?",
+    a: "TrueNAS SCALE only — version 24.04 and later, including 25.04, 25.10, and 26.x. CORE is not supported. The app uses WebSocket JSON-RPC as the primary transport, with REST as a compatibility fallback for older SCALE versions.",
+  },
+  {
+    q: "Does the app talk to anything except my own server?",
+    a: "No. There is no developer-operated backend. The app contains no analytics SDKs, crash reporting services, or third-party dependencies. It communicates exclusively with the TrueNAS servers you configure.",
+  },
+  {
+    q: "Where are my API tokens stored?",
+    a: "Exclusively in the iOS Keychain on your device. They never leave your phone. iCloud Sync (Pro) syncs your monitor configurations and server list across devices but never transports credentials.",
+  },
+  {
+    q: "How do self-signed TLS certificates work?",
+    a: "By default the app does strict TLS validation. If your server uses a self-signed certificate (common in self-hosted environments), the app prompts you once to review and pin the certificate's SHA-256 fingerprint. This is opt-in per server.",
+  },
+  {
+    q: "Can I try the app without connecting to a real server?",
+    a: 'Yes. The welcome screen has a "Preview with Sample Data" option that loads the full UI with realistic read-only fixture data. All five tabs are navigable; control actions are visible but disabled.',
+  },
+  {
+    q: "What does Pro cost? Is it a subscription?",
+    a: "Pro is a one-time, lifetime purchase. No subscription, no recurring charges, no expiry. The price is set in App Store Connect and displayed in your local currency. If you've purchased Pro and reinstall, use the Restore Purchases button — it's tied to your Apple ID.",
+  },
+  {
+    q: "Why is Pro $9.99 and not free?",
+    a: "Pro funds ongoing development and keeps the app independent, ad-free, and without telemetry. The Free tier is genuinely useful — live monitoring, alerts, storage health, and one local monitor are all included without cost.",
+  },
+  {
+    q: "What about Enterprise?",
+    a: "Enterprise is reserved in code for a future unlimited-server offering. It is not currently purchasable. Pro caps at 8 servers; Free caps at 2.",
+  },
+  {
+    q: "How safe are the control actions?",
+    a: "All state-changing actions require Control Mode — a confirmation gate with a persistent banner and 5-minute auto-expire. High-risk actions (reboot, shutdown, disk wipe, snapshot rollback) additionally require an arming toggle plus biometric authentication. Network mutations require an outage-risk acknowledgement.",
+  },
+  {
+    q: "Is there an Android version?",
+    a: "Not at this time. TrueNAS Pulse is a native SwiftUI app that uses iOS-specific surfaces (Dynamic Island, Live Activities, Home Screen widgets, App Intents). A cross-platform port would compromise that.",
+  },
+  {
+    q: "Where do I report a bug?",
+    a: "Open an issue at github.com/phobos-/TrueNAS-Pulse/issues, or email support@phobos-cc.be.",
+  },
+];
+---
+
+<BaseLayout
+  title="FAQ"
+  description="Frequently asked questions about TrueNAS Pulse — supported versions, security model, Pro pricing."
+>
+  <Section
+    eyebrow="Help"
+    heading="Frequently asked questions"
+    lede="If your question isn't here, reach us at support@phobos-cc.be."
+    width="narrow"
+  >
+    <div class="space-y-3">
+      {
+        faqs.map((item, i) => (
+          <MotionReveal delay={i * 25}>
+            <details
+              class="group rounded-lg border border-stroke-soft bg-surface/60 transition-colors hover:border-stroke-strong"
+            >
+              <summary class="flex cursor-pointer items-center justify-between gap-3 px-5 py-4 text-[15px] font-medium text-text">
+                {item.q}
+                <span
+                  class="text-text-tertiary transition-transform group-open:rotate-180"
+                  aria-hidden="true"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M3 5l4 4 4-4"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <div class="border-t border-stroke-soft/60 px-5 pb-5 pt-4 text-sm leading-relaxed text-text-secondary">
+                {item.a}
+              </div>
+            </details>
+          </MotionReveal>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>

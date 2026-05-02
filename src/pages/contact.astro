@@ -1,0 +1,69 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import { site } from "~/data/site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch about TrueNAS Pulse — support, bug reports, press, and general questions."
+>
+  <Section eyebrow="Get in touch" heading="One inbox. One person." width="narrow">
+    <div class="space-y-8 text-base leading-relaxed text-text-secondary">
+      <p>
+        TrueNAS Pulse is built and maintained by Christophe Cornelis. There is
+        no support team, no ticketing system, and no automated triage — just
+        one engineer who reads everything that comes in and responds.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-6">
+          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">Bug reports</h3>
+          <p class="mb-3 text-sm">
+            The fastest path. Public, searchable, and tracked.
+          </p>
+          <a
+            href={site.supportUrl}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            Open a GitHub issue
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M5 4h4v4M4 9l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
+        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-6">
+          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">Email</h3>
+          <p class="mb-3 text-sm">
+            Support, press, and everything else.
+          </p>
+          <a
+            href={`mailto:${site.supportEmail}`}
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          >
+            {site.supportEmail}
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-stroke-soft bg-surface/40 p-6">
+        <h3 class="mb-3 text-base font-semibold tracking-tight text-text">
+          Before you write
+        </h3>
+        <p class="text-sm">
+          When reporting a bug, the following helps a lot — and rules out the
+          common cases without a back-and-forth:
+        </p>
+        <ul class="mt-3 space-y-1.5 text-sm">
+          <li>iOS version + device model (Settings → General → About).</li>
+          <li>TrueNAS Pulse version (Settings → About).</li>
+          <li>TrueNAS SCALE version of the affected server.</li>
+          <li>Whether the issue reproduces in <em>Sample Data Mode</em> (Settings → Sample Data → Try Demo).</li>
+          <li>A screenshot or screen recording when relevant.</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
