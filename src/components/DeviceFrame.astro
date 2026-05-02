@@ -12,8 +12,14 @@ interface Props {
   caption?: string;
   /** Optional alt text for the screenshot loaded inside the frame. */
   ariaLabel?: string;
+  /**
+   * Real iPhone screenshots already include the Dynamic Island in the captured
+   * pixels. Set true to suppress the CSS island overlay so the two don't
+   * stack. Defaults to false (show CSS island for synthetic content).
+   */
+  realScreenshot?: boolean;
 }
-const { caption, ariaLabel } = Astro.props;
+const { caption, ariaLabel, realScreenshot = false } = Astro.props;
 ---
 
 <figure class="device-frame" role="img" aria-label={ariaLabel || caption}>
@@ -24,8 +30,8 @@ const { caption, ariaLabel } = Astro.props;
     <div class="device-screen">
       <slot />
     </div>
-    <!-- Dynamic Island -->
-    <span class="device-island" aria-hidden="true"></span>
+    <!-- Dynamic Island — only when content is synthetic; real screenshots already include it -->
+    {!realScreenshot && <span class="device-island" aria-hidden="true"></span>}
   </div>
   {caption && <figcaption class="device-caption">{caption}</figcaption>}
 </figure>

@@ -2,7 +2,6 @@
 import { site } from "~/data/site";
 import AppStoreButton from "~/components/AppStoreButton.astro";
 import DeviceFrame from "~/components/DeviceFrame.astro";
-import ScreenMock from "~/components/ScreenMock.astro";
 ---
 
 <section class="relative overflow-hidden device-stage">
@@ -75,8 +74,29 @@ import ScreenMock from "~/components/ScreenMock.astro";
     </div>
 
     <div class="reveal-init mt-16 flex justify-center lg:mt-0" data-reveal-delay="180">
-      <DeviceFrame ariaLabel="TrueNAS Pulse dashboard preview">
-        <ScreenMock />
+      <DeviceFrame
+        ariaLabel="TrueNAS Pulse dashboard — Goldeye server, READY, 22.3 of 33.2 TB used, CPU 4 percent, memory 78 percent, storage healthy"
+        realScreenshot
+      >
+        <picture>
+          <source
+            type="image/avif"
+            srcset="/screenshots/01-dashboard.avif"
+          />
+          <source
+            type="image/webp"
+            srcset="/screenshots/01-dashboard.webp"
+          />
+          <img
+            src="/screenshots/01-dashboard.webp"
+            alt=""
+            width="1180"
+            height="2564"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
       </DeviceFrame>
     </div>
   </div>

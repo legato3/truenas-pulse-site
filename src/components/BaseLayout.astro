@@ -83,6 +83,20 @@ const og = new URL(ogImage, site.origin).toString();
         },
       })}
     />
+
+    {/*
+      First-party Plausible Analytics — self-hosted on LXC 132 behind Caddy at
+      /_pl/. Loading the script + posting events from the same origin defeats
+      the standard ad-block blocklists targeting plausible.io / *.plausible.*.
+      No cookies, no cross-site requests, no IP storage at rest. Matches the
+      MONETIZATION.md "no tracking, no third-party SDK" promise.
+    */}
+    <script
+      defer
+      data-domain="pulse.phobos-cc.be"
+      data-api="/_pl/api/event"
+      src="/_pl/js/script.js"
+    ></script>
   </head>
   <body class="font-sans text-text antialiased">
     <a
