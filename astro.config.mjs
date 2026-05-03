@@ -17,9 +17,7 @@ export default defineConfig({
   },
   integrations: [
     mdx(),
-    sitemap({
-      filter: (page) => !page.includes("/press/"),
-    }),
+    sitemap(),
   ],
   prefetch: {
     prefetchAll: false,

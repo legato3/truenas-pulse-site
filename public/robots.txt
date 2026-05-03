@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /press
 
 Sitemap: https://pulse.phobos-cc.be/sitemap-index.xml

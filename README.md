@@ -20,8 +20,9 @@ src/
   components/    BaseLayout, Header, Footer, Hero, DeviceFrame, ScreenMock,
                  FeatureGrid, TierCompare, PillarStrip, CallToAction,
                  MotionReveal, Section, AppStoreButton
-  pages/         index.astro, features.astro, pro.astro, faq.astro,
-                 contact.astro, press.astro, privacy.mdx, terms.mdx, eula.mdx
+  pages/         index.astro, features.astro, screenshots.astro, pro.astro,
+                 faq.astro, changelog.astro, contact.astro, 404.astro,
+                 privacy.mdx, terms.mdx, eula.mdx
   data/          site.ts (identity copy, links), features.ts (26-feature canon)
   styles/        global.css (single @theme + tiny utilities)
 public/          favicon set, og-image.png, site.webmanifest, robots.txt

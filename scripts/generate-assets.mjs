@@ -118,7 +118,7 @@ writeFileSync(
 // 8. robots.txt
 writeFileSync(
   resolve(PUB, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /press\n\nSitemap: https://pulse.phobos-cc.be/sitemap-index.xml\n`,
+  `User-agent: *\nAllow: /\n\nSitemap: https://pulse.phobos-cc.be/sitemap-index.xml\n`,
 );
 
 console.log("[generate-assets] wrote:");

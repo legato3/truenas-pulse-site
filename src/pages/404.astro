@@ -1,0 +1,228 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import { navLinks } from "~/data/site";
+
+// Astro renders this at /404.html during build. Caddy serves it as the
+// 404 fallback (see /etc/caddy/Caddyfile on PROX-WEB / LXC 132).
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you tried to load isn't here. Use the navigation to find what you were after."
+  noindex
+>
+  <section class="four">
+    <div class="four-inner">
+      <p class="four-eyebrow">404 · not found</p>
+      <h1 class="four-title">
+        That page didn't <span class="four-title-accent">resolve</span>.
+      </h1>
+      <p class="four-lede">
+        The URL you followed isn't here. Either the page moved, the link was
+        mistyped, or it never existed. Either way: nothing's broken — just go
+        back to a known route.
+      </p>
+
+      <div class="four-actions">
+        <a href="/" class="four-cta-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path
+              d="M9 3L5 7l4 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+          Back to the home page
+        </a>
+        <a href="/faq" class="four-cta-ghost">
+          Try the FAQ instead
+        </a>
+      </div>
+
+      <div class="four-divider" aria-hidden="true"></div>
+
+      <p class="four-or">Or jump to a section:</p>
+      <ul class="four-routes">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a href={link.href}>
+                <span class="four-route-arrow" aria-hidden="true">→</span>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Calm "no signal" graphic — empty pool gauge bar -->
+    <div class="four-glyph" aria-hidden="true">
+      <span class="four-glyph-label">no route</span>
+      <div class="four-glyph-bar">
+        <span class="four-glyph-bar-fill"></span>
+      </div>
+      <span class="four-glyph-meta">https://pulse.phobos-cc.be<span class="four-glyph-path">/—</span></span>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .four {
+    min-height: calc(100dvh - 12rem);
+    display: grid;
+    place-items: center;
+    padding: clamp(3rem, 8vw, 6rem) 1.5rem;
+  }
+  .four-inner {
+    max-width: 38rem;
+    text-align: center;
+  }
+  .four-eyebrow {
+    margin: 0 0 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-warning);
+  }
+  .four-title {
+    margin: 0 0 1.25rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+  .four-title-accent {
+    color: var(--color-accent);
+  }
+  .four-lede {
+    margin: 0 0 2.25rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .four-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .four-cta-primary,
+  .four-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .four-cta-primary {
+    background: var(--color-text);
+    color: var(--color-bg);
+    box-shadow: 0 10px 25px -10px oklch(0 0 0 / 0.5);
+  }
+  .four-cta-primary:hover {
+    opacity: 0.9;
+  }
+  .four-cta-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-stroke-strong);
+  }
+  .four-cta-ghost:hover {
+    background: oklch(from var(--color-surface) l c h / 0.6);
+  }
+
+  .four-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--color-stroke-soft);
+    margin: 0 auto 1.5rem;
+  }
+
+  .four-or {
+    margin: 0 0 1rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .four-routes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+  }
+  .four-routes a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    transition: color 0.15s ease;
+  }
+  .four-routes a:hover {
+    color: var(--color-text);
+  }
+  .four-route-arrow {
+    color: var(--color-text-tertiary);
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .four-routes a:hover .four-route-arrow {
+    transform: translateX(2px);
+    color: var(--color-accent);
+  }
+
+  /* Calm visual: an empty progress bar that mimics the in-app pool capacity bar */
+  .four-glyph {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--color-stroke-soft);
+    width: 100%;
+    max-width: 26rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .four-glyph-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-text-tertiary);
+    text-align: left;
+  }
+  .four-glyph-bar {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-stroke-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .four-glyph-bar-fill {
+    position: absolute;
+    inset: 0 100% 0 0;
+    background: var(--color-warning);
+    border-radius: 999px;
+  }
+  .four-glyph-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    text-align: left;
+  }
+  .four-glyph-path {
+    color: var(--color-warning);
+  }
+</style>
