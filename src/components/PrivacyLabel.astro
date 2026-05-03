@@ -1,0 +1,249 @@
+---
+/**
+ * Apple-style App Store Privacy Nutrition Label.
+ *
+ * Mirrors what users see on the App Store listing: "Data Not Collected"
+ * with a small grid of the categories the app does NOT touch. Pulled
+ * verbatim from /app/repos/TrueNAS-Pulse/docs/APP_STORE_METADATA.md
+ * "Privacy Details for App Store Connect".
+ *
+ * Apple's actual nutrition label uses three states (Used to Track You,
+ * Linked to You, Not Linked to You). This app falls into the rare
+ * "Data Not Collected" bucket — we lean into that visually.
+ */
+
+interface Props {
+  /** Compact mode for the home page security section. */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+interface Item {
+  title: string;
+  /** Inline SVG icon name. */
+  icon:
+    | "shield-x"
+    | "fingerprint"
+    | "broadcast"
+    | "id-badge"
+    | "lock"
+    | "device";
+}
+
+const items: Item[] = [
+  {
+    icon: "shield-x",
+    title: "No analytics or tracking SDKs",
+  },
+  {
+    icon: "fingerprint",
+    title: "No crash-reporting services",
+  },
+  {
+    icon: "id-badge",
+    title: "No advertising identifiers",
+  },
+  {
+    icon: "broadcast",
+    title: "No data shared with third parties",
+  },
+  {
+    icon: "lock",
+    title: "Credentials live in the iOS Keychain",
+  },
+  {
+    icon: "device",
+    title: "Diagnostics stay on the device",
+  },
+];
+---
+
+<aside class:list={["privacy-label", compact && "is-compact"]} aria-label="Privacy summary">
+  <header class="privacy-label-head">
+    <div class="privacy-label-shield" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3l8 3v6c0 4.5-3.2 8.4-8 9-4.8-.6-8-4.5-8-9V6l8-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+        <path d="M9 12.5l2.2 2.2L15.5 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div>
+      <p class="privacy-label-eyebrow">App Privacy</p>
+      <h3 class="privacy-label-title">Data Not Collected</h3>
+      <p class="privacy-label-sub">The developer does not collect any data from this app.</p>
+    </div>
+  </header>
+
+  <div class="privacy-label-grid">
+    {
+      items.map((item) => (
+        <div class="privacy-label-item">
+          <span class="privacy-label-icon" aria-hidden="true">
+            {item.icon === "shield-x" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l8 3v6c0 4.5-3.2 8.4-8 9-4.8-.6-8-4.5-8-9V6l8-3z" stroke="currentColor" stroke-width="1.5" />
+                <path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === "fingerprint" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 11v3M5 14a14 14 0 0 1 0-4 7 7 0 0 1 14 0v6M9 18a8 8 0 0 1-1-4M16 18v-4a4 4 0 0 0-8 0v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === "broadcast" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.5" />
+                <path d="M8 12a4 4 0 0 1 8 0M5 12a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+              </svg>
+            )}
+            {item.icon === "id-badge" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M7 17c1.5-2 3-3 5-3s3.5 1 5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === "lock" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+            {item.icon === "device" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="2" width="12" height="20" rx="2.5" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="12" cy="18.5" r="0.9" fill="currentColor" />
+              </svg>
+            )}
+          </span>
+          <span class="privacy-label-text">{item.title}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <footer class="privacy-label-foot">
+    <a href="/privacy" class="privacy-label-link">
+      Read the full privacy policy
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </footer>
+</aside>
+
+<style>
+  .privacy-label {
+    --label-radius: 1rem;
+    border: 1px solid var(--color-stroke-soft);
+    border-radius: var(--label-radius);
+    background: oklch(from var(--color-surface-raised) l c h / 0.55);
+    padding: 1.5rem;
+    backdrop-filter: blur(6px);
+  }
+  .privacy-label.is-compact {
+    padding: 1.25rem;
+  }
+
+  .privacy-label-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    padding-bottom: 1.125rem;
+    margin-bottom: 1.125rem;
+    border-bottom: 1px solid var(--color-stroke-soft);
+  }
+  .privacy-label-shield {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 0.625rem;
+    background: oklch(from var(--color-ok) l c h / 0.10);
+    color: var(--color-ok);
+    box-shadow: inset 0 0 0 1px oklch(from var(--color-ok) l c h / 0.22);
+  }
+  .privacy-label-eyebrow {
+    margin: 0 0 0.15rem 0;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-text-tertiary);
+    font-weight: 500;
+  }
+  .privacy-label-title {
+    margin: 0;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .privacy-label-sub {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .privacy-label-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  @media (min-width: 480px) {
+    .privacy-label-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .privacy-label.is-compact .privacy-label-grid {
+    gap: 0.4rem;
+  }
+
+  .privacy-label-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.5rem;
+    background: oklch(from var(--color-bg-elevated) l c h / 0.5);
+    border: 1px solid var(--color-stroke-soft);
+  }
+  .privacy-label-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 0.4rem;
+    flex-shrink: 0;
+    background: oklch(from var(--color-ok) l c h / 0.10);
+    color: var(--color-ok);
+    box-shadow: inset 0 0 0 1px oklch(from var(--color-ok) l c h / 0.18);
+  }
+  .privacy-label-text {
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    line-height: 1.35;
+  }
+
+  .privacy-label-foot {
+    margin-top: 1.125rem;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--color-stroke-soft);
+  }
+  .privacy-label-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .privacy-label-link:hover {
+    color: var(--color-accent-hover);
+  }
+</style>

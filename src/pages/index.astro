@@ -11,6 +11,8 @@ import SecurityFlow from "~/components/SecurityFlow.astro";
 import KeywordMarquee from "~/components/KeywordMarquee.astro";
 import FreeShowcase from "~/components/FreeShowcase.astro";
 import AppStoreButton from "~/components/AppStoreButton.astro";
+import Personas from "~/components/Personas.astro";
+import PrivacyLabel from "~/components/PrivacyLabel.astro";
 import { site } from "~/data/site";
 ---
 
@@ -28,6 +30,14 @@ import { site } from "~/data/site";
         <StatsStrip />
       </MotionReveal>
     </div>
+  </Section>
+
+  <Section
+    eyebrow="Who it's for"
+    heading="If you operate TrueNAS, this is your phone surface."
+    lede="Three angles. Pick the one that sounds like you."
+  >
+    <Personas />
   </Section>
 
   <KeywordMarquee />
@@ -92,9 +102,9 @@ import { site } from "~/data/site";
       <SecurityFlow />
     </MotionReveal>
 
-    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <MotionReveal delay={60}>
-        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
+        <div class="h-full rounded-xl border border-stroke-soft bg-surface/60 p-7">
           <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
             Credential storage
           </h3>
@@ -108,7 +118,7 @@ import { site } from "~/data/site";
         </div>
       </MotionReveal>
       <MotionReveal delay={120}>
-        <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
+        <div class="h-full rounded-xl border border-stroke-soft bg-surface/60 p-7">
           <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
             Action safety
           </h3>
@@ -119,6 +129,9 @@ import { site } from "~/data/site";
             <li>Local action log — nothing leaves the device.</li>
           </ul>
         </div>
+      </MotionReveal>
+      <MotionReveal delay={180}>
+        <PrivacyLabel compact />
       </MotionReveal>
     </div>
   </Section>
