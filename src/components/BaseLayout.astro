@@ -4,23 +4,33 @@ import { site } from "~/data/site";
 import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 
-interface Props {
+interface FrontmatterShape {
   title?: string;
   description?: string;
   ogImage?: string;
-  /** Set true for legal pages: max-width prose, simpler chrome. */
   prose?: boolean;
-  /** Set true to suppress indexing (e.g. /press for now). */
   noindex?: boolean;
 }
 
-const {
-  title,
-  description = site.tagline,
-  ogImage = "/og-image.png",
-  prose = false,
-  noindex = false,
-} = Astro.props;
+interface Props extends FrontmatterShape {
+  /**
+   * Astro automatically supplies frontmatter from MDX files via this prop
+   * (NOT as individual props). We merge it back so MDX pages and .astro
+   * callers behave identically.
+   */
+  frontmatter?: FrontmatterShape;
+}
+
+// Merge: explicit props win over frontmatter; frontmatter wins over defaults.
+const fm = Astro.props.frontmatter ?? {};
+const merged: Required<FrontmatterShape> = {
+  title: Astro.props.title ?? fm.title ?? "",
+  description: Astro.props.description ?? fm.description ?? site.tagline,
+  ogImage: Astro.props.ogImage ?? fm.ogImage ?? "/og-image.png",
+  prose: Astro.props.prose ?? fm.prose ?? false,
+  noindex: Astro.props.noindex ?? fm.noindex ?? false,
+};
+const { title, description, ogImage, prose, noindex } = merged;
 
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.subtitle}`;
 const canonical = new URL(Astro.url.pathname, site.origin).toString();
