@@ -1,0 +1,185 @@
+---
+/**
+ * Floating "live metrics" card next to the hero device frame.
+ *
+ * Three labelled SVG sparklines (CPU, Memory, Network) that gently animate.
+ * Pure CSS — no per-frame JS, no accidental jank. The animation is offset
+ * per line so they don't pulse in lockstep, mimicking a real fleet view.
+ *
+ * Numeric labels are static — chosen to roughly match the dashboard
+ * screenshot in the device frame (CPU 4%, MEM 78%, NET ~12 MB/s) so the
+ * card and frame read as one cohesive composition.
+ */
+
+interface Spark {
+  label: string;
+  value: string;
+  /** Stroke colour for the sparkline. */
+  hue: "blue" | "violet" | "magenta";
+  /** SVG path string — viewBox 0 0 120 32. */
+  d: string;
+  /** Animation delay in seconds for the trailing dot pulse. */
+  delay: number;
+}
+
+const sparks: Spark[] = [
+  {
+    label: "CPU",
+    value: "4%",
+    hue: "blue",
+    d: "M0 22 L12 21 L24 23 L36 18 L48 19 L60 14 L72 16 L84 11 L96 14 L108 9 L120 12",
+    delay: 0,
+  },
+  {
+    label: "MEM",
+    value: "78%",
+    hue: "violet",
+    d: "M0 14 L15 16 L30 13 L45 12 L60 14 L75 11 L90 13 L105 10 L120 11",
+    delay: 0.6,
+  },
+  {
+    label: "NET",
+    value: "12 MB/s",
+    hue: "magenta",
+    d: "M0 24 L10 18 L20 20 L30 14 L40 16 L50 8 L60 16 L70 10 L80 14 L90 6 L100 12 L110 8 L120 14",
+    delay: 1.2,
+  },
+];
+
+const stroke = (h: Spark["hue"]) => {
+  switch (h) {
+    case "blue":
+      return "oklch(0.74 0.12 240)";
+    case "violet":
+      return "oklch(0.65 0.14 290)";
+    case "magenta":
+      return "oklch(0.65 0.21 340)";
+  }
+};
+---
+
+<div class="hero-metrics" aria-hidden="true">
+  <div class="hero-metrics-head">
+    <span class="status-dot"></span>
+    <span class="hero-metrics-label">Goldeye · live</span>
+    <span class="hero-metrics-time">1H</span>
+  </div>
+  <div class="hero-metrics-body">
+    {
+      sparks.map((s) => (
+        <div class="spark" style={`--stroke: ${stroke(s.hue)}; --delay: ${s.delay}s`}>
+          <div class="spark-meta">
+            <span class="spark-label">{s.label}</span>
+            <span class="spark-value">{s.value}</span>
+          </div>
+          <svg class="spark-svg" viewBox="0 0 120 32" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id={`fill-${s.label}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--stroke)" stop-opacity="0.32" />
+                <stop offset="100%" stop-color="var(--stroke)" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={`${s.d} L120 32 L0 32 Z`} fill={`url(#fill-${s.label})`} />
+            <path
+              d={s.d}
+              fill="none"
+              stroke="var(--stroke)"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="spark-line"
+            />
+          </svg>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .hero-metrics {
+    width: min(280px, 100%);
+    padding: 1rem 1.125rem;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-bg-elevated) l c h / 0.85);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.04) inset,
+      0 24px 60px -25px oklch(0 0 0 / 0.7),
+      0 0 60px oklch(0.62 0.16 235 / 0.06);
+  }
+
+  .hero-metrics-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.625rem;
+    margin-bottom: 0.625rem;
+    border-bottom: 1px solid var(--color-stroke-soft);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+  .hero-metrics-label {
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: -0.005em;
+  }
+  .hero-metrics-time {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .hero-metrics-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .spark {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  .spark-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+  }
+  .spark-label {
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+  .spark-value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+    font-size: 0.8125rem;
+  }
+  .spark-svg {
+    width: 100%;
+    height: 32px;
+    display: block;
+  }
+  .spark-line {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: spark-draw 1.2s ease-out var(--delay) forwards;
+  }
+  @keyframes spark-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spark-line {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

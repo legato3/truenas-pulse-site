@@ -6,6 +6,9 @@ import PillarStrip from "~/components/PillarStrip.astro";
 import FeatureGrid from "~/components/FeatureGrid.astro";
 import CallToAction from "~/components/CallToAction.astro";
 import MotionReveal from "~/components/MotionReveal.astro";
+import StatsStrip from "~/components/StatsStrip.astro";
+import SecurityFlow from "~/components/SecurityFlow.astro";
+import KeywordMarquee from "~/components/KeywordMarquee.astro";
 import { site } from "~/data/site";
 ---
 
@@ -18,12 +21,19 @@ import { site } from "~/data/site";
     lede="A calm dashboard, careful actions, and zero noise. Designed for the moments when something matters and you're not at your desk."
   >
     <PillarStrip />
+    <div class="mt-12">
+      <MotionReveal>
+        <StatsStrip />
+      </MotionReveal>
+    </div>
   </Section>
+
+  <KeywordMarquee />
 
   <Section
     eyebrow="Feature highlights"
     heading="Everything you need from the dashboard to the disk."
-    lede="A quick tour. The full 26-feature inventory lives on the Features page."
+    lede="A quick tour. The full 27-feature inventory lives on the Features page."
   >
     <FeatureGrid limit={6} hideEnterprise />
     <div class="mt-10 flex justify-center">
@@ -31,7 +41,7 @@ import { site } from "~/data/site";
         href="/features"
         class="inline-flex items-center gap-1.5 rounded-lg border border-stroke-strong px-5 py-3 text-sm font-medium text-text transition-colors hover:bg-surface/60"
       >
-        See all 26 features
+        See all 27 features
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path
             d="M5 3l4 4-4 4"
@@ -50,7 +60,11 @@ import { site } from "~/data/site";
     lede="No accounts. No cloud. No analytics. No third-party SDKs. The app talks only to the servers you configure — full stop."
   >
     <MotionReveal>
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <SecurityFlow />
+    </MotionReveal>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <MotionReveal delay={60}>
         <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
           <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
             Credential storage
@@ -63,6 +77,8 @@ import { site } from "~/data/site";
             <li>No tokens or secrets are ever logged.</li>
           </ul>
         </div>
+      </MotionReveal>
+      <MotionReveal delay={120}>
         <div class="rounded-xl border border-stroke-soft bg-surface/60 p-7">
           <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
             Action safety
@@ -74,8 +90,8 @@ import { site } from "~/data/site";
             <li>Local action log — nothing leaves the device.</li>
           </ul>
         </div>
-      </div>
-    </MotionReveal>
+      </MotionReveal>
+    </div>
   </Section>
 
   <CallToAction />

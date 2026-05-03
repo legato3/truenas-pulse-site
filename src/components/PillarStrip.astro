@@ -1,36 +1,141 @@
 ---
 /**
- * Three-up "why this exists" strip used directly under the hero. Pure copy,
- * no icons — keeps the calm, infrastructure-grade tone.
+ * Three-up "why this exists" strip used directly under the hero.
+ * Each pillar has a small line-art icon to give the section visual rhythm
+ * while keeping the calm, infrastructure-grade tone.
  */
 const pillars = [
   {
     head: "Native, not a wrapper",
     body: "Built in SwiftUI. WebSocket transport, MVVM, Live Activities, Dynamic Island, Home Screen widgets. No third-party SDK; nothing to ship cross-platform.",
+    icon: "swift",
   },
   {
     head: "Read first, act second",
     body: "Every action passes through Control Mode — confirmation gate, persistent banner, 5-minute auto-expire. High-risk operations also require biometric authentication.",
+    icon: "shield",
   },
   {
     head: "Your data stays yours",
     body: "API tokens live in the iOS Keychain. Strict TLS validation by default; per-server self-signed cert opt-in. No analytics. No telemetry. No accounts.",
+    icon: "key",
   },
 ] as const;
 ---
 
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+<div class="pillar-grid">
   {
     pillars.map((p, i) => (
       <div
-        class="reveal-init rounded-xl border border-stroke-soft bg-surface/60 p-6"
+        class="pillar reveal-init"
         data-reveal-delay={i * 80}
       >
-        <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
-          {p.head}
-        </h3>
-        <p class="text-sm leading-relaxed text-text-secondary">{p.body}</p>
+        <div class="pillar-icon" aria-hidden="true">
+          {p.icon === "swift" && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 12l4-9h10l4 9-4 9H7l-4-9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M9 8.5c2.5 2 4.5 4 6 6.5M15 8.5c-1 1.4-2.5 2.8-4.2 4M8.5 16.5c1.5.6 4.5.6 6.5-1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          )}
+          {p.icon === "shield" && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3l8 3v6c0 4.5-3.2 8.4-8 9-4.8-.6-8-4.5-8-9V6l8-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+              <path d="M9 12.5l2.2 2.2L15.5 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          )}
+          {p.icon === "key" && (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="8" cy="14" r="4" stroke="currentColor" stroke-width="1.5" />
+              <path d="M11 12l9-9M16 5l3 3M14 7l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          )}
+        </div>
+        <h3 class="pillar-head">{p.head}</h3>
+        <p class="pillar-body">{p.body}</p>
       </div>
     ))
   }
 </div>
+
+<style>
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .pillar-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pillar {
+    position: relative;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-surface) l c h / 0.6);
+    padding: 1.5rem;
+    overflow: hidden;
+    transition: border-color 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pillar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      oklch(0.62 0.16 235 / 0) 0%,
+      oklch(0.62 0.16 235 / 0.32) 45%,
+      oklch(0.65 0.14 290 / 0.32) 55%,
+      oklch(0.65 0.14 290 / 0) 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+  }
+  .pillar:hover {
+    border-color: var(--color-stroke-strong);
+    transform: translateY(-2px);
+  }
+  .pillar:hover::before {
+    opacity: 1;
+  }
+
+  .pillar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 0.625rem;
+    margin-bottom: 1rem;
+    background: oklch(from var(--color-accent) l c h / 0.08);
+    color: var(--color-accent);
+    box-shadow: inset 0 0 0 1px oklch(from var(--color-accent) l c h / 0.16);
+  }
+
+  .pillar-head {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .pillar-body {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pillar:hover {
+      transform: none;
+    }
+  }
+</style>

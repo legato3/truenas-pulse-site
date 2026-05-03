@@ -1,0 +1,101 @@
+---
+/**
+ * Subtle animated SVG grid + drifting orbs used as a hero backdrop.
+ * Designed to be calm: long durations, low opacity, brand-tinted only.
+ *
+ * Why SVG (not CSS-only): a precise grid with brand-tinted radial fade looks
+ * cleaner under retina than a CSS background-image, and the orbs give the
+ * dark surface a sense of depth without violating the "infrastructure-grade"
+ * tone. ~2KB inlined; no JS.
+ */
+---
+
+<div class="ambient" aria-hidden="true">
+  <svg class="ambient-grid" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="pulseGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="oklch(1 0 0 / 0.045)" stroke-width="1" />
+      </pattern>
+      <radialGradient id="pulseFade" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="oklch(0 0 0 / 0)" />
+        <stop offset="60%" stop-color="oklch(0 0 0 / 0.5)" />
+        <stop offset="100%" stop-color="oklch(0 0 0 / 1)" />
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#pulseGrid)" />
+    <rect width="100%" height="100%" fill="url(#pulseFade)" />
+  </svg>
+
+  <span class="ambient-orb ambient-orb-1"></span>
+  <span class="ambient-orb ambient-orb-2"></span>
+  <span class="ambient-orb ambient-orb-3"></span>
+</div>
+
+<style>
+  .ambient {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 70%, transparent 100%);
+  }
+  .ambient-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+  .ambient-orb-1 {
+    top: -10%;
+    left: 8%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.45), transparent 70%);
+    animation: drift-a 22s ease-in-out infinite;
+  }
+  .ambient-orb-2 {
+    top: 30%;
+    right: 4%;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, oklch(0.65 0.14 290 / 0.32), transparent 70%);
+    animation: drift-b 28s ease-in-out infinite;
+  }
+  .ambient-orb-3 {
+    bottom: -20%;
+    left: 38%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, oklch(0.65 0.21 340 / 0.18), transparent 70%);
+    animation: drift-c 34s ease-in-out infinite;
+  }
+
+  @keyframes drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(40px, 30px, 0) scale(1.06); }
+  }
+  @keyframes drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(-30px, 40px, 0) scale(1.08); }
+  }
+  @keyframes drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(20px, -30px, 0) scale(1.04); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-orb {
+      animation: none !important;
+    }
+  }
+</style>

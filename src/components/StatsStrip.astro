@@ -1,0 +1,180 @@
+---
+/**
+ * "By the numbers" strip — fast credibility signal under the hero.
+ *
+ * Numbers are intentionally factual and verifiable from canonical sources:
+ *   - 27 features visible (28 total minus 1 reserved tier)
+ *     -> /app/repos/TrueNAS-Pulse/docs/PRO_FEATURES.md feature registry
+ *   - 4 public versions shipped (1.0, 1.0.1, 1.0.2, 1.0.3)
+ *     -> /app/data/pulse-screenshots/fetch-changelog.ts
+ *   - 0 third-party SDKs / analytics
+ *     -> /app/repos/TrueNAS-Pulse/docs/MONETIZATION.md
+ *   - 8 servers max on Pro
+ *     -> Pro tier cap
+ *
+ * Numbers count up via WAAPI when scrolled into view. Respects reduce-motion.
+ */
+import { changelog } from "~/data/changelog";
+import { features } from "~/data/features";
+
+const visibleFeatureCount = features.filter(
+  (f) => f.tier !== "Enterprise (reserved)",
+).length;
+const versionCount = changelog.length;
+
+interface Stat {
+  value: number;
+  /** Suffix or prefix glyph rendered next to the value (e.g. "+", "×"). */
+  ornament?: string;
+  label: string;
+  /** Sub-line — short clarifier. */
+  detail: string;
+}
+
+const stats: Stat[] = [
+  {
+    value: visibleFeatureCount,
+    label: "Operator features",
+    detail: "Free + Pro, no demo gate",
+  },
+  {
+    value: 0,
+    label: "Third-party SDKs",
+    detail: "No analytics. No tracking.",
+  },
+  {
+    value: versionCount,
+    label: "Public releases",
+    detail: "Active development since 2026-04",
+  },
+  {
+    value: 8,
+    label: "Servers on Pro",
+    detail: "2 on Free — genuinely usable",
+  },
+];
+---
+
+<div class="stats-strip">
+  {
+    stats.map((s, i) => (
+      <div class="stats-cell" data-stats-cell data-target={s.value} style={`--i: ${i}`}>
+        <div class="stats-num-wrap">
+          <span class="stats-num" data-stats-num>0</span>
+        </div>
+        <p class="stats-label">{s.label}</p>
+        <p class="stats-detail">{s.detail}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .stats-strip {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--color-stroke-soft);
+    border-radius: 1rem;
+    background:
+      radial-gradient(ellipse at 50% 0%, oklch(0.62 0.16 235 / 0.08), transparent 70%),
+      oklch(from var(--color-surface) l c h / 0.4);
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .stats-strip {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .stats-cell {
+    position: relative;
+    padding: 1.75rem 1.5rem;
+    text-align: left;
+  }
+  /* Hairline separators that match the iOS app's row treatment */
+  .stats-cell + .stats-cell {
+    border-top: 1px solid var(--color-stroke-soft);
+  }
+  @media (min-width: 768px) {
+    .stats-cell + .stats-cell {
+      border-top: 0;
+      border-left: 1px solid var(--color-stroke-soft);
+    }
+  }
+
+  .stats-num-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  .stats-num {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    background: linear-gradient(
+      180deg,
+      var(--color-text) 0%,
+      oklch(from var(--color-text) calc(l - 0.18) c h) 100%
+    );
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats-label {
+    margin: 0.6rem 0 0.15rem 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+  .stats-detail {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--color-text-tertiary);
+  }
+</style>
+
+<script>
+  // Count-up on first scroll into view. Cheap WAAPI-free implementation.
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cells = document.querySelectorAll<HTMLElement>("[data-stats-cell]");
+
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.target || 0);
+    const out = el.querySelector<HTMLElement>("[data-stats-num]");
+    if (!out) return;
+    if (reduced || target === 0) {
+      out.textContent = String(target);
+      return;
+    }
+    const duration = 1100;
+    const start = performance.now();
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      out.textContent = String(Math.round(ease(t) * target));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if (cells.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          animate(entry.target as HTMLElement);
+          io.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.4 },
+    );
+    cells.forEach((el) => io.observe(el));
+  }
+</script>

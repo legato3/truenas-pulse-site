@@ -1,0 +1,107 @@
+---
+/**
+ * Keyword marquee — slow horizontal scroll of native iOS / TrueNAS / homelab
+ * keywords. Subtle visual texture, not a feature list. Pure CSS animation.
+ *
+ * Each chip is a fact about the app — every term is verifiable from
+ * /app/repos/TrueNAS-Pulse/docs/.
+ */
+const chips = [
+  "SwiftUI",
+  "WebSocket JSON-RPC",
+  "MVVM",
+  "iOS Keychain",
+  "Strict TLS",
+  "Live Activities",
+  "Dynamic Island",
+  "Home Screen widget",
+  "App Intents",
+  "Bonjour discovery",
+  "ZFS Pools",
+  "VDEV management",
+  "SMB · NFS shares",
+  "Snapshots · Replications",
+  "Apps · VMs · Containers",
+  "30d reporting",
+  "Storage runway",
+  "Audit log",
+  "Control Mode gate",
+  "Biometric confirm",
+  "iCloud Sync (Pro)",
+  "0 trackers",
+] as const;
+
+// Duplicated for seamless loop — CSS animation translates -50%.
+const loop = [...chips, ...chips];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-fade marquee-fade-l"></div>
+  <div class="marquee-track">
+    {
+      loop.map((c) => (
+        <span class="marquee-chip">{c}</span>
+      ))
+    }
+  </div>
+  <div class="marquee-fade marquee-fade-r"></div>
+</div>
+
+<style>
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    border-block: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-bg-elevated) l c h / 0.5);
+    padding: 1rem 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.625rem;
+    width: max-content;
+    animation: marquee-anim 60s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-anim {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+      transform: translateX(-12%);
+    }
+  }
+  .marquee-chip {
+    flex-shrink: 0;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-surface) l c h / 0.5);
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .marquee-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .marquee-fade-l {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-bg) 0%, transparent 100%);
+  }
+  .marquee-fade-r {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-bg) 0%, transparent 100%);
+  }
+</style>

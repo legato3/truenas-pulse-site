@@ -3,28 +3,137 @@ import AppStoreButton from "~/components/AppStoreButton.astro";
 import { site } from "~/data/site";
 ---
 
-<section class="px-5 py-20 sm:py-28">
-  <div
-    class="reveal-init mx-auto max-w-3xl rounded-3xl border border-stroke-soft bg-surface-membership/70 p-10 text-center sm:p-14"
-  >
-    <h2 class="text-balance text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-tight tracking-tight text-text">
-      Calm, deliberate, infrastructure-grade.
-    </h2>
-    <p class="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-text-secondary">
-      A native iPhone client for TrueNAS SCALE — built for sysadmins, operators,
-      and homelab users who want their server in one calm place.
-    </p>
-    <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <AppStoreButton size="lg" />
-      <a
-        href="/pro"
-        class="inline-flex items-center justify-center rounded-lg border border-stroke-strong px-5 py-3.5 text-sm font-medium text-text transition-colors hover:bg-surface/60"
-      >
-        See Pro features
-      </a>
+<section class="cta-section">
+  <div class="cta-card reveal-init">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <div class="cta-content">
+      <p class="cta-eyebrow">
+        <span class="status-dot"></span>
+        <span>Available now · iOS {site.minimumOsVersion}+</span>
+      </p>
+      <h2 class="cta-heading">
+        Calm, deliberate, infrastructure-grade.
+      </h2>
+      <p class="cta-lede">
+        A native iPhone client for TrueNAS SCALE — built for sysadmins, operators,
+        and homelab users who want their server in one calm place.
+      </p>
+      <div class="cta-actions">
+        <AppStoreButton size="lg" />
+        <a href="/pro" class="cta-secondary">
+          See Pro features
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <p class="cta-trust">{site.trustLine}</p>
     </div>
-    <p class="mt-6 text-xs text-text-tertiary">
-      {site.trustLine}
-    </p>
   </div>
 </section>
+
+<style>
+  .cta-section {
+    padding: 5rem 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .cta-section {
+      padding-block: 7rem;
+    }
+  }
+
+  .cta-card {
+    position: relative;
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--color-stroke-soft);
+    background:
+      linear-gradient(180deg, oklch(from var(--color-surface-membership) l c h / 0.8), oklch(from var(--color-surface) l c h / 0.7));
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  @media (min-width: 640px) {
+    .cta-card {
+      padding: 3.5rem;
+    }
+  }
+
+  /* Pulsing brand-tinted halo behind the card content */
+  .cta-glow {
+    position: absolute;
+    inset: -40%;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 30% 30%, oklch(0.62 0.16 235 / 0.20), transparent 55%),
+      radial-gradient(circle at 70% 70%, oklch(0.65 0.21 340 / 0.16), transparent 55%);
+    filter: blur(40px);
+    animation: cta-glow-anim 14s ease-in-out infinite alternate;
+  }
+  @keyframes cta-glow-anim {
+    0%   { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(8deg) scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-glow { animation: none; }
+  }
+
+  .cta-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.25rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-bg-elevated) l c h / 0.6);
+  }
+  .cta-heading {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin: 0 0 1rem 0;
+    text-wrap: balance;
+  }
+  .cta-lede {
+    max-width: 36rem;
+    margin: 0 auto 2rem auto;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.875rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-stroke-strong);
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.18s ease;
+  }
+  .cta-secondary:hover {
+    background: oklch(from var(--color-surface) l c h / 0.6);
+  }
+  .cta-trust {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+  }
+</style>

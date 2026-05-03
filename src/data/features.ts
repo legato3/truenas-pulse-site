@@ -1,5 +1,5 @@
 /**
- * 26-feature canonical registry — mirrored from
+ * 27-feature canonical registry — mirrored from
  * /app/repos/TrueNAS-Pulse/docs/PRO_FEATURES.md (table at "Feature Registry").
  *
  * Categories follow the iOS app's ProFeature.category (Scale / Advanced Control /
