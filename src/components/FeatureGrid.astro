@@ -7,21 +7,16 @@ interface Props {
   category?: (typeof featureCategories)[number];
   /** Max number of features to render — handy for the Home page teaser. */
   limit?: number;
-  /** When true, hide the Enterprise (reserved) row to avoid teasing the un-purchasable tier. */
-  hideEnterprise?: boolean;
   /** When true, render the category headings inline (used on /features). */
   withHeadings?: boolean;
 }
 
-const { category, limit, hideEnterprise = false, withHeadings = false } = Astro.props;
+const { category, limit, withHeadings = false } = Astro.props;
 
 const filterCat = (f: Feature): boolean =>
   !category ? true : f.category === category;
 
-const filterEnt = (f: Feature): boolean =>
-  hideEnterprise ? f.tier !== "Enterprise (reserved)" : true;
-
-const visible = features.filter((f) => filterCat(f) && filterEnt(f));
+const visible = features.filter(filterCat);
 const cards = limit ? visible.slice(0, limit) : visible;
 
 const grouped: Record<string, typeof features> = {};
@@ -36,8 +31,6 @@ const tierClass = (tier: Feature["tier"]) => {
       return "bg-ok/12 text-ok";
     case "Pro":
       return "bg-accent/14 text-accent";
-    case "Enterprise (reserved)":
-      return "bg-warning/12 text-warning";
   }
 };
 ---
@@ -71,7 +64,7 @@ const tierClass = (tier: Feature["tier"]) => {
                         tierClass(f.tier),
                       ]}
                     >
-                      {f.tier === "Enterprise (reserved)" ? "Reserved" : f.tier}
+                      {f.tier}
                     </span>
                   </header>
                   <p class="text-sm leading-relaxed text-text-secondary">
@@ -98,7 +91,7 @@ const tierClass = (tier: Feature["tier"]) => {
                     tierClass(f.tier),
                   ]}
                 >
-                  {f.tier === "Enterprise (reserved)" ? "Reserved" : f.tier}
+                  {f.tier}
                 </span>
               </header>
               <p class="text-sm leading-relaxed text-text-secondary">

@@ -12,7 +12,7 @@
  */
 export type FeatureCategory = "Scale" | "Advanced Control" | "Operator Productivity";
 
-export type FeatureTier = "Free" | "Pro" | "Enterprise (reserved)";
+export type FeatureTier = "Free" | "Pro";
 
 export interface Feature {
   /** Stable id matching the ProFeature enum case in the iOS app. */
@@ -50,15 +50,6 @@ export const features: Feature[] = [
     description:
       "Find where your servers disagree. Spot the config change that caused the problem before it spreads.",
   },
-  {
-    id: "unlimitedServers",
-    name: "Unlimited Servers",
-    category: "Scale",
-    tier: "Enterprise (reserved)",
-    description:
-      "Reserved for a future tier. Pro currently caps at 8 servers; Free at 2.",
-  },
-
   // ── Advanced Control (lifecycle + mutation) ─────────────────────
   {
     id: "diskManagement",

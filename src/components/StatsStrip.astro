@@ -3,7 +3,7 @@
  * "By the numbers" strip — fast credibility signal under the hero.
  *
  * Numbers are intentionally factual and verifiable from canonical sources:
- *   - 27 features visible (28 total minus 1 reserved tier)
+ *   - 27 operator features (Free + Pro)
  *     -> /app/repos/TrueNAS-Pulse/docs/PRO_FEATURES.md feature registry
  *   - 4 public versions shipped (1.0, 1.0.1, 1.0.2, 1.0.3)
  *     -> /app/data/pulse-screenshots/fetch-changelog.ts
@@ -17,9 +17,7 @@
 import { changelog } from "~/data/changelog";
 import { features } from "~/data/features";
 
-const visibleFeatureCount = features.filter(
-  (f) => f.tier !== "Enterprise (reserved)",
-).length;
+const featureCount = features.length;
 const versionCount = changelog.length;
 
 interface Stat {
@@ -33,7 +31,7 @@ interface Stat {
 
 const stats: Stat[] = [
   {
-    value: visibleFeatureCount,
+    value: featureCount,
     label: "Operator features",
     detail: "Free + Pro, no demo gate",
   },
