@@ -1,0 +1,191 @@
+---
+import type { Screenshot } from "~/data/screenshots";
+import DeviceFrame from "~/components/DeviceFrame.astro";
+
+interface Props {
+  shot: Screenshot;
+  /** Index controls left/right alternation + the eyebrow number. */
+  index: number;
+  /** Eager-load the first spotlight so the LCP is the dashboard image. */
+  eager?: boolean;
+}
+
+const { shot, index, eager = false } = Astro.props;
+const isReversed = index % 2 === 1;
+const eyebrow = String(index + 1).padStart(2, "0");
+---
+
+<article class:list={["spotlight", isReversed && "is-reversed"]}>
+  <button
+    type="button"
+    class="spotlight-frame"
+    data-lightbox-trigger
+    data-src={`/screenshots/${shot.slug}.webp`}
+    data-src-avif={`/screenshots/${shot.slug}.avif`}
+    data-alt={`TrueNAS Pulse — ${shot.title}. ${shot.caption}`}
+    data-width={shot.width}
+    data-height={shot.height}
+    aria-label={`View ${shot.title} screenshot at full size`}
+  >
+    <DeviceFrame
+      ariaLabel={`TrueNAS Pulse — ${shot.title}`}
+      realScreenshot
+      size="large"
+    >
+      <picture>
+        <source type="image/avif" srcset={`/screenshots/${shot.slug}.avif`} />
+        <source type="image/webp" srcset={`/screenshots/${shot.slug}.webp`} />
+        <img
+          src={`/screenshots/${shot.slug}.webp`}
+          alt=""
+          width={shot.width}
+          height={shot.height}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+        />
+      </picture>
+    </DeviceFrame>
+    <span class="spotlight-zoom-hint" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5" />
+        <path d="M9.5 9.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+      Tap to enlarge
+    </span>
+  </button>
+
+  <div class="spotlight-text">
+    <p class="spotlight-eyebrow">
+      <span class="spotlight-num">{eyebrow}</span>
+      <span aria-hidden="true">·</span>
+      <span>
+        {shot.tier === "Pro" ? (
+          <span class="spotlight-tier">Pro</span>
+        ) : (
+          <span class="spotlight-tier is-free">Free</span>
+        )}
+      </span>
+    </p>
+    <h2 class="spotlight-title">{shot.title}</h2>
+    <p class="spotlight-caption">{shot.caption}</p>
+  </div>
+</article>
+
+<style>
+  .spotlight {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+
+  @media (min-width: 768px) {
+    .spotlight {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .spotlight.is-reversed .spotlight-frame {
+      order: 2;
+    }
+    .spotlight.is-reversed .spotlight-text {
+      order: 1;
+    }
+  }
+
+  .spotlight-frame {
+    position: relative;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0 auto;
+    cursor: zoom-in;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .spotlight-frame:hover {
+    transform: translateY(-4px);
+  }
+  .spotlight-frame:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 12px;
+    border-radius: 8px;
+  }
+
+  /* Tap-to-enlarge hint sits below the frame, fades in on hover */
+  .spotlight-zoom-hint {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -2.25rem;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-text-tertiary);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+  .spotlight-frame:hover .spotlight-zoom-hint,
+  .spotlight-frame:focus-visible .spotlight-zoom-hint {
+    opacity: 1;
+  }
+
+  .spotlight-text {
+    max-width: 32rem;
+    margin: 0 auto;
+  }
+  @media (min-width: 768px) {
+    .spotlight.is-reversed .spotlight-text {
+      margin-inline: auto auto;
+    }
+  }
+
+  .spotlight-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-block: 0 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-text-tertiary);
+  }
+  .spotlight-num {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-text-secondary);
+  }
+  .spotlight-tier {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: oklch(from var(--color-accent) l c h / 0.14);
+    color: var(--color-accent);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .spotlight-tier.is-free {
+    background: oklch(from var(--color-ok) l c h / 0.14);
+    color: var(--color-ok);
+  }
+
+  .spotlight-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-block: 0 1rem;
+  }
+  .spotlight-caption {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>

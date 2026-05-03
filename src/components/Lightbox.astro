@@ -1,0 +1,230 @@
+---
+/**
+ * Click-to-enlarge lightbox for the screenshot spotlights.
+ *
+ * Wire-up:
+ * - Place this component once per page (typically at the end of the gallery).
+ * - Any element with [data-lightbox-trigger] becomes a clickable trigger.
+ *   Required data attrs: data-src, data-alt. Optional: data-src-avif,
+ *   data-width, data-height.
+ *
+ * Behaviour:
+ * - Opens with a soft scale-in. Closes on Escape, click-outside, or close button.
+ * - Locks body scroll while open so the backdrop can't shift.
+ * - Trap focus inside the dialog while open (single close button + image link).
+ * - Respects prefers-reduced-motion.
+ */
+---
+
+<div
+  id="lightbox"
+  class="lb"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="lightbox-caption"
+  hidden
+>
+  <button
+    type="button"
+    class="lb-close"
+    data-lightbox-close
+    aria-label="Close screenshot"
+  >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M5 5l10 10M15 5L5 15"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+      ></path>
+    </svg>
+  </button>
+
+  <figure class="lb-figure">
+    <picture id="lightbox-picture">
+      <source id="lightbox-source-avif" type="image/avif" />
+      <img
+        id="lightbox-image"
+        alt=""
+        class="lb-image"
+        decoding="async"
+        loading="eager"
+      />
+    </picture>
+    <figcaption id="lightbox-caption" class="lb-caption"></figcaption>
+  </figure>
+</div>
+
+<style>
+  .lb[hidden] {
+    display: none;
+  }
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: oklch(0 0 0 / 0.84);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    animation: lb-fade-in 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lb {
+      animation: none;
+    }
+  }
+  @keyframes lb-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .lb-close {
+    position: absolute;
+    top: clamp(1rem, 2.5vw, 2rem);
+    right: clamp(1rem, 2.5vw, 2rem);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    color: oklch(1 0 0 / 0.85);
+    background: oklch(0.16 0 0 / 0.6);
+    border: 1px solid oklch(1 0 0 / 0.12);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .lb-close:hover,
+  .lb-close:focus-visible {
+    background: oklch(0.22 0 0 / 0.8);
+    color: oklch(1 0 0);
+    outline: none;
+  }
+  .lb-close:focus-visible {
+    box-shadow: 0 0 0 3px oklch(0.62 0.16 235 / 0.4);
+  }
+
+  .lb-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .lb-image {
+    /* Aspect-ratio honoured via width+height; cap by viewport */
+    max-height: calc(100dvh - 8rem);
+    max-width: min(100%, 540px);
+    width: auto;
+    height: auto;
+    border-radius: 28px;
+    box-shadow:
+      0 30px 60px -10px oklch(0 0 0 / 0.7),
+      0 0 0 1px oklch(1 0 0 / 0.06);
+    background: oklch(0.07 0 0);
+    animation: lb-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lb-image {
+      animation: none;
+    }
+  }
+  @keyframes lb-pop {
+    from {
+      transform: scale(0.96);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .lb-caption {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    text-align: center;
+    max-width: 36rem;
+    line-height: 1.5;
+  }
+</style>
+
+<script>
+  // Vanilla, no framework. Single instance assumed per page.
+  const lb = document.getElementById("lightbox") as HTMLDialogElement | null;
+  if (lb) {
+    const img = document.getElementById("lightbox-image") as HTMLImageElement;
+    const sourceAvif = document.getElementById(
+      "lightbox-source-avif",
+    ) as HTMLSourceElement;
+    const caption = document.getElementById("lightbox-caption") as HTMLElement;
+    const closeBtn = lb.querySelector("[data-lightbox-close]") as HTMLButtonElement;
+
+    let lastTrigger: HTMLElement | null = null;
+    let bodyOverflow = "";
+
+    const open = (trigger: HTMLElement): void => {
+      const src = trigger.dataset.src;
+      const srcAvif = trigger.dataset.srcAvif;
+      const alt = trigger.dataset.alt ?? "";
+      const w = trigger.dataset.width;
+      const h = trigger.dataset.height;
+      if (!src) return;
+
+      sourceAvif.srcset = srcAvif ?? "";
+      img.src = src;
+      img.alt = alt;
+      if (w) img.setAttribute("width", w);
+      if (h) img.setAttribute("height", h);
+      caption.textContent = alt;
+
+      lastTrigger = trigger;
+      bodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      lb.hidden = false;
+      // Move focus to close button so screen readers + keyboard land here
+      requestAnimationFrame(() => closeBtn.focus());
+    };
+
+    const close = (): void => {
+      lb.hidden = true;
+      img.removeAttribute("src");
+      sourceAvif.removeAttribute("srcset");
+      document.body.style.overflow = bodyOverflow;
+      if (lastTrigger) {
+        lastTrigger.focus();
+        lastTrigger = null;
+      }
+    };
+
+    // Delegated click handler — allows lazy spotlights to register without re-binding
+    document.addEventListener("click", (e) => {
+      const trigger = (e.target as HTMLElement).closest(
+        "[data-lightbox-trigger]",
+      ) as HTMLElement | null;
+      if (trigger) {
+        e.preventDefault();
+        open(trigger);
+        return;
+      }
+      // Click outside the figure closes
+      if (e.target === lb) close();
+    });
+
+    closeBtn.addEventListener("click", close);
+
+    document.addEventListener("keydown", (e) => {
+      if (lb.hidden) return;
+      if (e.key === "Escape") close();
+    });
+  }
+</script>

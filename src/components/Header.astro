@@ -13,22 +13,14 @@ const path = Astro.url.pathname.replace(/\/$/, "");
       class="flex items-center gap-2.5 text-text transition-opacity hover:opacity-80"
       aria-label={`${site.name} home`}
     >
-      <span
-        class="grid h-7 w-7 place-items-center rounded-md bg-surface ring-1 ring-stroke-strong"
-      >
-        <!-- Inline pulse glyph: a small concentric ring + dot, infrastructure-grade -->
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-opacity="0.3" />
-          <circle cx="7" cy="7" r="2.5" fill="currentColor" />
-        </svg>
-      </span>
+      <img
+        src="/icon-192.png"
+        alt=""
+        width="28"
+        height="28"
+        class="h-7 w-7 rounded-md ring-1 ring-stroke-strong"
+        decoding="async"
+      />
       <span class="text-[15px] font-semibold tracking-tight">{site.name}</span>
     </a>
 

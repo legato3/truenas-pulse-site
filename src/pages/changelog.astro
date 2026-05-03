@@ -36,48 +36,177 @@ const toBullets = (whatsNew: string): string[] => {
     lede={`Every public version of ${site.name}, newest first. Pulled directly from App Store Connect.`}
     width="narrow"
   >
-    <ol class="space-y-10">
+    <ol class="changelog-list">
       {
         changelog.map((entry, i) => {
           const bullets = toBullets(entry.whatsNew);
+          const isLatest = i === 0;
           return (
             <MotionReveal as="li" delay={i * 40}>
-              <article class="rounded-xl border border-stroke-soft bg-surface/60 p-7 sm:p-8">
-                <header class="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-stroke-soft/60 pb-3">
-                  <h2 class="font-mono text-xl font-medium tracking-tight text-text">
-                    v{entry.version}
-                  </h2>
-                  <time
-                    datetime={entry.releaseDate}
-                    class="text-sm text-text-tertiary"
-                  >
-                    {formatDate(entry.releaseDate)}
-                  </time>
-                </header>
-                {bullets.length > 0 ? (
-                  <ul class="space-y-2.5 text-sm leading-relaxed text-text-secondary">
-                    {bullets.map((b) => (
-                      <li class="flex items-start gap-2.5">
-                        <span class="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-accent" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p class="text-sm italic leading-relaxed text-text-tertiary">
-                    Initial release.
-                  </p>
-                )}
+              <article class:list={["changelog-entry", isLatest && "is-latest"]}>
+                <span class="changelog-rail" aria-hidden="true">
+                  <span class="changelog-dot"></span>
+                </span>
+                <div class="changelog-body">
+                  <header class="changelog-head">
+                    <div class="changelog-version-row">
+                      <h2 class="changelog-version">
+                        Version {entry.version}
+                      </h2>
+                      {isLatest && (
+                        <span class="changelog-latest-badge">Latest</span>
+                      )}
+                    </div>
+                    <time
+                      datetime={entry.releaseDate}
+                      class="changelog-date"
+                    >
+                      {formatDate(entry.releaseDate)}
+                    </time>
+                  </header>
+                  {bullets.length > 0 ? (
+                    <ul class="changelog-bullets">
+                      {bullets.map((b) => (
+                        <li>
+                          <span class="changelog-bullet" aria-hidden="true" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p class="changelog-initial">First public release.</p>
+                  )}
+                </div>
               </article>
             </MotionReveal>
           );
         })
       }
     </ol>
-
-    <p class="mt-10 text-center text-xs text-text-tertiary">
-      Source: App Store Connect <code>appStoreVersionLocalizations</code>.
-      Refresh: <code>bun run scripts/fetch-changelog.ts</code>.
-    </p>
   </Section>
 </BaseLayout>
+
+<style>
+  .changelog-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .changelog-entry {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 1.25rem;
+    position: relative;
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .changelog-list > li:first-child .changelog-entry {
+    padding-top: 0;
+  }
+
+  /* Vertical timeline rail */
+  .changelog-rail {
+    position: relative;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+  }
+  .changelog-rail::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: -2.5rem;
+    width: 1px;
+    background: var(--color-stroke-soft);
+  }
+  .changelog-list > li:last-child .changelog-rail::before {
+    bottom: 50%;
+  }
+  .changelog-dot {
+    position: relative;
+    z-index: 1;
+    margin-top: 12px;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--color-bg);
+    border: 2px solid var(--color-stroke-strong);
+  }
+  .changelog-entry.is-latest .changelog-dot {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 16px oklch(from var(--color-accent) l c h / 0.45);
+  }
+
+  .changelog-body {
+    padding-bottom: 0.5rem;
+  }
+  .changelog-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .changelog-version-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .changelog-version {
+    margin: 0;
+    font-size: clamp(1.125rem, 2.4vw, 1.375rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .changelog-latest-badge {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: oklch(from var(--color-accent) l c h / 0.16);
+    color: var(--color-accent);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .changelog-date {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .changelog-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  .changelog-bullets li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+  .changelog-bullet {
+    margin-top: 0.6rem;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-text-tertiary);
+  }
+  .changelog-entry.is-latest .changelog-bullet {
+    background: var(--color-accent);
+  }
+  .changelog-initial {
+    font-style: italic;
+    color: var(--color-text-tertiary);
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+</style>

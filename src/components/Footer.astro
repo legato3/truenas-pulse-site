@@ -8,21 +8,15 @@ const year = new Date().getFullYear();
     <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
       <div class="space-y-2">
         <div class="flex items-center gap-2.5 text-text">
-          <span
-            class="grid h-6 w-6 place-items-center rounded-md bg-surface ring-1 ring-stroke-strong"
-          >
-            <svg
-              width="11"
-              height="11"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-opacity="0.3" />
-              <circle cx="7" cy="7" r="2.5" fill="currentColor" />
-            </svg>
-          </span>
+          <img
+            src="/icon-192.png"
+            alt=""
+            width="24"
+            height="24"
+            class="h-6 w-6 rounded-md ring-1 ring-stroke-strong"
+            decoding="async"
+            loading="lazy"
+          />
           <span class="text-sm font-semibold">{site.name}</span>
         </div>
         <p class="text-xs text-text-tertiary max-w-md">

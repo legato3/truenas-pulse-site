@@ -18,12 +18,19 @@ interface Props {
    * stack. Defaults to false (show CSS island for synthetic content).
    */
   realScreenshot?: boolean;
+  /** Render at the bigger spotlight size (used by /screenshots). */
+  size?: "default" | "large";
 }
-const { caption, ariaLabel, realScreenshot = false } = Astro.props;
+const {
+  caption,
+  ariaLabel,
+  realScreenshot = false,
+  size = "default",
+} = Astro.props;
 ---
 
 <figure class="device-frame" role="img" aria-label={ariaLabel || caption}>
-  <div class="device-shell">
+  <div class:list={["device-shell", size === "large" && "is-large"]}>
     <!-- Bezel highlight (top edge gloss) -->
     <span class="device-gloss" aria-hidden="true"></span>
     <!-- Screen + content slot -->
@@ -46,26 +53,40 @@ const { caption, ariaLabel, realScreenshot = false } = Astro.props;
   }
 
   .device-shell {
-    --frame-w: clamp(240px, 38vw, 320px);
-    --frame-radius: 12.5%;
-    --bezel: 9px;
+    /* Wider clamp so frames scale up on big screens (gallery + hero) */
+    --frame-w: clamp(220px, 32vw, 380px);
+    --frame-radius: 14%;
+    /* Thinner bezel — modern iPhone proportions */
+    --bezel: 6px;
 
     position: relative;
     width: var(--frame-w);
     aspect-ratio: 9 / 19.5;
     border-radius: var(--frame-radius);
-    background: linear-gradient(
-      180deg,
-      oklch(0.32 0.005 250),
-      oklch(0.20 0.005 250) 35%,
-      oklch(0.14 0.005 250) 100%
-    );
+    background:
+      /* Subtle inner highlight so the bezel reads as titanium */
+      linear-gradient(
+        135deg,
+        oklch(0.36 0.005 250) 0%,
+        oklch(0.22 0.005 250) 35%,
+        oklch(0.16 0.005 250) 65%,
+        oklch(0.28 0.005 250) 100%
+      );
     padding: var(--bezel);
     box-shadow:
-      0 1px 0 oklch(1 0 0 / 0.08) inset,
-      0 0 0 1px oklch(0 0 0 / 0.5),
-      0 30px 60px -20px oklch(0 0 0 / 0.7),
-      0 0 60px oklch(0.74 0.12 240 / 0.10);
+      /* Inner specular */
+      0 1px 0 oklch(1 0 0 / 0.10) inset,
+      0 -1px 0 oklch(0 0 0 / 0.4) inset,
+      /* Edge */
+      0 0 0 1px oklch(0 0 0 / 0.55),
+      /* Cast shadow */
+      0 40px 80px -25px oklch(0 0 0 / 0.85),
+      /* Brand-tinted ambient glow */
+      0 0 80px oklch(0.74 0.12 240 / 0.10);
+  }
+
+  .device-shell.is-large {
+    --frame-w: clamp(280px, 42vw, 460px);
   }
 
   .device-gloss {

@@ -1,28 +1,36 @@
 ---
 import BaseLayout from "~/components/BaseLayout.astro";
 import Section from "~/components/Section.astro";
-import ScreenshotCard from "~/components/ScreenshotCard.astro";
+import ScreenshotSpotlight from "~/components/ScreenshotSpotlight.astro";
+import Lightbox from "~/components/Lightbox.astro";
 import CallToAction from "~/components/CallToAction.astro";
 import { screenshots } from "~/data/screenshots";
 ---
 
 <BaseLayout
   title="Screenshots"
-  description="A walkthrough of TrueNAS Pulse on iPhone — dashboard, storage, sharing, workloads, fleet, reporting, and the Home Screen widget."
+  description="A walkthrough of TrueNAS Pulse on iPhone — dashboard, storage, sharing, workloads, fleet, reporting, and the Home Screen widget. Tap any screen to enlarge."
 >
   <Section
     eyebrow="The app"
     heading="A walkthrough."
-    lede="Captured on iPhone 17. Free unless marked Pro."
+    lede="Captured on iPhone 17. Tap any screen to view it full size."
   >
-    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="spotlights">
       {
         screenshots.map((shot, i) => (
-          <ScreenshotCard shot={shot} eager={i < 3} />
+          <ScreenshotSpotlight shot={shot} index={i} eager={i === 0} />
         ))
       }
     </div>
   </Section>
 
+  <Lightbox />
   <CallToAction />
 </BaseLayout>
+
+<style>
+  .spotlights > * + * {
+    border-top: 1px solid var(--color-stroke-soft);
+  }
+</style>
