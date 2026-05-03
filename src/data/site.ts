@@ -21,7 +21,7 @@ export const site = {
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
   supportEmail: "chris@phobos-cc.be",
-  supportUrl: "https://github.com/phobos-/TrueNAS-Pulse/issues",
+  supportUrl: "https://github.com/legato3/TrueNAS-Pulse-App/issues",
   bundleId: "Phobos.TrueNAS-Pulse",
   trademarkLine:
     "TrueNAS® is a registered trademark of iXsystems, Inc. TrueNAS Pulse is an independent third-party application and is not affiliated with, endorsed by, or sponsored by iXsystems.",
