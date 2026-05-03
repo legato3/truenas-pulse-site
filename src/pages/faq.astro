@@ -10,7 +10,11 @@ const faqs = [
   },
   {
     q: "Which TrueNAS versions are supported?",
-    a: "TrueNAS SCALE only — version 24.04 and later, including 25.04, 25.10, and 26.x. CORE is not supported. The app uses WebSocket JSON-RPC as the primary transport, with REST as a compatibility fallback for older SCALE versions.",
+    a: "TrueNAS SCALE only — version 24.04 and later, including 25.04, 25.10, and 26.x. CORE is not supported. The app uses WebSocket JSON-RPC as the primary transport, with REST as a compatibility fallback for older SCALE versions. Your SCALE server must have remote API access enabled.",
+  },
+  {
+    q: "Which iOS version do I need?",
+    a: "iOS 17.6 or later. The app uses Live Activities, the Dynamic Island, and Home Screen widgets — features that depend on iOS 17 surfaces.",
   },
   {
     q: "Does the app talk to anything except my own server?",
@@ -18,7 +22,7 @@ const faqs = [
   },
   {
     q: "Where are my API tokens stored?",
-    a: "Exclusively in the iOS Keychain on your device. They never leave your phone. iCloud Sync (Pro) syncs your monitor configurations and server list across devices but never transports credentials.",
+    a: "Exclusively in the iOS Keychain on your device. They are never synced to iCloud and never leave your phone. iCloud Sync (Pro) syncs your monitor configurations and server list across your own devices via your private iCloud Key-Value Store — credentials are never part of that sync.",
   },
   {
     q: "How do self-signed TLS certificates work?",

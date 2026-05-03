@@ -56,9 +56,10 @@ import { site } from "~/data/site";
             Credential storage
           </h3>
           <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
-            <li>API tokens stored exclusively in the iOS Keychain.</li>
+            <li>API tokens stored exclusively in the iOS Keychain — never synced to iCloud.</li>
             <li>Strict TLS validation by default.</li>
             <li>Per-server self-signed certificate opt-in (SHA-256 fingerprint pinning).</li>
+            <li>iCloud Sync (Pro) covers server list + monitors via your own private iCloud — credentials never travel.</li>
             <li>No tokens or secrets are ever logged.</li>
           </ul>
         </div>

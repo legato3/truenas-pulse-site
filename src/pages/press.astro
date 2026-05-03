@@ -86,7 +86,36 @@ import { site } from "~/data/site";
               </a>
             </dd>
           </div>
+          <div class="flex justify-between border-b border-stroke-soft/60 pb-2">
+            <dt class="text-text-tertiary">Latest version</dt>
+            <dd class="font-mono text-text">
+              {site.latestVersion} <span class="text-text-tertiary">·</span>{" "}
+              {new Date(site.latestReleaseDate).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </dd>
+          </div>
+          <div class="flex justify-between border-b border-stroke-soft/60 pb-2">
+            <dt class="text-text-tertiary">Minimum iOS</dt>
+            <dd class="font-mono text-text">{site.minimumOsVersion}</dd>
+          </div>
         </dl>
+      </div>
+
+      <div>
+        <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+          A note on linked URLs
+        </h3>
+        <p class="text-[14px]">
+          The Privacy and Terms URLs currently shown on the App Store listing
+          point to <code>legato3.github.io/TrueNAS-Pulse-App/</code> — the
+          legacy Jekyll docs site. Those links will be updated to
+          <code>pulse.phobos-cc.be</code> in a near-term App Store Connect
+          metadata refresh; the legacy site stays live for at least three
+          months past that change as a safety net.
+        </p>
       </div>
 
       <div>

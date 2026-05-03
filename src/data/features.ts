@@ -122,7 +122,15 @@ export const features: Feature[] = [
     category: "Advanced Control",
     tier: "Pro",
     description:
-      "Roll back a dataset to any point in time. Delete, clone, and rollback with full ZFS control.",
+      "Create snapshots on demand for free. Pro adds delete, clone, and rollback so you can recover any dataset to any point in time.",
+  },
+  {
+    id: "containerLifecycle",
+    name: "Container Lifecycle",
+    category: "Advanced Control",
+    tier: "Free",
+    description:
+      "Start, stop, and force-stop TrueNAS 26 native containers — included in the free tier.",
   },
   {
     id: "dataProtectionEditing",
@@ -173,6 +181,14 @@ export const features: Feature[] = [
     tier: "Pro",
     description:
       "See when problems started and why. 30 days of CPU, memory, and network history to trace any incident. Free includes 1H.",
+  },
+  {
+    id: "storageRunway",
+    name: "Storage Runway",
+    category: "Operator Productivity",
+    tier: "Pro",
+    description:
+      "Per-pool fill-rate sparkline and projected days remaining — see how long you have before a pool fills up.",
   },
   {
     id: "batchActions",

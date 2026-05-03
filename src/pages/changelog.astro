@@ -1,0 +1,83 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import MotionReveal from "~/components/MotionReveal.astro";
+import { changelog } from "~/data/changelog";
+import { site } from "~/data/site";
+
+// Format an ISO date as "25 April 2026" — calmer than US/EU number forms.
+const formatDate = (iso: string): string => {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
+
+// Split a "What's New" blob into bullets. Apple stores them as plain lines,
+// some prefixed with "•" / "-", others not. Normalize to a clean array.
+const toBullets = (whatsNew: string): string[] => {
+  if (!whatsNew.trim()) return [];
+  return whatsNew
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^\s*[•\-*]\s*/, "").trim())
+    .filter((line) => line.length > 0);
+};
+---
+
+<BaseLayout
+  title="Changelog"
+  description="Release notes for every public version of TrueNAS Pulse, sourced from App Store Connect."
+>
+  <Section
+    eyebrow="Release notes"
+    heading="What's shipped."
+    lede={`Every public version of ${site.name}, newest first. Pulled directly from App Store Connect.`}
+    width="narrow"
+  >
+    <ol class="space-y-10">
+      {
+        changelog.map((entry, i) => {
+          const bullets = toBullets(entry.whatsNew);
+          return (
+            <MotionReveal as="li" delay={i * 40}>
+              <article class="rounded-xl border border-stroke-soft bg-surface/60 p-7 sm:p-8">
+                <header class="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-stroke-soft/60 pb-3">
+                  <h2 class="font-mono text-xl font-medium tracking-tight text-text">
+                    v{entry.version}
+                  </h2>
+                  <time
+                    datetime={entry.releaseDate}
+                    class="text-sm text-text-tertiary"
+                  >
+                    {formatDate(entry.releaseDate)}
+                  </time>
+                </header>
+                {bullets.length > 0 ? (
+                  <ul class="space-y-2.5 text-sm leading-relaxed text-text-secondary">
+                    {bullets.map((b) => (
+                      <li class="flex items-start gap-2.5">
+                        <span class="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-accent" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-sm italic leading-relaxed text-text-tertiary">
+                    Initial release.
+                  </p>
+                )}
+              </article>
+            </MotionReveal>
+          );
+        })
+      }
+    </ol>
+
+    <p class="mt-10 text-center text-xs text-text-tertiary">
+      Source: App Store Connect <code>appStoreVersionLocalizations</code>.
+      Refresh: <code>bun run scripts/fetch-changelog.ts</code>.
+    </p>
+  </Section>
+</BaseLayout>

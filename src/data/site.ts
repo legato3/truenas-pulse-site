@@ -8,7 +8,15 @@ export const site = {
   name: "TrueNAS Pulse",
   subtitle: "Third-Party SCALE Monitor",
   tagline:
+    "Built for sysadmins, operators, and homelab users who need fast infrastructure visibility and safe remote remediation — away from a browser.",
+  /** The shorter promo line from APP_STORE_METADATA.md, useful in tight contexts. */
+  promoLine:
     "Free live monitoring, 1-hour history, and one included monitor for TrueNAS SCALE — with Pro admin tools when you need more control.",
+  /** Minimum iOS version supported by the current App Store build (1.0.3). */
+  minimumOsVersion: "17.6",
+  /** Latest live App Store version + release date — kept in sync with /changelog. */
+  latestVersion: "1.0.3",
+  latestReleaseDate: "2026-04-25",
   origin: "https://pulse.phobos-cc.be",
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
@@ -24,6 +32,7 @@ export const navLinks = [
   { href: "/features", label: "Features" },
   { href: "/screenshots", label: "Screenshots" },
   { href: "/pro", label: "Pro" },
+  { href: "/changelog", label: "Changelog" },
   { href: "/faq", label: "FAQ" },
 ] as const;
 
