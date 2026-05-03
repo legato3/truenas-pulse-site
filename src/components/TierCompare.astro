@@ -47,25 +47,56 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
   {/* Free */}
   <div class="rounded-2xl border border-stroke-soft bg-surface/60 p-7">
     <header class="mb-5">
-      <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-text-tertiary">
-        Free
+      <p class="mb-2 inline-flex items-center gap-1.5 rounded-full border border-stroke-soft bg-bg-elevated/60 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-[0.12em] text-ok">
+        <span class="status-dot" style="width: 0.4rem; height: 0.4rem;"></span>
+        Free, genuinely
       </p>
-      <h3 class="text-2xl font-semibold tracking-tight text-text">
+      <h3 class="mt-2 text-2xl font-semibold tracking-tight text-text">
         Live monitoring · 1H history
       </h3>
       <p class="mt-2 text-sm leading-relaxed text-text-secondary">
-        Read-only operational visibility for up to 2 servers. Genuinely usable —
-        not a demo trap.
+        Read-only operations for up to 2 servers. Not a demo, not a 14-day
+        trial — usable forever, on its own.
       </p>
     </header>
     <div class="mb-6 flex items-baseline gap-2">
       <span class="font-mono text-5xl font-medium text-text">$0</span>
       <span class="text-sm text-text-tertiary">forever</span>
     </div>
-    <p class="text-sm leading-relaxed text-text-secondary">
-      Includes the dashboard, alerts, storage health, jobs, services view,
-      one local monitor, the Home Screen widget, and the audit log viewer.
-    </p>
+    <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>Live dashboard, alerts, storage health, jobs, and services view</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>1-hour reporting history (CPU, memory, network)</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>One proactive monitor on the active server</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>TrueNAS 26 container lifecycle (start, stop, force-stop)</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>Filesystem browser + audit log (read-only)</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>Manual ZFS snapshot creation</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>Home Screen widget for glanceable status</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="mt-1 text-ok">✓</span>
+        <span>Up to 2 servers with fast switching</span>
+      </li>
+    </ul>
   </div>
 
   {/* Pro */}

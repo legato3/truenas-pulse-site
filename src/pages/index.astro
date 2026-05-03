@@ -9,6 +9,8 @@ import MotionReveal from "~/components/MotionReveal.astro";
 import StatsStrip from "~/components/StatsStrip.astro";
 import SecurityFlow from "~/components/SecurityFlow.astro";
 import KeywordMarquee from "~/components/KeywordMarquee.astro";
+import FreeShowcase from "~/components/FreeShowcase.astro";
+import AppStoreButton from "~/components/AppStoreButton.astro";
 import { site } from "~/data/site";
 ---
 
@@ -31,9 +33,36 @@ import { site } from "~/data/site";
   <KeywordMarquee />
 
   <Section
+    eyebrow="Free, on purpose"
+    heading="Start free. Stay free if you want to."
+    lede="The free tier is built to be useful on its own, not a demo for Pro. Two servers, full read-only operations, the Home Screen widget, one proactive monitor, and TrueNAS 26 container controls — all included."
+  >
+    <MotionReveal>
+      <FreeShowcase />
+    </MotionReveal>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <AppStoreButton size="md" />
+      <a
+        href="/pro"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-stroke-strong px-5 py-3 text-sm font-medium text-text transition-colors hover:bg-surface/60"
+      >
+        See what Pro adds
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M5 3l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+  </Section>
+
+  <Section
     eyebrow="Feature highlights"
     heading="Everything you need from the dashboard to the disk."
-    lede="A quick tour. The full 27-feature inventory lives on the Features page."
+    lede="A quick tour of the Pro toolset. The full 27-feature inventory — Free + Pro — lives on the Features page."
   >
     <FeatureGrid limit={6} />
     <div class="mt-10 flex justify-center">

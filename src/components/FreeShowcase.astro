@@ -1,0 +1,289 @@
+---
+/**
+ * "Free is genuinely useful" showcase. Goal: lift the Free story so it
+ * feels substantial on its own, not a teaser for Pro.
+ *
+ * Every line is verifiable from APP_STORE_METADATA.md "FREE MONITORING"
+ * + features.ts (Free entries: alertAcknowledgement + containerLifecycle)
+ * + MONETIZATION.md "1. Value Split" (Free covers reading; Pro covers
+ * acting on what you see).
+ */
+
+interface Capability {
+  /** Short headline. */
+  title: string;
+  /** Plain-text body. No markdown. */
+  body: string;
+  /** Lucide-style line icon name (rendered inline below). */
+  icon:
+    | "activity"
+    | "database"
+    | "bell"
+    | "clock"
+    | "servers"
+    | "folder"
+    | "container"
+    | "widget"
+    | "eye";
+}
+
+const capabilities: Capability[] = [
+  {
+    icon: "activity",
+    title: "Live dashboard",
+    body: "Real-time CPU, memory, network, and storage status — refreshed continuously while the app is open.",
+  },
+  {
+    icon: "database",
+    title: "Full ZFS visibility",
+    body: "Pool health, capacity, dataset hierarchy, disk detail, drive temperatures, and snapshot counts.",
+  },
+  {
+    icon: "bell",
+    title: "Alerts and jobs",
+    body: "Read every alert your server emits and acknowledge them inline. Watch middleware jobs run in real time.",
+  },
+  {
+    icon: "clock",
+    title: "1-hour reporting",
+    body: "Live history charts for CPU, memory, and network — enough to catch the spike that just happened.",
+  },
+  {
+    icon: "servers",
+    title: "Up to 2 servers",
+    body: "Add a second TrueNAS for free. Switch between them instantly. Aggregated alert view spans both.",
+  },
+  {
+    icon: "eye",
+    title: "One proactive monitor",
+    body: "Pin the metric that matters — pool capacity, drive temperature, or service status — and get notified before it breaks.",
+  },
+  {
+    icon: "folder",
+    title: "Filesystem + audit log",
+    body: "Browse your datasets read-only and review the TrueNAS audit log straight from your phone.",
+  },
+  {
+    icon: "container",
+    title: "Container lifecycle",
+    body: "Start, stop, and force-stop TrueNAS 26 native containers — gated by Control Mode, included in Free.",
+  },
+  {
+    icon: "widget",
+    title: "Home Screen widget",
+    body: "Glanceable server health on your Home Screen and Lock Screen — no app launch needed.",
+  },
+];
+---
+
+<div class="free-showcase">
+  <div class="free-showcase-head">
+    <span class="free-badge">
+      <span class="status-dot"></span>
+      <span>$0 forever · No nag · No demo trap</span>
+    </span>
+    <h3 class="free-showcase-title">
+      Free is genuinely useful.
+    </h3>
+    <p class="free-showcase-lede">
+      Two TrueNAS servers, complete read-only operations, the Home Screen widget,
+      one proactive monitor, and TrueNAS 26 container controls — at no cost,
+      with no time limit.
+    </p>
+  </div>
+
+  <div class="free-grid">
+    {
+      capabilities.map((c, i) => (
+        <article class="free-cell reveal-init" data-reveal-delay={i * 30}>
+          <div class="free-icon" aria-hidden="true">
+            {c.icon === "activity" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12h4l3-8 4 16 3-8h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            )}
+            {c.icon === "database" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <ellipse cx="12" cy="5.5" rx="8" ry="2.5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M4 5.5v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-6" stroke="currentColor" stroke-width="1.5" />
+                <path d="M4 11.5v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-6" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+            {c.icon === "bell" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M10 19a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            )}
+            {c.icon === "clock" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                <path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            )}
+            {c.icon === "servers" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <rect x="3" y="14" width="18" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <circle cx="6.5" cy="7" r="0.9" fill="currentColor" />
+                <circle cx="6.5" cy="17" r="0.9" fill="currentColor" />
+              </svg>
+            )}
+            {c.icon === "folder" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+              </svg>
+            )}
+            {c.icon === "container" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="6" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M8 6v12M13 6v12M18 6v12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+            {c.icon === "widget" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+                <rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+            {c.icon === "eye" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            )}
+          </div>
+          <h4 class="free-cell-title">{c.title}</h4>
+          <p class="free-cell-body">{c.body}</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="free-trust">
+    Genuinely usable on its own. Pro is a single one-time purchase that
+    adds the operator toolset on top — and only if you want it.
+  </p>
+</div>
+
+<style>
+  .free-showcase {
+    position: relative;
+    border-radius: 1.25rem;
+    border: 1px solid var(--color-stroke-soft);
+    background:
+      radial-gradient(ellipse at 0% 0%, oklch(0.66 0.14 150 / 0.08), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, oklch(0.62 0.16 235 / 0.08), transparent 55%),
+      oklch(from var(--color-surface) l c h / 0.4);
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .free-showcase-head {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .free-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid oklch(from var(--color-ok) l c h / 0.32);
+    background: oklch(from var(--color-ok) l c h / 0.10);
+    color: var(--color-ok);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    margin-bottom: 1.25rem;
+  }
+  .free-badge .status-dot {
+    box-shadow: 0 0 12px var(--color-ok);
+  }
+  .free-showcase-title {
+    margin: 0 0 0.75rem 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+  .free-showcase-lede {
+    margin: 0 auto;
+    max-width: 36rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    text-wrap: pretty;
+  }
+
+  .free-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+  @media (min-width: 640px) {
+    .free-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .free-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .free-cell {
+    position: relative;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-stroke-soft);
+    background: oklch(from var(--color-bg-elevated) l c h / 0.5);
+    padding: 1.25rem;
+    transition: border-color 0.32s ease, background-color 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .free-cell:hover {
+    border-color: oklch(from var(--color-ok) l c h / 0.32);
+    background: oklch(from var(--color-bg-elevated) l c h / 0.7);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .free-cell:hover { transform: none; }
+  }
+
+  .free-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 0.5rem;
+    margin-bottom: 0.875rem;
+    background: oklch(from var(--color-ok) l c h / 0.10);
+    color: var(--color-ok);
+    box-shadow: inset 0 0 0 1px oklch(from var(--color-ok) l c h / 0.20);
+  }
+  .free-cell-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.005em;
+  }
+  .free-cell-body {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  .free-trust {
+    margin: 2rem 0 0 0;
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+</style>

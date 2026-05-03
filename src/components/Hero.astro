@@ -3,7 +3,6 @@ import { site } from "~/data/site";
 import AppStoreButton from "~/components/AppStoreButton.astro";
 import DeviceFrame from "~/components/DeviceFrame.astro";
 import AmbientGrid from "~/components/AmbientGrid.astro";
-import HeroMetrics from "~/components/HeroMetrics.astro";
 ---
 
 <section class="relative overflow-hidden device-stage">
@@ -77,36 +76,31 @@ import HeroMetrics from "~/components/HeroMetrics.astro";
       </ul>
     </div>
 
-    <div class="hero-stage reveal-init mt-16 lg:mt-0" data-reveal-delay="180">
-      <div class="hero-stage-device">
-        <DeviceFrame
-          ariaLabel="TrueNAS Pulse dashboard — Goldeye server, READY, 22.3 of 33.2 TB used, CPU 4 percent, memory 78 percent, storage healthy"
-          realScreenshot
-        >
-          <picture>
-            <source
-              type="image/avif"
-              srcset="/screenshots/01-dashboard.avif"
-            />
-            <source
-              type="image/webp"
-              srcset="/screenshots/01-dashboard.webp"
-            />
-            <img
-              src="/screenshots/01-dashboard.webp"
-              alt=""
-              width="1180"
-              height="2564"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </picture>
-        </DeviceFrame>
-      </div>
-      <div class="hero-stage-metrics">
-        <HeroMetrics />
-      </div>
+    <div class="reveal-init mt-16 flex justify-center lg:mt-0" data-reveal-delay="180">
+      <DeviceFrame
+        ariaLabel="TrueNAS Pulse dashboard — Goldeye server, READY, 22.3 of 33.2 TB used, CPU 4 percent, memory 78 percent, storage healthy"
+        realScreenshot
+      >
+        <picture>
+          <source
+            type="image/avif"
+            srcset="/screenshots/01-dashboard.avif"
+          />
+          <source
+            type="image/webp"
+            srcset="/screenshots/01-dashboard.webp"
+          />
+          <img
+            src="/screenshots/01-dashboard.webp"
+            alt=""
+            width="1180"
+            height="2564"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
+      </DeviceFrame>
     </div>
   </div>
 </section>
@@ -146,36 +140,4 @@ import HeroMetrics from "~/components/HeroMetrics.astro";
     .status-dot-pulse::after { animation: none; opacity: 0; }
   }
 
-  /* Device + floating metrics card composition */
-  .hero-stage {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hero-stage-device {
-    position: relative;
-    z-index: 1;
-  }
-  .hero-stage-metrics {
-    position: relative;
-    z-index: 2;
-    margin-top: 1.5rem;
-  }
-  /* Pin the metrics card to the device on lg+ for a layered composition */
-  @media (min-width: 1024px) {
-    .hero-stage-metrics {
-      position: absolute;
-      top: 50%;
-      right: -2rem;
-      transform: translate(0, -10%);
-      margin-top: 0;
-    }
-  }
-  /* On 2xl viewports the device sits more central — pull the card outward */
-  @media (min-width: 1280px) {
-    .hero-stage-metrics {
-      right: -3.25rem;
-    }
-  }
 </style>
