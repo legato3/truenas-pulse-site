@@ -17,12 +17,24 @@ const faqs = [
     a: "iOS 17.6 or later. The app uses Live Activities, the Dynamic Island, and Home Screen widgets — features that depend on iOS 17 surfaces.",
   },
   {
+    q: "Does it work on iPad or Mac?",
+    a: "Not at the moment. TrueNAS Pulse is built and submitted as iPhone-only (Targeted Device Family = iPhone). iPad and Apple Silicon Mac aren't supported in the current release. iPhone Mirroring on macOS works because that's a system feature, not an app capability.",
+  },
+  {
     q: "Does the app talk to anything except my own server?",
-    a: "No. There is no developer-operated backend. The app contains no analytics SDKs, crash reporting services, or third-party dependencies. It communicates exclusively with the TrueNAS servers you configure.",
+    a: "No analytics or telemetry — ever. The app talks to the TrueNAS servers you configure. The only optional outbound connection is the Cloud Push Relay (off by default, opt-in per server) used to deliver alert notifications when the app is backgrounded; you can also point it at a self-hosted relay you run yourself.",
+  },
+  {
+    q: "Does my server need to be on the public internet?",
+    a: "No. The app connects over any reachable IP — same LAN, a Tailscale tailnet, a WireGuard / OpenVPN tunnel, or a reverse-proxied hostname. Most homelab users run TrueNAS Pulse over Tailscale or a private VPN and never expose the TrueNAS API publicly.",
   },
   {
     q: "Where are my API tokens stored?",
     a: "Exclusively in the iOS Keychain on your device. They are never synced to iCloud and never leave your phone. iCloud Sync (Pro) syncs your monitor configurations and server list across your own devices via your private iCloud Key-Value Store — credentials are never part of that sync.",
+  },
+  {
+    q: "Will I get notifications when the app is closed?",
+    a: "By default the app delivers device-local notifications when monitors fire while it's running. For alerts that need to reach you while the app is backgrounded or closed, you can opt in to the Cloud Push Relay per server. The relay only forwards alert summaries — never credentials — and is signed end-to-end. You can also self-host the relay if you'd rather not use the built-in one.",
   },
   {
     q: "How do self-signed TLS certificates work?",
@@ -41,6 +53,10 @@ const faqs = [
     a: "Pro funds ongoing development and keeps the app independent, ad-free, and without telemetry. The Free tier is genuinely useful — live monitoring, alerts, storage health, and one local monitor are all included without cost.",
   },
   {
+    q: "Does Pro support Apple Family Sharing?",
+    a: "Not currently. The Pro in-app purchase is configured as non-shareable, so it's tied to the Apple ID that bought it. Restore Purchases on the same Apple ID works on every device you sign in to.",
+  },
+  {
     q: "How many servers can I monitor?",
     a: "Free supports up to 2 servers. Pro raises the cap to 8 servers. Switching between servers is instant and aggregated alert views span every system you've added.",
   },
@@ -50,7 +66,7 @@ const faqs = [
   },
   {
     q: "Is there an Android version?",
-    a: "Not at this time. TrueNAS Pulse is a native SwiftUI app that uses iOS-specific surfaces (Dynamic Island, Live Activities, Home Screen widgets, App Intents). A cross-platform port would compromise that.",
+    a: "An Android version is currently being looked into — no release date yet. TrueNAS Pulse on iOS is a native SwiftUI app built around iOS-specific surfaces (Dynamic Island, Live Activities, Home Screen widgets, App Intents), so an Android build will be a separately considered native effort, not a cross-platform port.",
   },
   {
     q: "Where do I report a bug?",
