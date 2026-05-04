@@ -75,7 +75,7 @@ const og = new URL(ogImage, site.origin).toString();
 
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Structured data — calm, brand-only, no fake reviews -->
+    <!-- Structured data — MobileApplication rich result -->
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
@@ -83,14 +83,50 @@ const og = new URL(ogImage, site.origin).toString();
         "@type": "MobileApplication",
         name: site.name,
         applicationCategory: "UtilitiesApplication",
-        operatingSystem: "iOS",
+        applicationSubCategory: "Network Monitoring",
+        operatingSystem: `iOS ${site.minimumOsVersion}`,
+        softwareVersion: site.latestVersion,
         url: site.origin,
-        offers: {
-          "@type": "Offer",
-          price: "0",
-          priceCurrency: "USD",
-          description: "Free tier with optional Pro one-time purchase.",
+        downloadUrl: site.appStoreUrl,
+        author: {
+          "@type": "Person",
+          name: "Christophe Cornelis",
         },
+        featureList: [
+          "Live TrueNAS SCALE monitoring",
+          "Pool and storage health dashboard",
+          "Smart proactive alerts",
+          "Control Mode admin actions with biometric auth",
+          "Home Screen widget",
+          "Dynamic Island and Live Activities",
+          "iCloud sync across devices",
+          "Self-signed TLS certificate pinning",
+          "Cloud Push Relay for background notifications",
+          "Demo mode with sample data",
+        ].join(", "),
+        screenshot: [
+          `${site.origin}/screenshots/01-dashboard.webp`,
+          `${site.origin}/screenshots/02-storage.webp`,
+          `${site.origin}/screenshots/03-sharing.webp`,
+          `${site.origin}/screenshots/04-workloads.webp`,
+          `${site.origin}/screenshots/05-fleet.webp`,
+          `${site.origin}/screenshots/06-reporting.webp`,
+          `${site.origin}/screenshots/07-widget.webp`,
+        ],
+        offers: [
+          {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            description: "Free tier — live monitoring, alerts, storage health, 2 servers, Home Screen widget.",
+          },
+          {
+            "@type": "Offer",
+            price: "9.99",
+            priceCurrency: "USD",
+            description: "Pro — one-time lifetime purchase. Fleet view, terminal, 30-day history, iCloud sync, 8 servers.",
+          },
+        ],
       })}
     />
 

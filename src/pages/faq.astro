@@ -2,6 +2,7 @@
 import BaseLayout from "~/components/BaseLayout.astro";
 import Section from "~/components/Section.astro";
 import MotionReveal from "~/components/MotionReveal.astro";
+import { site } from "~/data/site";
 
 const faqs = [
   {
@@ -73,12 +74,26 @@ const faqs = [
     a: "Open an issue at github.com/legato3/TrueNAS-Pulse-App, or email chris@phobos-cc.be.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title="FAQ"
-  description="Frequently asked questions about TrueNAS Pulse — supported versions, security model, Pro pricing."
+  description="Common questions about TrueNAS Pulse — which TrueNAS SCALE versions are supported, iOS requirements, privacy, notifications, Pro pricing, and Android plans."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <Section
     eyebrow="Help"
     heading="Frequently asked questions"
