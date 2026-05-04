@@ -131,17 +131,16 @@ const og = new URL(ogImage, site.origin).toString();
     />
 
     {/*
-      First-party Plausible Analytics — self-hosted on LXC 132 behind Caddy at
-      /_pl/. Loading the script + posting events from the same origin defeats
-      the standard ad-block blocklists targeting plausible.io / *.plausible.*.
-      No cookies, no cross-site requests, no IP storage at rest. Matches the
-      MONETIZATION.md "no tracking, no third-party SDK" promise.
+      Self-hosted Plausible Analytics — served directly from analytics.phobos-cc.be
+      (Plausible CE on LXC 132). Cookieless, no personal data, no cross-site
+      tracking, GDPR-compliant. Used only for aggregate site traffic; the iOS app
+      itself has no analytics or telemetry whatsoever.
     */}
     <script
       defer
       data-domain="pulse.phobos-cc.be"
-      data-api="/_pl/api/event"
-      src="/_pl/js/script.js"
+      data-api="https://analytics.phobos-cc.be/api/event"
+      src="https://analytics.phobos-cc.be/js/script.js"
     ></script>
   </head>
   <body class="font-sans text-text antialiased">
