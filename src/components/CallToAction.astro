@@ -27,7 +27,15 @@ import { site } from "~/data/site";
           </svg>
         </a>
       </div>
-      <p class="cta-trust">{site.trustLine}</p>
+      <p class="cta-trust">
+        {site.trustLine} &nbsp;·&nbsp;
+        <a
+          href={site.testFlightUrl}
+          target="_blank"
+          rel="noopener"
+          class="underline underline-offset-2 hover:text-text-secondary transition-colors"
+        >Try the beta on TestFlight</a>
+      </p>
     </div>
   </div>
 </section>

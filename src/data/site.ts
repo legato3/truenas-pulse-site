@@ -20,6 +20,7 @@ export const site = {
   origin: "https://pulse.phobos-cc.be",
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
+  testFlightUrl: "https://testflight.apple.com/join/r3xzH5eE",
   supportEmail: "chris@phobos-cc.be",
   supportUrl: "https://github.com/legato3/TrueNAS-Pulse-App/issues",
   bundleId: "Phobos.TrueNAS-Pulse",
