@@ -14,6 +14,11 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    "version": "1.0.4",
+    "releaseDate": "2026-05-04",
+    "whatsNew": "• Clearer health and alert screens, so important server issues are easier to review.\n• Better visibility into backups, data protection tasks, and TrueNAS updates.\n• More useful storage, dataset, share access, and configuration checks.\n• Activity entries now give more context when something needs attention.\n• Dashboard, search, audit log, and loading flows are smoother and more reliable.\n• Key settings stay available more often when the server connection is interrupted.\n• Improved compatibility with newer TrueNAS SCALE releases."
+  },
+  {
     "version": "1.0.3",
     "releaseDate": "2026-04-25",
     "whatsNew": "• Improved System Health summaries with clearer READY, WARNING, and CRITICAL status details\n• Improved Push Relay enrollment handling to prevent sync race conditions\n• Dashboard refresh and navigation issues that could affect routing or stale data handling\n• Live Activity build compatibility with newer Swift/Xcode versions"
