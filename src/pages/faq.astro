@@ -71,7 +71,8 @@ const faqs = [
   },
   {
     q: "Is there a beta / TestFlight?",
-    a: "Yes. You can join the TestFlight beta at testflight.apple.com/join/r3xzH5eE. Beta builds include upcoming features ahead of the App Store release. TestFlight is free and you can leave at any time.",
+    a: `Yes. You can join the TestFlight beta at ${site.testFlightUrl}. Beta builds include upcoming features ahead of the App Store release. The same Free/Pro pricing applies inside the beta — joining TestFlight doesn't unlock paid features for free.`,
+    html: `Yes. You can <a href="${site.testFlightUrl}" target="_blank" rel="noopener" class="text-accent underline underline-offset-2 hover:text-accent-hover transition-colors">join the TestFlight beta here</a>. Beta builds include upcoming features ahead of the App Store release. The same Free/Pro pricing applies inside the beta — joining TestFlight doesn't unlock paid features for free.`,
   },
   {
     q: "Where do I report a bug?",
@@ -129,7 +130,9 @@ const faqSchema = {
                 </span>
               </summary>
               <div class="border-t border-stroke-soft/60 px-5 pb-5 pt-4 text-sm leading-relaxed text-text-secondary">
-                {item.a}
+                {item.html
+                  ? <Fragment set:html={item.html} />
+                  : item.a}
               </div>
             </details>
           </MotionReveal>
