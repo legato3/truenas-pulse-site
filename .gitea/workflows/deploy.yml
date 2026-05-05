@@ -41,7 +41,7 @@ jobs:
         working-directory: /opt/act-runner/workspace/truenas-pulse-site
         run: |
           export PATH="$HOME/.bun/bin:$PATH"
-          bun run scripts/generate-assets.mjs || true   # falls back to existing /public assets if master image missing on runner
+          bun run scripts/generate-assets.mjs || true
           bun run build
 
       - name: Stage deploy SSH key
@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
           install -d -m 700 ~/.ssh
-          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/pulse-deploy
+          printf '"%sn"' "$DEPLOY_SSH_KEY" > ~/.ssh/pulse-deploy
           chmod 600 ~/.ssh/pulse-deploy
 
       - name: Probe SSH host
@@ -66,23 +66,35 @@ jobs:
         working-directory: /opt/act-runner/workspace/truenas-pulse-site
         run: |
           set -euo pipefail
-          rsync -az --delete \
-            -e "ssh -i $HOME/.ssh/pulse-deploy -o StrictHostKeyChecking=no" \
-            dist/ "root@${DEPLOY_HOST}:/var/www/pulse-site/"
+          rsync -az --delete             -e "ssh -i $HOME/.ssh/pulse-deploy -o StrictHostKeyChecking=no"             dist/ "root@${DEPLOY_HOST}:/var/www/pulse-site/"
 
       - name: Fix ownership and reload Caddy
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
           set -euo pipefail
-          ssh -i "$HOME/.ssh/pulse-deploy" -o StrictHostKeyChecking=no "root@${DEPLOY_HOST}" \
-            "chown -R caddy:caddy /var/www/pulse-site && systemctl restart caddy"
+          ssh -i "$HOME/.ssh/pulse-deploy" -o StrictHostKeyChecking=no "root@${DEPLOY_HOST}"             "chown -R caddy:caddy /var/www/pulse-site && systemctl restart caddy"
+
+      - name: Update CSP script hashes
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          sleep 3
+          # Fetch fresh page directly from origin (no Cloudflare cache)
+          curl -sf --max-time 15 -H "Host: pulse.phobos-cc.be"             "http://${DEPLOY_HOST}/" -o /tmp/pulse-page.html
+          # Compute hashes
+          python3 /opt/act-runner/workspace/truenas-pulse-site/scripts/csp-hash-compute.py             /tmp/pulse-page.html > /tmp/csp-hashes.txt
+          cat /tmp/csp-hashes.txt
+          # Copy helper script + hashes to target, patch Caddyfile, restart Caddy
+          scp -i "$HOME/.ssh/pulse-deploy" -o StrictHostKeyChecking=no             /tmp/csp-hashes.txt             /opt/act-runner/workspace/truenas-pulse-site/scripts/csp-hash-patch.py             "root@${DEPLOY_HOST}:/tmp/"
+          ssh -i "$HOME/.ssh/pulse-deploy" -o StrictHostKeyChecking=no "root@${DEPLOY_HOST}"             "python3 /tmp/csp-hash-patch.py /tmp/csp-hashes.txt              && caddy validate --config /etc/caddy/Caddyfile              && systemctl restart caddy              && rm -f /tmp/csp-hashes.txt /tmp/csp-hash-patch.py"
 
       - name: Smoke probe
         run: |
           set -euo pipefail
           for path in / /features /pro /privacy /faq; do
-            code=$(curl -sS -o /dev/null -w '%{http_code}' "https://pulse.phobos-cc.be$path")
+            code=$(curl -sS -o /dev/null -w '"%{http_code}"' "https://pulse.phobos-cc.be$path")
             echo "  $path -> $code"
             test "$code" = "200"
           done
