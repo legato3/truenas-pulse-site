@@ -115,9 +115,22 @@ body {
 
 /* Hero gradient backstop for the iPhone frame */
 .device-stage {
+  position: relative;
   background:
-    radial-gradient(ellipse at 50% 0%, oklch(0.74 0.12 240 / 0.16), transparent 60%),
-    radial-gradient(ellipse at 50% 100%, oklch(0.65 0.21 340 / 0.10), transparent 70%);
+    radial-gradient(ellipse at 50% 0%, oklch(0.74 0.12 240 / 0.16), transparent 60%);
+}
+
+/* Smooth fade from hero into body background — no hard cut, no purple */
+.device-stage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18rem;
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Selection — match the calm-blue accent without violating brand */
