@@ -143,7 +143,7 @@ const outcomes = [
   <Section
     eyebrow="Security model"
     heading="Your servers, your credentials, your data."
-    lede="No accounts. No in-app analytics. No third-party SDKs. Direct by default: the app talks to the servers you configure, with an optional relay only for push alerts."
+    lede="Direct by default. No accounts, no in-app analytics, no tracking SDKs. TrueNAS Pulse talks directly to the servers you configure. Optional Cloud Push Relay is off by default and only used for background alert delivery."
   >
     <MotionReveal>
       <SecurityFlow />
@@ -160,7 +160,7 @@ const outcomes = [
             <li>Strict TLS validation by default.</li>
             <li>Per-server self-signed certificate opt-in (SHA-256 fingerprint pinning).</li>
             <li>iCloud Sync (Pro) covers server list + monitors via your own private iCloud — credentials never travel.</li>
-            <li>API tokens and credentials are never sent to the optional Cloud Push Relay.</li>
+            <li>API tokens, credentials, passwords, and secrets are never sent to the optional Cloud Push Relay.</li>
           </ul>
         </div>
       </MotionReveal>

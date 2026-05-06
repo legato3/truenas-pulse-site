@@ -15,9 +15,11 @@ independent third-party iOS application developed by Christophe Cornelis
 
 ## 1. The App
 
-TrueNAS Pulse is an iOS client for TrueNAS SCALE servers. The App connects
-exclusively to TrueNAS servers that you configure. We do not operate any
-backend service that the App depends on.
+TrueNAS Pulse is an iOS client for TrueNAS SCALE servers. By default, the App
+connects directly to TrueNAS servers that you configure. If you explicitly
+enable Cloud Push Relay for background alert notifications, limited alert
+summary data may be routed through the relay only for notification delivery.
+API tokens, credentials, passwords, and secrets are never sent to the relay.
 
 ## 2. Independent third-party application
 

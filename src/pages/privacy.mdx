@@ -9,9 +9,10 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
 
 # Privacy Policy
 
-_Last updated: 2026-05-02_
+_Last updated: 2026-05-06_
 
-TrueNAS Pulse does not collect, store, or transmit any personal data.
+TrueNAS Pulse does not collect personal data through analytics, tracking,
+advertising, or crash-reporting SDKs.
 
 <PrivacyLabel hideLink />
 
@@ -19,12 +20,13 @@ TrueNAS Pulse does not collect, store, or transmit any personal data.
 ## What the app does
 
 TrueNAS Pulse is **direct by default**. It communicates with the TrueNAS
-servers that you configure and contains no analytics, tracking, advertising,
-or third-party SDKs.
+servers that you configure and contains no in-app analytics, tracking,
+advertising, crash-reporting, or generic telemetry SDKs.
 
-If you opt in to Cloud Push Relay, it is used only to deliver alert summaries
-when the app is backgrounded or closed. The relay is off by default,
-configured per server, and API tokens or credentials are never sent to it.
+If you explicitly enable Cloud Push Relay for background alert notifications,
+limited alert summary data may be routed through the relay only for notification
+delivery. The relay is off by default, configured per server, and API tokens,
+credentials, passwords, and secrets are never sent to it.
 
 ## Data not collected
 
@@ -46,8 +48,8 @@ configured per server, and API tokens or credentials are never sent to it.
   tokens never leave the Keychain — iCloud Sync does not transport
   credentials.
 - If you enable **Cloud Push Relay**, only alert summaries are relayed for
-  push delivery while the app is backgrounded or closed. API tokens and
-  credentials never leave the device.
+  push delivery while the app is backgrounded or closed. API tokens,
+  credentials, passwords, and secrets never leave the device.
 
 ## App Store privacy details
 

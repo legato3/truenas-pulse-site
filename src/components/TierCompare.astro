@@ -45,13 +45,17 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
 
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
   {/* Free */}
-  <div class="card tier-card tier-card-free rounded-2xl border border-stroke-soft p-7">
+  <div class="card tier-card tier-card-free relative rounded-2xl border border-stroke-soft p-7">
+    <span
+      class="tier-badge tier-badge-free absolute right-4 top-4 rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider"
+    >
+      Free, genuinely
+    </span>
     <header class="mb-5">
-      <p class="tier-badge tier-badge-free mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-[0.12em]">
-        <span class="status-dot" style="width: 0.4rem; height: 0.4rem;"></span>
-        Free, genuinely
+      <p class="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-text-tertiary">
+        TrueNAS Pulse
       </p>
-      <h3 class="mt-2 text-2xl font-semibold tracking-tight text-text">
+      <h3 class="text-2xl font-semibold tracking-tight text-text">
         Useful forever monitoring
       </h3>
       <p class="mt-2 text-sm leading-relaxed text-text-secondary">

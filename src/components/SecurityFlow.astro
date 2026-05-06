@@ -3,11 +3,12 @@
  * Animated security architecture diagram.
  *
  * Shows: iPhone (Keychain + Strict TLS) ↔ direct connection ↔ TrueNAS SCALE.
- * Direct by default, no in-app analytics, no developer-operated backend required.
+ * Direct by default, no in-app analytics, with Cloud Push Relay available only
+ * as an opt-in path for background alert delivery.
  *
  * Pure SVG + CSS — no JS, no runtime cost. Animation is a slow dotted-line
- * pulse to convey "data flowing exclusively between your phone and your
- * server", matching the calm/infrastructure-grade tone.
+ * pulse to convey "direct by default between your phone and your server",
+ * matching the calm/infrastructure-grade tone.
  */
 ---
 
@@ -92,8 +93,9 @@
   </div>
 
   <p class="flow-disclaimer">
-    Direct by default. Optional relay only for push alert summaries when the app
-    is backgrounded or closed. No app telemetry endpoint.
+    Direct by default. Optional Cloud Push Relay is off by default, per server,
+    and only delivers background alert summaries. API tokens, credentials,
+    passwords, and secrets are never sent to it.
   </p>
 </div>
 
