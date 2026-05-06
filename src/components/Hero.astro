@@ -3,6 +3,7 @@ import { site } from "~/data/site";
 import AppStoreButton from "~/components/AppStoreButton.astro";
 import DeviceFrame from "~/components/DeviceFrame.astro";
 import AmbientGrid from "~/components/AmbientGrid.astro";
+import LiveDashboard from "~/components/LiveDashboard.astro";
 ---
 
 <section class="relative overflow-hidden device-stage">
@@ -14,7 +15,7 @@ import AmbientGrid from "~/components/AmbientGrid.astro";
     <div class="reveal-init">
       <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-stroke-soft bg-surface/60 px-3 py-1 text-xs text-text-secondary backdrop-blur">
         <span class="status-dot status-dot-pulse"></span>
-        <span>Native iOS · TrueNAS SCALE · v{site.latestVersion}</span>
+        <span>Native iOS &middot; TrueNAS SCALE 25.10 &middot; <span class="font-mono">v{site.latestVersion}</span></span>
       </div>
 
       <h1
@@ -68,47 +69,28 @@ import AmbientGrid from "~/components/AmbientGrid.astro";
       >
         <li class="flex items-start gap-2">
           <span class="status-dot mt-1.5"></span>
-          <span>Live monitoring with 1-hour history</span>
+          <span>Live monitoring · <span class="font-mono text-text-tertiary">15 s</span> refresh · <span class="font-mono text-text-tertiary">1 h</span> history</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="status-dot mt-1.5"></span>
-          <span>Up to 2 servers free, up to 8 with Pro</span>
+          <span>Up to <span class="font-mono text-text-tertiary">2</span> servers free, <span class="font-mono text-text-tertiary">8</span> with Pro</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="status-dot mt-1.5"></span>
-          <span>iOS Keychain credentials, strict TLS</span>
+          <span>iOS Keychain credentials · strict TLS · no relay</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="status-dot mt-1.5"></span>
-          <span>Zero in-app analytics. Zero third-party SDKs.</span>
+          <span>Zero analytics. Zero third-party SDKs. One-time purchase.</span>
         </li>
       </ul>
     </div>
 
     <div class="reveal-init mt-16 flex justify-center lg:mt-0" data-reveal-delay="180">
       <DeviceFrame
-        ariaLabel="TrueNAS Pulse dashboard — Goldeye server, READY, 22.3 of 33.2 TB used, CPU 4 percent, memory 78 percent, storage healthy"
-        realScreenshot
+        ariaLabel="TrueNAS Pulse live dashboard — GOLDEYE server on SCALE 25.10, storage 22.3 of 33.2 TB, pool ONLINE, CPU 4 percent, memory 78 percent, disk temps healthy"
       >
-        <picture>
-          <source
-            type="image/avif"
-            srcset="/screenshots/01-dashboard.avif"
-          />
-          <source
-            type="image/webp"
-            srcset="/screenshots/01-dashboard.webp"
-          />
-          <img
-            src="/screenshots/01-dashboard.webp"
-            alt=""
-            width="1180"
-            height="2564"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
-        </picture>
+        <LiveDashboard />
       </DeviceFrame>
     </div>
   </div>
