@@ -66,12 +66,20 @@ const og = new URL(ogImage, site.origin).toString();
     <meta property="og:image" content={og} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="TrueNAS Pulse preview for the third-party TrueNAS SCALE iPhone app"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
+    <meta
+      name="twitter:image:alt"
+      content="TrueNAS Pulse preview for the third-party TrueNAS SCALE iPhone app"
+    />
 
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 

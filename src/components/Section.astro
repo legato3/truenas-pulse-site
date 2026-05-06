@@ -4,6 +4,8 @@ interface Props {
   eyebrow?: string;
   heading?: string;
   lede?: string;
+  /** Heading element for the section title. Use h1 for page-level headings. */
+  headingLevel?: "h1" | "h2";
   /** Maximum content width: "narrow" for prose, "wide" for full-bleed. */
   width?: "narrow" | "wide";
   /** Tighten vertical padding for stacked sections. */
@@ -16,11 +18,14 @@ const {
   eyebrow,
   heading,
   lede,
+  headingLevel = "h2",
   width = "wide",
   tight = false,
   id,
   className,
 } = Astro.props;
+
+const HeadingTag = headingLevel;
 ---
 
 <section
@@ -46,9 +51,9 @@ const {
             </p>
           )}
           {heading && (
-            <h2 class="text-balance text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight text-text">
+            <HeadingTag class="text-balance text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-tight text-text">
               {heading}
-            </h2>
+            </HeadingTag>
           )}
           {lede && (
             <p class="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-text-secondary sm:text-lg">

@@ -6,7 +6,7 @@
  */
 export const site = {
   name: "TrueNAS Pulse",
-  subtitle: "Third-Party SCALE Monitor",
+  subtitle: "Third-Party TrueNAS SCALE iPhone App",
   tagline:
     "Built for sysadmins, operators, and homelab users who need fast infrastructure visibility and safe remote remediation — away from a browser.",
   /** The shorter promo line from APP_STORE_METADATA.md, useful in tight contexts. */
