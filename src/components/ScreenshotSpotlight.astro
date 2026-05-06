@@ -13,9 +13,10 @@ interface Props {
 const { shot, index, eager = false } = Astro.props;
 const isReversed = index % 2 === 1;
 const eyebrow = String(index + 1).padStart(2, "0");
+const isWidget = shot.slug === "07-widget";
 ---
 
-<article class:list={["spotlight", isReversed && "is-reversed"]}>
+<article class:list={["spotlight", isReversed && "is-reversed", isWidget && "is-widget"]}>
   <button
     type="button"
     class="spotlight-frame"
@@ -27,24 +28,43 @@ const eyebrow = String(index + 1).padStart(2, "0");
     data-height={shot.height}
     aria-label={`View ${shot.title} screenshot at full size`}
   >
-    <DeviceFrame
-      ariaLabel={`TrueNAS Pulse — ${shot.title}`}
-      realScreenshot
-      size="large"
-    >
-      <picture>
-        <source type="image/avif" srcset={`/screenshots/${shot.slug}.avif`} />
-        <source type="image/webp" srcset={`/screenshots/${shot.slug}.webp`} />
-        <img
-          src={`/screenshots/${shot.slug}.webp`}
-          alt=""
-          width={shot.width}
-          height={shot.height}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-        />
-      </picture>
-    </DeviceFrame>
+    {
+      isWidget ? (
+        <div class="widget-shot" role="img" aria-label={`TrueNAS Pulse — ${shot.title}`}>
+          <picture>
+            <source type="image/avif" srcset={`/screenshots/${shot.slug}.avif`} />
+            <source type="image/webp" srcset={`/screenshots/${shot.slug}.webp`} />
+            <img
+              src={`/screenshots/${shot.slug}.webp`}
+              alt=""
+              width={shot.width}
+              height={shot.height}
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </picture>
+        </div>
+      ) : (
+        <DeviceFrame
+          ariaLabel={`TrueNAS Pulse — ${shot.title}`}
+          realScreenshot
+          size="large"
+        >
+          <picture>
+            <source type="image/avif" srcset={`/screenshots/${shot.slug}.avif`} />
+            <source type="image/webp" srcset={`/screenshots/${shot.slug}.webp`} />
+            <img
+              src={`/screenshots/${shot.slug}.webp`}
+              alt=""
+              width={shot.width}
+              height={shot.height}
+              loading={eager ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </picture>
+        </DeviceFrame>
+      )
+    }
     <span class="spotlight-zoom-hint" aria-hidden="true">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5" />
@@ -131,6 +151,47 @@ const eyebrow = String(index + 1).padStart(2, "0");
   .spotlight-frame:hover .spotlight-zoom-hint,
   .spotlight-frame:focus-visible .spotlight-zoom-hint {
     opacity: 1;
+  }
+
+  .widget-shot {
+    /* Source screenshot is 1180x2565; crop inside the translucent widget shell. */
+    --src-w: 1180;
+    --src-h: 2565;
+    --crop-x: 116;
+    --crop-y: 894;
+    --crop-w: 950;
+    --crop-h: 410;
+
+    width: min(100%, 620px);
+    aspect-ratio: calc(var(--crop-w) / var(--crop-h));
+    border-radius: 1.35rem;
+    overflow: hidden;
+    background: oklch(0.08 0 0);
+    box-shadow:
+      0 30px 70px -35px oklch(0 0 0 / 0.9),
+      0 0 0 1px oklch(1 0 0 / 0.06);
+  }
+  .widget-shot :global(picture) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .widget-shot :global(img) {
+    display: block;
+    width: calc(100% * var(--src-w) / var(--crop-w));
+    height: auto;
+    max-width: none;
+    transform: translate(
+      calc(-100% * var(--crop-x) / var(--src-w)),
+      calc(-100% * var(--crop-y) / var(--src-h))
+    );
+    transform-origin: top left;
+  }
+  @media (max-width: 640px) {
+    .widget-shot {
+      width: min(100%, 420px);
+      border-radius: 1.35rem;
+    }
   }
 
   .spotlight-text {
