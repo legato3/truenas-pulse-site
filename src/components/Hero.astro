@@ -22,8 +22,32 @@ import DeviceFrame from "~/components/DeviceFrame.astro";
         <span class="block hero-headline-accent">At a glance.</span>
       </h1>
 
+      <!-- ECG heartbeat pulse — brand signature, loops every 3.2s -->
+      <div class="mt-5 mb-1" aria-hidden="true">
+        <svg class="ecg-pulse" width="240" height="40" viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Glow layer -->
+          <path class="ecg-path ecg-glow"
+            d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
+            stroke="oklch(0.62 0.16 235 / 0.35)"
+            stroke-width="5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
+          <!-- Sharp line -->
+          <path class="ecg-path ecg-line"
+            d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
+            stroke="oklch(0.66 0.14 150)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
+        </svg>
+      </div>
+
       <p
-        class="mt-6 max-w-xl text-pretty text-base leading-relaxed text-text-secondary sm:text-lg"
+        class="mt-4 max-w-xl text-pretty text-base leading-relaxed text-text-secondary sm:text-lg"
       >
         {site.tagline}
       </p>
@@ -141,6 +165,39 @@ import DeviceFrame from "~/components/DeviceFrame.astro";
   }
   @media (prefers-reduced-motion: reduce) {
     .status-dot-pulse::after { animation: none; opacity: 0; }
+  }
+
+  /* ECG heartbeat animation — draws the trace across, fades, repeats */
+  .ecg-pulse {
+    overflow: visible;
+    display: block;
+  }
+  .ecg-path {
+    /* Total path length ~310px — dasharray must be >= that */
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: ecg-sweep 3.2s cubic-bezier(0.4, 0, 0.55, 1) infinite;
+  }
+  .ecg-glow {
+    filter: blur(4px);
+    animation-delay: 0s;
+  }
+  .ecg-line {
+    animation-delay: 0s;
+  }
+  @keyframes ecg-sweep {
+    0%   { stroke-dashoffset: 500; opacity: 0; }
+    4%   { opacity: 1; }
+    55%  { stroke-dashoffset: 0;   opacity: 1; }
+    78%  { stroke-dashoffset: 0;   opacity: 0.5; }
+    100% { stroke-dashoffset: 0;   opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ecg-path {
+      animation: none;
+      stroke-dashoffset: 0;
+      opacity: 0.4;
+    }
   }
 
 </style>
