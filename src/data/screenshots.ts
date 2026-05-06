@@ -15,56 +15,56 @@ export interface Screenshot {
 export const screenshots: Screenshot[] = [
   {
     "slug": "01-dashboard",
-    "title": "Your Pulse. Within Reach.",
-    "caption": "CPU, memory, storage, and network — live, right now.",
+    "title": "Know Server Health Fast",
+    "caption": "Live health, alerts, storage, and load in one first check.",
     "tier": null,
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "02-storage",
-    "title": "Full ZFS Visibility",
-    "caption": "Pool health, capacity, snapshots, and disk count — without the browser.",
+    "title": "See Storage Risk Early",
+    "caption": "Know whether pools are healthy, filling, or degraded before opening the web UI.",
     "tier": null,
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "03-sharing",
-    "title": "Shares and Sessions",
-    "caption": "SMB, NFS, and connected client sessions — all in one place.",
+    "title": "Check Sharing State",
+    "caption": "Review SMB, NFS, and active sessions without leaving your phone.",
     "tier": null,
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "04-workloads",
-    "title": "Workload Lifecycle",
-    "caption": "Services, VMs, apps, and containers — with update awareness baked in.",
+    "title": "Control Operational State",
+    "caption": "Track services, VMs, apps, and containers before deciding whether action is needed.",
     "tier": null,
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "05-fleet",
-    "title": "All Your Servers. One Screen.",
-    "caption": "Anomaly-first overview across every system. Health, storage, and drift in one view.",
+    "title": "Find the Problem Server",
+    "caption": "Spot the system that needs attention across health, storage, and drift.",
     "tier": "Pro",
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "06-reporting",
-    "title": "See Trends Before Incidents",
-    "caption": "Historical CPU, memory, network, and disk throughput — beyond the free 1H view.",
+    "title": "Know When It Started",
+    "caption": "Use history to place CPU, memory, network, and disk changes on the incident timeline.",
     "tier": "Pro",
     "width": 1206,
     "height": 2622
   },
   {
     "slug": "07-widget",
-    "title": "Server Health on Your Home Screen",
-    "caption": "Glanceable status — no app launch needed.",
+    "title": "Passive Home Screen Awareness",
+    "caption": "Keep server health visible without opening the app.",
     "tier": null,
     "width": 1206,
     "height": 2622
