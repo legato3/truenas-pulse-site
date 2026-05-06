@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euo pipefail
           install -d -m 700 ~/.ssh
-          printf '"%sn"' "$DEPLOY_SSH_KEY" > ~/.ssh/pulse-deploy
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/pulse-deploy
           chmod 600 ~/.ssh/pulse-deploy
 
       - name: Probe SSH host
