@@ -223,11 +223,11 @@ export const features: Feature[] = [
   },
   {
     id: "terminal",
-    name: "Terminal",
+    name: "Server Console",
     category: "Operator Productivity",
     tier: "Pro",
     description:
-      "SSH into your server from anywhere. Diagnose and fix without switching devices.",
+      "Open a guarded server console from your phone. Run quick diagnostics without opening the web UI.",
   },
   {
     id: "cloudSync",

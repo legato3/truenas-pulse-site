@@ -34,7 +34,7 @@ const rows: Row[] = [
   { label: "Data protection controls", free: "View only", pro: true },
   { label: "Power operations & system update install", free: "—", pro: true },
   { label: "Live log streaming", free: "—", pro: true },
-  { label: "Terminal (web shell)", free: "—", pro: true },
+  { label: "Server Console", free: "—", pro: true },
   { label: "Config backup / restore / support bundle", free: "—", pro: true },
   { label: "Batch actions", free: "—", pro: true },
   { label: "iCloud Sync · Live Activities", free: "—", pro: true },
@@ -129,7 +129,7 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
       <span class="tier-chip">8 servers</span>
       <span class="tier-chip">30-day history</span>
       <span class="tier-chip">Fleet view</span>
-      <span class="tier-chip">Terminal</span>
+      <span class="tier-chip">Server Console</span>
     </div>
     <div class="tier-price-row mb-6 flex items-baseline gap-2">
       <span class="tier-price text-5xl text-text">$9.99</span>
@@ -140,7 +140,7 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
       Pay once through the App Store. Free remains useful if you never upgrade.
     </p>
     <p class="mt-2 text-xs text-text-tertiary">
-      Want to try before you buy?
+      Want upcoming builds early?
       <a
         href={site.testFlightUrl}
         target="_blank"
@@ -218,11 +218,7 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
     background: oklch(from var(--color-bg-elevated) l c h / 0.68);
   }
 
-  .tier-badge-free {
-    color: var(--color-ok);
-    box-shadow: inset 0 0 0 1px oklch(from var(--color-ok) l c h / 0.10);
-  }
-
+  .tier-badge-free,
   .tier-badge-pro {
     color: var(--color-accent);
     background: oklch(from var(--color-accent) l c h / 0.14);

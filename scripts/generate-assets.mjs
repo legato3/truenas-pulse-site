@@ -87,7 +87,7 @@ const ogSvg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" 
   <text x="80" y="290" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="76" font-weight="600" fill="#ffffff" letter-spacing="-2">TrueNAS Pulse</text>
   <text x="80" y="356" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="34" font-weight="400" fill="#9aa0a6" letter-spacing="-0.5">Third-Party SCALE Monitor — native iOS.</text>
   <text x="80" y="438" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="22" font-weight="400" fill="#737a87">Free live monitoring, 1-hour history, one local monitor.</text>
-  <text x="80" y="468" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="22" font-weight="400" fill="#737a87">Pro adds fleet, 30-day reporting, lifecycle, terminal.</text>
+  <text x="80" y="468" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="22" font-weight="400" fill="#737a87">Pro adds fleet, 30-day reporting, lifecycle, Server Console.</text>
   <g transform="translate(80, 540)">
     <circle cx="6" cy="6" r="6" fill="#38ad70"/>
     <text x="22" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="20" font-weight="500" fill="#ffffff">pulse.phobos-cc.be</text>

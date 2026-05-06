@@ -136,7 +136,7 @@ export const featureIcons: Record<string, string> = {
     `<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>`,
   ),
 
-  // display.and.arrow.down → terminal prompt
+  // display.and.arrow.down → Server Console prompt
   terminal: svg(
     `<polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>`,
   ),
