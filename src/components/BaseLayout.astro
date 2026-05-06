@@ -153,10 +153,12 @@ const og = new URL(ogImage, site.origin).toString();
       Skip to content
     </a>
 
-    <!-- Ambient glow orbs — consistent across all pages, behind all content -->
+    <!-- Full-page ambient layer: grid + orbs, fixed behind all content on every page -->
     <div aria-hidden="true" class="page-ambient">
+      <div class="page-grid"></div>
       <span class="page-orb page-orb-1"></span>
       <span class="page-orb page-orb-2"></span>
+      <span class="page-orb page-orb-3"></span>
     </div>
 
     <Header />
@@ -175,29 +177,62 @@ const og = new URL(ogImage, site.origin).toString();
         overflow: hidden;
         z-index: 0;
       }
+
+      /* Repeating grid — same 60×60 pattern as AmbientGrid SVG, full-page */
+      .page-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right,  oklch(1 0 0 / 0.045) 1px, transparent 1px),
+          linear-gradient(to bottom, oklch(1 0 0 / 0.045) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
       .page-orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(80px);
+        filter: blur(60px);
+        opacity: 0.55;
         will-change: transform;
       }
-      /* Top-left blue — mirrors hero orb-1, always anchored to the top */
       .page-orb-1 {
-        top: -8%;
-        left: 5%;
-        width: 480px;
-        height: 480px;
-        opacity: 0.35;
-        background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.50), transparent 70%);
+        top: -10%;
+        left: 8%;
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.45), transparent 70%);
+        animation: drift-a 22s ease-in-out infinite;
       }
-      /* Bottom-right counterpoint — subtle depth */
       .page-orb-2 {
-        bottom: 5%;
-        right: 4%;
-        width: 360px;
-        height: 360px;
-        opacity: 0.18;
-        background: radial-gradient(circle, oklch(0.55 0.13 235 / 0.40), transparent 70%);
+        top: 20%;
+        right: 6%;
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, oklch(0.55 0.13 235 / 0.22), transparent 70%);
+        animation: drift-b 28s ease-in-out infinite;
+      }
+      .page-orb-3 {
+        bottom: -10%;
+        left: 42%;
+        width: 340px;
+        height: 340px;
+        background: radial-gradient(circle, oklch(0.58 0.10 235 / 0.12), transparent 70%);
+        animation: drift-c 34s ease-in-out infinite;
+      }
+      @keyframes drift-a {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50%      { transform: translate3d(40px, 30px, 0) scale(1.06); }
+      }
+      @keyframes drift-b {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50%      { transform: translate3d(-30px, 40px, 0) scale(1.08); }
+      }
+      @keyframes drift-c {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50%      { transform: translate3d(20px, -30px, 0) scale(1.04); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .page-orb { animation: none !important; }
       }
 
       .prose-page {
