@@ -21,7 +21,7 @@ import AmbientGrid from "~/components/AmbientGrid.astro";
         class="text-balance text-[clamp(2.25rem,6vw,4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-text"
       >
         Your server.
-        <span class="block pb-1 hero-headline-accent">At a glance.</span>
+        <span class="block hero-headline-accent">At a glance.</span>
       </h1>
 
       <p
@@ -120,6 +120,8 @@ import AmbientGrid from "~/components/AmbientGrid.astro";
     -webkit-background-clip: text;
             background-clip: text;
     color: transparent;
+    /* Prevent descender clipping (e.g. "g" in "glance") from tight leading */
+    padding-bottom: 0.15em;
   }
 
   /* Pulse on the live status dot — matches /chat-server status pill */
