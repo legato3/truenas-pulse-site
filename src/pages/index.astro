@@ -89,14 +89,14 @@ const outcomes = [
 
   <Section
     eyebrow="Daily operation"
-    heading="The homepage view stays focused."
-    lede="TrueNAS Pulse is built around the checks that matter when you are away from the browser. The full Free + Pro inventory lives on the Features page."
+    heading="Know what needs attention."
+    lede="TrueNAS Pulse keeps live health, alerts, storage, jobs, and guarded actions close on your iPhone. The full Free + Pro inventory lives on the Features page."
   >
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {
         outcomes.map((item, i) => (
           <MotionReveal delay={i * 35}>
-            <article class="card h-full rounded-lg border border-stroke-soft bg-surface p-5">
+            <article class="card outcome-card h-full rounded-lg border border-stroke-soft p-5">
               <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
                 {item.head}
               </h3>
@@ -151,7 +151,7 @@ const outcomes = [
 
     <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <MotionReveal delay={60}>
-        <div class="card h-full rounded-xl border border-stroke-soft bg-surface p-7">
+        <div class="card security-detail-card h-full rounded-xl border border-stroke-soft p-7">
           <h3 class="mb-2 text-lg font-semibold tracking-tight text-text">
             Credential storage
           </h3>
@@ -165,7 +165,7 @@ const outcomes = [
         </div>
       </MotionReveal>
       <MotionReveal delay={120}>
-        <div class="card h-full rounded-xl border border-stroke-soft bg-surface p-7">
+        <div class="card security-detail-card h-full rounded-xl border border-stroke-soft p-7">
           <h3 class="mb-2 text-lg font-semibold tracking-tight text-text">
             Action safety
           </h3>
@@ -185,3 +185,12 @@ const outcomes = [
 
   <CallToAction />
 </BaseLayout>
+
+<style>
+  .outcome-card,
+  .security-detail-card {
+    background: oklch(from var(--color-surface-raised) l c h / 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+</style>

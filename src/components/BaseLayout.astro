@@ -198,70 +198,69 @@ const og = new URL(ogImage, site.origin).toString();
         100% { filter: hue-rotate(0deg)  brightness(1.00); }
       }
 
-      /* Grid — 96px cells, very subtle lines so they don't overpower content */
+      /* Shared grid — one fixed layer across every page, matching the homepage. */
       .page-grid {
         position: absolute;
         inset: 0;
         background-image:
-          linear-gradient(to right,  oklch(1 0 0 / 0.032) 1px, transparent 1px),
-          linear-gradient(to bottom, oklch(1 0 0 / 0.032) 1px, transparent 1px);
-        background-size: 96px 96px;
+          linear-gradient(to right,  oklch(1 0 0 / 0.045) 1px, transparent 1px),
+          linear-gradient(to bottom, oklch(1 0 0 / 0.045) 1px, transparent 1px);
+        background-size: 60px 60px;
         /* Fade grid out toward the bottom so it doesn't look like wallpaper */
-        mask-image: linear-gradient(180deg, black 0%, black 40%, oklch(0 0 0 / 0.4) 100%);
-        -webkit-mask-image: linear-gradient(180deg, black 0%, black 40%, oklch(0 0 0 / 0.4) 100%);
+        mask-image: linear-gradient(180deg, black 0%, black 55%, oklch(0 0 0 / 0.42) 100%);
+        -webkit-mask-image: linear-gradient(180deg, black 0%, black 55%, oklch(0 0 0 / 0.42) 100%);
       }
 
-      /* Global orbs — very subtle, just enough to give depth to inner pages.
-         The hero has its own stronger focused orbs; these should not compete. */
+      /* Shared focused light — formerly hero-only, now used across every page. */
       .page-orb {
         position: absolute;
         border-radius: 50%;
         will-change: transform;
       }
-      /* Distant top-left ambient — soft, not a spotlight */
+      /* Primary: top-left, strong focused blue light */
       .page-orb-1 {
-        top: -10%;
-        left: -5%;
-        width: 900px;
-        height: 900px;
-        opacity: 0.13;
-        filter: blur(160px);
-        background: radial-gradient(circle, oklch(0.65 0.14 235 / 0.8), transparent 65%);
-        animation: drift-a 30s ease-in-out infinite;
+        top: -18%;
+        left: -6%;
+        width: 680px;
+        height: 680px;
+        opacity: 0.45;
+        filter: blur(90px);
+        background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.75), transparent 65%);
+        animation: drift-a 24s ease-in-out infinite;
       }
-      /* Right-side very faint fill */
+      /* Secondary: top-right, dimmer fill */
       .page-orb-2 {
-        top: 30%;
-        right: -10%;
-        width: 700px;
-        height: 700px;
-        opacity: 0.08;
-        filter: blur(150px);
-        background: radial-gradient(circle, oklch(0.58 0.11 235 / 0.7), transparent 65%);
-        animation: drift-b 38s ease-in-out infinite;
+        top: -5%;
+        right: -4%;
+        width: 440px;
+        height: 440px;
+        opacity: 0.22;
+        filter: blur(80px);
+        background: radial-gradient(circle, oklch(0.58 0.13 235 / 0.6), transparent 65%);
+        animation: drift-b 30s ease-in-out infinite;
       }
-      /* Bottom glow — barely visible, keeps deep pages from going flat black */
+      /* Subtle center-top halo — adds depth behind page headings */
       .page-orb-3 {
-        bottom: -20%;
+        top: -8%;
         left: 30%;
-        width: 800px;
-        height: 800px;
-        opacity: 0.07;
-        filter: blur(160px);
-        background: radial-gradient(circle, oklch(0.55 0.09 235 / 0.6), transparent 65%);
-        animation: drift-c 44s ease-in-out infinite;
+        width: 560px;
+        height: 400px;
+        opacity: 0.12;
+        filter: blur(100px);
+        background: radial-gradient(ellipse, oklch(0.74 0.12 240 / 0.5), transparent 65%);
+        animation: drift-c 36s ease-in-out infinite;
       }
       @keyframes drift-a {
         0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-        50%      { transform: translate3d(30px, 20px, 0) scale(1.04); }
+        50%      { transform: translate3d(24px, 18px, 0) scale(1.04); }
       }
       @keyframes drift-b {
         0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-        50%      { transform: translate3d(-20px, 30px, 0) scale(1.05); }
+        50%      { transform: translate3d(-18px, 24px, 0) scale(1.06); }
       }
       @keyframes drift-c {
         0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-        50%      { transform: translate3d(20px, -30px, 0) scale(1.04); }
+        50%      { transform: translate3d(16px, -12px, 0) scale(1.03); }
       }
       @media (prefers-reduced-motion: reduce) {
         .page-orb { animation: none !important; }
