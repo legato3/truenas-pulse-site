@@ -12,11 +12,11 @@ export const site = {
   /** The shorter promo line from APP_STORE_METADATA.md, useful in tight contexts. */
   promoLine:
     "Free live monitoring, 1-hour history, and one included monitor for TrueNAS SCALE — with Pro admin tools when you need more control.",
-  /** Minimum iOS version supported by the current App Store build (1.0.3). */
+  /** Minimum iOS version supported by the current App Store build (1.0.4). */
   minimumOsVersion: "17.6",
   /** Latest live App Store version + release date — kept in sync with /changelog. */
-  latestVersion: "1.0.3",
-  latestReleaseDate: "2026-04-25",
+  latestVersion: "1.0.4",
+  latestReleaseDate: "2026-05-06",
   origin: "https://pulse.phobos-cc.be",
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
