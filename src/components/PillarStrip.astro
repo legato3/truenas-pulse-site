@@ -73,10 +73,23 @@ const pillars = [
     position: relative;
     border-radius: 0.875rem;
     border: 1px solid var(--color-stroke-soft);
-    background: oklch(from var(--color-surface) l c h / 0.6);
+    background: oklch(from var(--color-surface) l c h / 0.50);
     padding: 1.5rem;
     overflow: hidden;
-    transition: border-color 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.32s ease;
+  }
+  /* Glass top-edge highlight */
+  .pillar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 0.14) 30%, oklch(1 0 0 / 0.14) 70%, transparent 100%);
+    pointer-events: none;
   }
   .pillar::before {
     content: "";
@@ -99,7 +112,8 @@ const pillars = [
     pointer-events: none;
   }
   .pillar:hover {
-    border-color: var(--color-stroke-strong);
+    border-color: oklch(1 0 0 / 0.12);
+    background: oklch(from var(--color-surface) l c h / 0.70);
     transform: translateY(-2px);
   }
   .pillar:hover::before {

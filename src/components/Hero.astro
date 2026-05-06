@@ -6,6 +6,27 @@ import DeviceFrame from "~/components/DeviceFrame.astro";
 
 <section class="relative device-stage">
 
+  <!-- Hero-local ambient: strong focused orbs + SVG grid, fades out below hero -->
+  <div class="hero-ambient" aria-hidden="true">
+    <svg class="hero-grid" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="heroGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="oklch(1 0 0 / 0.055)" stroke-width="1" />
+        </pattern>
+        <radialGradient id="heroFade" cx="40%" cy="35%" r="55%">
+          <stop offset="0%" stop-color="oklch(0 0 0 / 0)" />
+          <stop offset="55%" stop-color="oklch(0 0 0 / 0.45)" />
+          <stop offset="100%" stop-color="oklch(0 0 0 / 1)" />
+        </radialGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#heroGrid)" />
+      <rect width="100%" height="100%" fill="url(#heroFade)" />
+    </svg>
+    <span class="hero-orb hero-orb-1"></span>
+    <span class="hero-orb hero-orb-2"></span>
+    <span class="hero-orb hero-orb-3"></span>
+  </div>
+
   <div
     class="relative z-10 mx-auto max-w-6xl px-5 pt-20 pb-24 sm:pt-28 sm:pb-32 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16"
   >
@@ -131,6 +152,77 @@ import DeviceFrame from "~/components/DeviceFrame.astro";
 </section>
 
 <style>
+  /* ── Hero ambient ──────────────────────────────────────────────── */
+  .hero-ambient {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Fades out smoothly at the bottom — no hard seam into next section */
+    mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+  }
+  /* Primary: top-left, strong focused blue light */
+  .hero-orb-1 {
+    top: -18%;
+    left: -6%;
+    width: 680px;
+    height: 680px;
+    opacity: 0.45;
+    filter: blur(90px);
+    background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.75), transparent 65%);
+    animation: drift-a 24s ease-in-out infinite;
+  }
+  /* Secondary: top-right, dimmer fill */
+  .hero-orb-2 {
+    top: -5%;
+    right: -4%;
+    width: 440px;
+    height: 440px;
+    opacity: 0.22;
+    filter: blur(80px);
+    background: radial-gradient(circle, oklch(0.58 0.13 235 / 0.6), transparent 65%);
+    animation: drift-b 30s ease-in-out infinite;
+  }
+  /* Subtle center-top halo — adds depth behind headline */
+  .hero-orb-3 {
+    top: -8%;
+    left: 30%;
+    width: 560px;
+    height: 400px;
+    opacity: 0.12;
+    filter: blur(100px);
+    background: radial-gradient(ellipse, oklch(0.74 0.12 240 / 0.5), transparent 65%);
+    animation: drift-c 36s ease-in-out infinite;
+  }
+  @keyframes drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(24px, 18px, 0) scale(1.04); }
+  }
+  @keyframes drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(-18px, 24px, 0) scale(1.06); }
+  }
+  @keyframes drift-c {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(16px, -12px, 0) scale(1.03); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-orb { animation: none !important; }
+  }
+
+  /* ── Headline accent ────────────────────────────────────────────── */
   /* Headline accent uses a subtle brand-tinted gradient — no rainbow. */
   .hero-headline-accent {
     background: linear-gradient(
