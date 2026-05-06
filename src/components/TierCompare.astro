@@ -147,9 +147,9 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
   <table class="w-full text-sm">
     <thead class="border-b border-stroke-soft bg-surface-raised text-xs uppercase tracking-[0.12em] text-text-tertiary">
       <tr>
-        <th class="px-5 py-3 text-left font-medium">Feature</th>
-        <th class="w-32 px-5 py-3 text-center font-medium">Free</th>
-        <th class="w-48 px-5 py-3 text-center font-medium">Pro</th>
+        <th class="px-5 py-2.5 text-left font-medium">Feature</th>
+        <th class="whitespace-nowrap px-5 py-2.5 text-center font-medium">Free</th>
+        <th class="whitespace-nowrap px-5 py-2.5 text-center font-medium">Pro</th>
       </tr>
     </thead>
     <tbody>
@@ -157,20 +157,24 @@ const cell = (val: string | true) => (val === true ? "✓" : val);
         rows.map((row, i) => (
           <tr
             class:list={[
-              "border-t border-stroke-soft/60",
-              i % 2 === 1 && "bg-bg-elevated",
+              "border-t border-stroke-soft",
+              /* Zebra goes lighter, not darker — dark-theme convention. A
+                 white-alpha overlay reads as a 'lifted' row regardless of
+                 the base surface's lightness. bg-bg-elevated (0.165) over
+                 bg-surface (0.20) had the rows sinking instead. */
+              i % 2 === 1 && "bg-[oklch(1_0_0_/_0.025)]",
             ]}
           >
-            <td class="px-5 py-3 text-text-secondary">{row.label}</td>
+            <td class="px-5 py-2.5 text-text-secondary">{row.label}</td>
             <td
               class:list={[
-                "px-5 py-3 text-center font-mono text-[13px]",
+                "whitespace-nowrap px-5 py-2.5 text-center font-mono text-[13px]",
                 row.free === "—" ? "text-text-tertiary" : "text-text",
               ]}
             >
               {cell(row.free)}
             </td>
-            <td class="px-5 py-3 text-center font-mono text-[13px] text-text">
+            <td class="whitespace-nowrap px-5 py-2.5 text-center font-mono text-[13px] text-text">
               {cell(row.pro)}
             </td>
           </tr>
