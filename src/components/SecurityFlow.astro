@@ -106,8 +106,20 @@
     align-items: stretch;
     border: 1px solid var(--color-stroke-soft);
     border-radius: 1rem;
-    background: oklch(from var(--color-surface) l c h / 0.4);
+    background: oklch(from var(--color-surface) l c h / 0.40);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 1.75rem;
+    overflow: hidden;
+  }
+  /* Glass top-edge highlight on the outer container */
+  .flow-diagram::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 0.12) 25%, oklch(1 0 0 / 0.12) 75%, transparent 100%);
+    pointer-events: none;
   }
   @media (min-width: 768px) {
     .flow-diagram {
@@ -125,13 +137,25 @@
   }
 
   .flow-tile {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.875rem;
     padding: 1rem 1.125rem;
     border-radius: 0.75rem;
-    background: oklch(from var(--color-surface-raised) l c h / 0.65);
+    background: oklch(from var(--color-surface-raised) l c h / 0.55);
     border: 1px solid var(--color-stroke-soft);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
+  .flow-tile::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 0.13) 40%, oklch(1 0 0 / 0.13) 60%, transparent 100%);
+    pointer-events: none;
   }
   .flow-tile-icon {
     display: inline-flex;
