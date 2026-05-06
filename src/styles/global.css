@@ -26,8 +26,9 @@
   --color-text-disabled: oklch(0.45 0 0 / 0.55);
 
   /* ── Interactive accent ─────────────────────────────────────── */
-  --color-accent: oklch(0.62 0.16 235);       /* iOS systemBlue echo */
+  --color-accent: oklch(0.62 0.16 235);       /* iOS systemBlue echo — primary */
   --color-accent-hover: oklch(0.68 0.17 235);
+  --color-accent-secondary: oklch(0.72 0.11 200); /* iOS systemTeal echo — pairs with primary, never decorative */
 
   /* ── Semantic state (never decorative) ──────────────────────── */
   --color-ok: oklch(0.66 0.14 150);           /* calm green: rgb(0.22, 0.68, 0.44) */
@@ -35,10 +36,10 @@
   --color-critical: oklch(0.62 0.18 22);      /* serious red: rgb(0.84, 0.28, 0.36) */
   --color-inactive: oklch(0.55 0.01 250);
 
-  /* ── Data-light (chart-only — encode meaning) ───────────────── */
+  /* ── Data-light (chart-only — encode meaning, cool palette only) ─── */
   --color-data-blue: oklch(0.74 0.12 240);    /* flow */
-  --color-data-violet: oklch(0.65 0.14 290);  /* highLoad */
-  --color-data-magenta: oklch(0.65 0.21 340); /* acid */
+  --color-data-teal: oklch(0.72 0.11 200);    /* highLoad — cool, never violet */
+  --color-data-mint: oklch(0.74 0.12 170);    /* secondary signal — never magenta */
 
   /* ── Typography ─────────────────────────────────────────────── */
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
