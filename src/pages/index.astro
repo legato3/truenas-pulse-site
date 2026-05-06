@@ -3,16 +3,37 @@ import BaseLayout from "~/components/BaseLayout.astro";
 import Hero from "~/components/Hero.astro";
 import Section from "~/components/Section.astro";
 import PillarStrip from "~/components/PillarStrip.astro";
-import FeatureGrid from "~/components/FeatureGrid.astro";
 import CallToAction from "~/components/CallToAction.astro";
 import MotionReveal from "~/components/MotionReveal.astro";
 import StatsStrip from "~/components/StatsStrip.astro";
 import SecurityFlow from "~/components/SecurityFlow.astro";
-import KeywordMarquee from "~/components/KeywordMarquee.astro";
 import FreeShowcase from "~/components/FreeShowcase.astro";
 import AppStoreButton from "~/components/AppStoreButton.astro";
 import Personas from "~/components/Personas.astro";
 import PrivacyLabel from "~/components/PrivacyLabel.astro";
+
+const outcomes = [
+  {
+    head: "Know if TrueNAS is healthy",
+    body: "Live status for CPU, memory, network, pools, disks, and services.",
+  },
+  {
+    head: "Catch alerts quickly",
+    body: "Review alerts and monitor signals from your phone before they turn into incidents.",
+  },
+  {
+    head: "Understand storage and jobs",
+    body: "Check pool health, datasets, snapshots, middleware jobs, and audit context without opening the web UI.",
+  },
+  {
+    head: "Act safely when needed",
+    body: "State-changing operations sit behind Control Mode, expiry, and biometric confirmation where risk is higher.",
+  },
+  {
+    head: "Go deeper with Pro",
+    body: "Fleet view, longer history, terminal, lifecycle controls, and advanced operator tooling stay one tap away.",
+  },
+] as const;
 ---
 
 <BaseLayout description="Monitor your TrueNAS SCALE server from your iPhone. Live pool status, storage health, smart alerts, and safe admin actions — free on the App Store.">
@@ -39,12 +60,10 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
     <Personas />
   </Section>
 
-  <KeywordMarquee />
-
   <Section
     eyebrow="Free, on purpose"
     heading="Start free. Stay free if you want to."
-    lede="The free tier is built to be useful on its own, not a demo for Pro. Two servers, full read-only operations, the Home Screen widget, one proactive monitor, and TrueNAS 26 container controls — all included."
+    lede="The free tier is built to be useful on its own, not a demo for Pro. Monitor two servers, see health, alerts, storage, jobs, and widgets, and keep one proactive monitor at no cost."
   >
     <MotionReveal>
       <FreeShowcase />
@@ -69,17 +88,46 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
   </Section>
 
   <Section
-    eyebrow="Feature highlights"
-    heading="Everything you need from the dashboard to the disk."
-    lede="A quick tour of the Pro toolset. The full 27-feature inventory — Free + Pro — lives on the Features page."
+    eyebrow="Daily operation"
+    heading="The homepage view stays focused."
+    lede="TrueNAS Pulse is built around the checks that matter when you are away from the browser. The full Free + Pro inventory lives on the Features page."
   >
-    <FeatureGrid limit={6} />
-    <div class="mt-10 flex justify-center">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        outcomes.map((item, i) => (
+          <MotionReveal delay={i * 35}>
+            <article class="card h-full rounded-lg border border-stroke-soft bg-surface p-5">
+              <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+                {item.head}
+              </h3>
+              <p class="text-sm leading-relaxed text-text-secondary">
+                {item.body}
+              </p>
+            </article>
+          </MotionReveal>
+        ))
+      }
+    </div>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
       <a
         href="/features"
         class="inline-flex items-center gap-1.5 rounded-lg border border-stroke-strong px-5 py-3 text-sm font-medium text-text transition-colors hover:bg-surface/60"
       >
-        See all 27 features
+        See full feature inventory
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M5 3l4 4-4 4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+      <a
+        href="/pro"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-stroke-strong px-5 py-3 text-sm font-medium text-text transition-colors hover:bg-surface/60"
+      >
+        See Pro tooling
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path
             d="M5 3l4 4-4 4"

@@ -30,48 +30,33 @@ interface Capability {
 const capabilities: Capability[] = [
   {
     icon: "activity",
-    title: "Live dashboard",
-    body: "Real-time CPU, memory, network, and storage status — refreshed continuously while the app is open.",
-  },
-  {
-    icon: "database",
-    title: "Full ZFS visibility",
-    body: "Pool health, capacity, dataset hierarchy, disk detail, drive temperatures, and snapshot counts.",
+    title: "Live health",
+    body: "CPU, memory, network, pool, disk, and service status while the app is open.",
   },
   {
     icon: "bell",
     title: "Alerts and jobs",
-    body: "Read every alert your server emits and acknowledge them inline. Watch middleware jobs run in real time.",
+    body: "Review alerts, acknowledge what you've handled, and watch middleware jobs run.",
+  },
+  {
+    icon: "database",
+    title: "Storage visibility",
+    body: "Check pools, datasets, disks, snapshots, capacity, and drive temperatures.",
   },
   {
     icon: "clock",
     title: "1-hour reporting",
-    body: "Live history charts for CPU, memory, and network — enough to catch the spike that just happened.",
-  },
-  {
-    icon: "servers",
-    title: "Up to 2 servers",
-    body: "Add a second TrueNAS for free. Switch between them instantly. Aggregated alert view spans both.",
-  },
-  {
-    icon: "eye",
-    title: "One proactive monitor",
-    body: "Pin the metric that matters — pool capacity, drive temperature, or service status — and get notified before it breaks.",
-  },
-  {
-    icon: "folder",
-    title: "Filesystem + audit log",
-    body: "Browse your datasets read-only and review the TrueNAS audit log straight from your phone.",
-  },
-  {
-    icon: "container",
-    title: "Container lifecycle",
-    body: "Start, stop, and force-stop TrueNAS 26 native containers — gated by Control Mode, included in Free.",
+    body: "Enough CPU, memory, and network history to catch the spike that just happened.",
   },
   {
     icon: "widget",
-    title: "Home Screen widget",
-    body: "Glanceable server health on your Home Screen and Lock Screen — no app launch needed.",
+    title: "Two servers and widget",
+    body: "Monitor two TrueNAS servers and keep glanceable status on your Home Screen.",
+  },
+  {
+    icon: "container",
+    title: "Guarded included actions",
+    body: "Free includes alert acknowledgement, manual snapshots, and TrueNAS 26 container lifecycle where supported.",
   },
 ];
 ---
@@ -86,9 +71,9 @@ const capabilities: Capability[] = [
       Free is genuinely useful.
     </h3>
     <p class="free-showcase-lede">
-      Two TrueNAS servers, complete read-only operations, the Home Screen widget,
-      one proactive monitor, and TrueNAS 26 container controls — at no cost,
-      with no time limit.
+      Two TrueNAS servers, live health, alerts, storage visibility, jobs, the
+      Home Screen widget, and one proactive monitor — at no cost, with no time
+      limit.
     </p>
   </div>
 
@@ -163,8 +148,8 @@ const capabilities: Capability[] = [
   </div>
 
   <p class="free-trust">
-    Genuinely usable on its own. Pro is a single one-time purchase that
-    adds the operator toolset on top — and only if you want it.
+    Genuinely usable on its own. Pro adds deeper operator tooling on top — and
+    only if you need it.
   </p>
 </div>
 
