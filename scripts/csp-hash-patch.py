@@ -23,17 +23,16 @@ replacement = (
 with open(caddy_path) as f:
     c = f.read()
 
-new = re.sub(
-    r"script-src 'self'[^;]*https://static\.cloudflareinsights\.com",
-    replacement,
-    c
-)
-
-if new == c:
+pattern = r"script-src 'self'[^;]*https://static\.cloudflareinsights\.com"
+if not re.search(pattern, c):
     print("WARN: pattern not matched, Caddyfile unchanged", file=sys.stderr)
     sys.exit(1)
 
-with open(caddy_path, "w") as f:
-    f.write(new)
+new = re.sub(pattern, replacement, c)
 
-print(f"Caddyfile updated with {len(hashes)} hashes")
+if new == c:
+    print(f"Caddyfile already up-to-date with {len(hashes)} hashes, no write needed")
+else:
+    with open(caddy_path, "w") as f:
+        f.write(new)
+    print(f"Caddyfile updated with {len(hashes)} hashes")
