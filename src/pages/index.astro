@@ -95,7 +95,7 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
   <Section
     eyebrow="Security model"
     heading="Your servers, your credentials, your data."
-    lede="No accounts. No cloud. No in-app analytics. No third-party SDKs. The app talks only to the servers you configure — full stop."
+    lede="No accounts. No in-app analytics. No third-party SDKs. Direct by default: the app talks to the servers you configure, with an optional relay only for push alerts."
   >
     <MotionReveal>
       <SecurityFlow />
@@ -112,7 +112,7 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
             <li>Strict TLS validation by default.</li>
             <li>Per-server self-signed certificate opt-in (SHA-256 fingerprint pinning).</li>
             <li>iCloud Sync (Pro) covers server list + monitors via your own private iCloud — credentials never travel.</li>
-            <li>No tokens or secrets are ever logged.</li>
+            <li>API tokens and credentials are never sent to the optional Cloud Push Relay.</li>
           </ul>
         </div>
       </MotionReveal>
@@ -137,4 +137,3 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
 
   <CallToAction />
 </BaseLayout>
-

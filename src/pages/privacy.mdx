@@ -18,9 +18,13 @@ TrueNAS Pulse does not collect, store, or transmit any personal data.
 
 ## What the app does
 
-TrueNAS Pulse communicates **exclusively** with TrueNAS servers that you
-configure. There is no developer-operated cloud service. The app contains
-no analytics, tracking, advertising, or third-party SDKs.
+TrueNAS Pulse is **direct by default**. It communicates with the TrueNAS
+servers that you configure and contains no analytics, tracking, advertising,
+or third-party SDKs.
+
+If you opt in to Cloud Push Relay, it is used only to deliver alert summaries
+when the app is backgrounded or closed. The relay is off by default,
+configured per server, and API tokens or credentials are never sent to it.
 
 ## Data not collected
 
@@ -28,8 +32,7 @@ no analytics, tracking, advertising, or third-party SDKs.
 - No crash reporting services
 - No advertising identifiers
 - No data shared with third parties
-- No network requests except direct communication with the TrueNAS servers
-  you configure
+- No background alert relay traffic unless you explicitly opt in per server
 
 ## Where your data lives
 
@@ -42,6 +45,9 @@ no analytics, tracking, advertising, or third-party SDKs.
   list sync across your devices via Apple's iCloud Key-Value Store. API
   tokens never leave the Keychain — iCloud Sync does not transport
   credentials.
+- If you enable **Cloud Push Relay**, only alert summaries are relayed for
+  push delivery while the app is backgrounded or closed. API tokens and
+  credentials never leave the device.
 
 ## App Store privacy details
 

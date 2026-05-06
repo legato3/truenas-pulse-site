@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "Does the app talk to anything except my own server?",
-    a: "No analytics or telemetry — ever. The app talks to the TrueNAS servers you configure. The only optional outbound connection is the Cloud Push Relay (off by default, opt-in per server) used to deliver alert notifications when the app is backgrounded; you can also point it at a self-hosted relay you run yourself.",
+    a: "Direct by default. TrueNAS Pulse talks to the TrueNAS servers you configure and has no analytics or telemetry. If you opt in to Cloud Push Relay, it is only used to deliver alert summaries when the app is backgrounded or closed. It is off by default, configured per server, and never receives API tokens or credentials. You can also point the app at a self-hosted relay you run yourself.",
   },
   {
     q: "Does my server need to be on the public internet?",
@@ -35,7 +35,7 @@ const faqs = [
   },
   {
     q: "Will I get notifications when the app is closed?",
-    a: "By default the app delivers device-local notifications when monitors fire while it's running. For alerts that need to reach you while the app is backgrounded or closed, you can opt in to the Cloud Push Relay per server. The relay only forwards alert summaries — never credentials — and is signed end-to-end. You can also self-host the relay if you'd rather not use the built-in one.",
+    a: "By default the app delivers device-local notifications when monitors fire while it's running. For alerts that need to reach you while the app is backgrounded or closed, you can opt in to Cloud Push Relay per server. The relay only forwards alert summaries — never API tokens or credentials. You can also self-host the relay if you'd rather not use the built-in one.",
   },
   {
     q: "How do self-signed TLS certificates work?",
