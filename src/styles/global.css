@@ -75,8 +75,9 @@ html {
 
 body {
   background:
-    radial-gradient(circle at 6% 2%, oklch(1 0 0 / 0.06), transparent 60%),
-    radial-gradient(circle at 96% 98%, oklch(0 0 0 / 0.30), transparent 55%),
+    radial-gradient(ellipse 120% 55% at 50% -5%,  oklch(0.74 0.12 240 / 0.13), transparent),
+    radial-gradient(ellipse  70% 40% at 10% 50%,  oklch(0.62 0.16 235 / 0.05), transparent),
+    radial-gradient(ellipse  60% 35% at 90% 75%,  oklch(0.62 0.16 235 / 0.04), transparent),
     var(--color-bg);
   background-attachment: fixed;
   min-height: 100dvh;
@@ -113,25 +114,8 @@ body {
   border-color: var(--color-stroke-soft);
 }
 
-/* Hero gradient backstop for the iPhone frame */
-.device-stage {
-  position: relative;
-  background:
-    radial-gradient(ellipse at 50% 0%, oklch(0.74 0.12 240 / 0.16), transparent 60%);
-}
-
-/* Smooth fade from hero into body background — no hard cut, no purple */
-.device-stage::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 18rem;
-  background: linear-gradient(to bottom, transparent, var(--color-bg));
-  pointer-events: none;
-  z-index: 0;
-}
+/* Hero section — no own background, body fixed gradient paints through seamlessly */
+.device-stage {}
 
 /* Selection — match the calm-blue accent without violating brand */
 ::selection {
