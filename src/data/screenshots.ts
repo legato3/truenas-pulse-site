@@ -15,7 +15,7 @@ export interface Screenshot {
 export const screenshots: Screenshot[] = [
   {
     "slug": "01-dashboard",
-    "title": "Your Server. At a Glance.",
+    "title": "Your Pulse. Within Reach.",
     "caption": "CPU, memory, storage, and network — live, right now.",
     "tier": null,
     "width": 1206,
