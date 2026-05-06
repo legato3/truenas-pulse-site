@@ -46,24 +46,39 @@ import DeviceFrame from "~/components/DeviceFrame.astro";
       <!-- ECG heartbeat pulse — brand signature, loops every 3.2s -->
       <div class="mt-5 mb-1" aria-hidden="true">
         <svg class="ecg-pulse" width="240" height="40" viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Glow layer -->
-          <path class="ecg-path ecg-glow"
-            d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
-            stroke="oklch(0.62 0.16 235 / 0.35)"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-          />
-          <!-- Sharp line -->
-          <path class="ecg-path ecg-line"
-            d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
-            stroke="oklch(0.66 0.14 150)"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"
-          />
+          <defs>
+            <!-- Horizontal gradient: transparent at both ends, opaque in the middle -->
+            <linearGradient id="ecgFade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="white" stop-opacity="0" />
+              <stop offset="7%"   stop-color="white" stop-opacity="1" />
+              <stop offset="93%"  stop-color="white" stop-opacity="1" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </linearGradient>
+            <mask id="ecgMask">
+              <rect width="240" height="40" fill="url(#ecgFade)" />
+            </mask>
+          </defs>
+          <!-- Both paths share the fade mask so both ends dissolve softly -->
+          <g mask="url(#ecgMask)">
+            <!-- Glow layer -->
+            <path class="ecg-path ecg-glow"
+              d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
+              stroke="oklch(0.62 0.16 235 / 0.35)"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+            <!-- Sharp line -->
+            <path class="ecg-path ecg-line"
+              d="M0,20 H52 L55,18 L59,14 L62,20 H72 L76,4 L80,36 L84,20 H94 L97,24 L100,20 H240"
+              stroke="oklch(0.66 0.14 150)"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </g>
         </svg>
       </div>
 
