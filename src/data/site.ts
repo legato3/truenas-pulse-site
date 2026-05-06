@@ -17,12 +17,12 @@ export const site = {
   /** Latest live App Store version + release date — kept in sync with /changelog. */
   latestVersion: "1.0.4",
   latestReleaseDate: "2026-05-04",
-  origin: "https://pulse.phobos-cc.be",
+  origin: "https://truenaspulse.com",
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
   testFlightUrl: "https://testflight.apple.com/join/r3xzH5eE",
-  supportEmail: "chris@phobos-cc.be",
-  supportUrl: "https://pulse.phobos-cc.be/support",
+  supportEmail: "support@truenaspulse.com",
+  supportUrl: "https://truenaspulse.com/support",
   bundleId: "Phobos.TrueNAS-Pulse",
   trademarkLine:
     "TrueNAS® is a registered trademark of iXsystems, Inc. TrueNAS Pulse is an independent third-party application and is not affiliated with, endorsed by, or sponsored by iXsystems.",

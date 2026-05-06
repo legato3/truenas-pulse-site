@@ -2,7 +2,7 @@
 
 Promotional site for [TrueNAS Pulse](https://apps.apple.com/app/id6759870893) — the third-party iOS client for TrueNAS SCALE.
 
-Live: **https://pulse.phobos-cc.be**
+Live: **https://truenaspulse.com**
 
 ## Stack
 
@@ -84,7 +84,7 @@ Secrets used:
   `/root/.ssh/authorized_keys`
 - `DEPLOY_HOST` — `192.168.0.93`
 
-The Cloudflare tunnel `phobos-home` routes `pulse.phobos-cc.be` →
+The Cloudflare tunnel `phobos-home` routes `truenaspulse.com` (and legacy `pulse.phobos-cc.be`) →
 `http://192.168.0.93:80` (LXC 132 → Caddy 2 serving the static build).
 
 ## Trademark

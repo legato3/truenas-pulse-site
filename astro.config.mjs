@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://pulse.phobos-cc.be",
+  site: "https://truenaspulse.com",
   trailingSlash: "ignore",
   build: {
     format: "directory",

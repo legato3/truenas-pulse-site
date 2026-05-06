@@ -90,7 +90,7 @@ const ogSvg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" 
   <text x="80" y="468" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="22" font-weight="400" fill="#737a87">Pro adds fleet, 30-day reporting, lifecycle, Server Console.</text>
   <g transform="translate(80, 540)">
     <circle cx="6" cy="6" r="6" fill="#38ad70"/>
-    <text x="22" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="20" font-weight="500" fill="#ffffff">pulse.phobos-cc.be</text>
+    <text x="22" y="11" font-family="-apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif" font-size="20" font-weight="500" fill="#ffffff">truenaspulse.com</text>
   </g>
 </svg>`);
 await sharp(ogSvg).png({ compressionLevel: 9 }).toFile(resolve(PUB, "og-image.png"));
@@ -118,7 +118,7 @@ writeFileSync(
 // 8. robots.txt
 writeFileSync(
   resolve(PUB, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: https://pulse.phobos-cc.be/sitemap-index.xml\n`,
+  `User-agent: *\nAllow: /\n\nSitemap: https://truenaspulse.com/sitemap-index.xml\n`,
 );
 
 console.log("[generate-assets] wrote:");

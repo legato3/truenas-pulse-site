@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pulse.phobos-cc.be/sitemap-index.xml
+Sitemap: https://truenaspulse.com/sitemap-index.xml
