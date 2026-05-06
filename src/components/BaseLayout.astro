@@ -153,6 +153,12 @@ const og = new URL(ogImage, site.origin).toString();
       Skip to content
     </a>
 
+    <!-- Ambient glow orbs — consistent across all pages, behind all content -->
+    <div aria-hidden="true" class="page-ambient">
+      <span class="page-orb page-orb-1"></span>
+      <span class="page-orb page-orb-2"></span>
+    </div>
+
     <Header />
 
     <main id="content" class:list={[prose ? "prose-page" : ""]}>
@@ -162,6 +168,38 @@ const og = new URL(ogImage, site.origin).toString();
     <Footer />
 
     <style>
+      .page-ambient {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .page-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        will-change: transform;
+      }
+      /* Top-left blue — mirrors hero orb-1, always anchored to the top */
+      .page-orb-1 {
+        top: -8%;
+        left: 5%;
+        width: 480px;
+        height: 480px;
+        opacity: 0.35;
+        background: radial-gradient(circle, oklch(0.62 0.16 235 / 0.50), transparent 70%);
+      }
+      /* Bottom-right counterpoint — subtle depth */
+      .page-orb-2 {
+        bottom: 5%;
+        right: 4%;
+        width: 360px;
+        height: 360px;
+        opacity: 0.18;
+        background: radial-gradient(circle, oklch(0.55 0.13 235 / 0.40), transparent 70%);
+      }
+
       .prose-page {
         max-width: 56rem;
         margin: 0 auto;
