@@ -53,7 +53,7 @@ const tierClass = (tier: Feature["tier"]) => {
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {list.map((f, i) => (
               <MotionReveal delay={i * 30}>
-                <article class="feature-card group h-full rounded-lg border border-stroke-soft bg-surface/50 p-5" style="backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+                <article class="feature-card group h-full rounded-lg border border-stroke-soft bg-surface p-5">
                   <header class="mb-2 flex items-start justify-between gap-3">
                     <h4 class="text-[15px] font-semibold text-text">
                       {f.name}
@@ -80,7 +80,7 @@ const tierClass = (tier: Feature["tier"]) => {
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((f, i) => (
           <MotionReveal delay={i * 30}>
-            <article class="group h-full rounded-lg border border-stroke-soft bg-surface/70 p-5 transition-colors hover:border-stroke-strong hover:bg-surface">
+            <article class="group h-full rounded-lg border border-stroke-soft bg-surface p-5 transition-colors hover:border-stroke-strong hover:bg-surface-raised">
               <header class="mb-2 flex items-start justify-between gap-3">
                 <h4 class="text-[15px] font-semibold text-text">
                   {f.name}
