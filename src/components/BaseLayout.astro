@@ -77,6 +77,7 @@ const og = new URL(ogImage, site.origin).toString();
 
     <!-- Structured data — MobileApplication rich result -->
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
@@ -137,6 +138,7 @@ const og = new URL(ogImage, site.origin).toString();
       itself has no analytics or telemetry whatsoever.
     */}
     <script
+      is:inline
       defer
       data-domain="pulse.phobos-cc.be"
       data-api="https://analytics.phobos-cc.be/api/event"

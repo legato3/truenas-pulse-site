@@ -13,7 +13,6 @@ import FreeShowcase from "~/components/FreeShowcase.astro";
 import AppStoreButton from "~/components/AppStoreButton.astro";
 import Personas from "~/components/Personas.astro";
 import PrivacyLabel from "~/components/PrivacyLabel.astro";
-import { site } from "~/data/site";
 ---
 
 <BaseLayout description="Monitor your TrueNAS SCALE server from your iPhone. Live pool status, storage health, smart alerts, and safe admin actions — free on the App Store.">
@@ -96,7 +95,7 @@ import { site } from "~/data/site";
   <Section
     eyebrow="Security model"
     heading="Your servers, your credentials, your data."
-    lede="No accounts. No cloud. No analytics. No third-party SDKs. The app talks only to the servers you configure — full stop."
+    lede="No accounts. No cloud. No in-app analytics. No third-party SDKs. The app talks only to the servers you configure — full stop."
   >
     <MotionReveal>
       <SecurityFlow />

@@ -5,7 +5,7 @@
  * Numbers are intentionally factual and verifiable from canonical sources:
  *   - 27 operator features (Free + Pro)
  *     -> /app/repos/TrueNAS-Pulse/docs/PRO_FEATURES.md feature registry
- *   - 4 public versions shipped (1.0, 1.0.1, 1.0.2, 1.0.3)
+ *   - Public versions shipped
  *     -> /app/data/pulse-screenshots/fetch-changelog.ts
  *   - 0 third-party SDKs / analytics
  *     -> /app/repos/TrueNAS-Pulse/docs/MONETIZATION.md
@@ -58,7 +58,7 @@ const stats: Stat[] = [
     stats.map((s, i) => (
       <div class="stats-cell" data-stats-cell data-target={s.value} style={`--i: ${i}`}>
         <div class="stats-num-wrap">
-          <span class="stats-num" data-stats-num>0</span>
+          <span class="stats-num" data-stats-num>{s.value}</span>
         </div>
         <p class="stats-label">{s.label}</p>
         <p class="stats-detail">{s.detail}</p>
@@ -151,6 +151,7 @@ const stats: Stat[] = [
       out.textContent = String(target);
       return;
     }
+    out.textContent = "0";
     const duration = 1100;
     const start = performance.now();
     const ease = (t: number) => 1 - Math.pow(1 - t, 3);

@@ -15,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-const { delay = 0, as = "div", className } = Astro.props;
+const { delay = 0, as = "div", className } = Astro.props as Props;
 const Tag = as;
 ---
 

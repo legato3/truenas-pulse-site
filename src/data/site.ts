@@ -16,7 +16,7 @@ export const site = {
   minimumOsVersion: "17.6",
   /** Latest live App Store version + release date — kept in sync with /changelog. */
   latestVersion: "1.0.4",
-  latestReleaseDate: "2026-05-06",
+  latestReleaseDate: "2026-05-04",
   origin: "https://pulse.phobos-cc.be",
   appStoreUrl: "https://apps.apple.com/app/id6759870893",
   appStoreId: "6759870893",
