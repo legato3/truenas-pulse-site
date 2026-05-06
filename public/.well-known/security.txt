@@ -1,4 +1,4 @@
-Contact: mailto:chris@phobos-cc.be
+Contact: mailto:support@truenaspulse.com
 Expires: 2027-05-05T00:00:00.000Z
 Preferred-Languages: en, nl
-Canonical: https://pulse.phobos-cc.be/.well-known/security.txt
+Canonical: https://truenaspulse.com/.well-known/security.txt
