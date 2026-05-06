@@ -130,6 +130,35 @@ body::before {
   border-color: var(--color-stroke-soft);
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * Card glass — modern surface treatment shared by every card on
+ * the site (focal pricing, content sections, tile grids, accordions,
+ * inline list items). Adds a 1px gradient highlight at the top edge
+ * that catches the eye and gives the surface a 'lit-from-above'
+ * affordance. Pair with rounded-{lg|xl|2xl} + bg-surface +
+ * border border-stroke-soft.
+ * ───────────────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(1 0 0 / 0.12) 30%,
+    oklch(1 0 0 / 0.12) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 /* Hero section — no own background, body fixed gradient paints through seamlessly */
 .device-stage {}
 

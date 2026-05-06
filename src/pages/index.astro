@@ -103,8 +103,8 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
 
     <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <MotionReveal delay={60}>
-        <div class="sec-card h-full rounded-xl border border-stroke-soft bg-surface p-7">
-          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+        <div class="card h-full rounded-xl border border-stroke-soft bg-surface p-7">
+          <h3 class="mb-2 text-lg font-semibold tracking-tight text-text">
             Credential storage
           </h3>
           <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
@@ -117,8 +117,8 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
         </div>
       </MotionReveal>
       <MotionReveal delay={120}>
-        <div class="sec-card h-full rounded-xl border border-stroke-soft bg-surface p-7">
-          <h3 class="mb-2 text-base font-semibold tracking-tight text-text">
+        <div class="card h-full rounded-xl border border-stroke-soft bg-surface p-7">
+          <h3 class="mb-2 text-lg font-semibold tracking-tight text-text">
             Action safety
           </h3>
           <ul class="space-y-2 text-sm leading-relaxed text-text-secondary">
@@ -138,23 +138,3 @@ import PrivacyLabel from "~/components/PrivacyLabel.astro";
   <CallToAction />
 </BaseLayout>
 
-<style>
-  /* Glass top-edge highlight on the two security detail cards */
-  .sec-card {
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.28s ease, background-color 0.28s ease;
-  }
-  .sec-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, oklch(1 0 0 / 0.12) 30%, oklch(1 0 0 / 0.12) 70%, transparent 100%);
-    pointer-events: none;
-  }
-  .sec-card:hover {
-    border-color: oklch(1 0 0 / 0.10);
-    background-color: oklch(from var(--color-surface) l c h / 0.65);
-  }
-</style>
