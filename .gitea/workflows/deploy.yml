@@ -91,7 +91,7 @@ jobs:
       - name: Smoke probe
         run: |
           set -euo pipefail
-          for path in / /features /pro /privacy /faq; do
+          for path in / /features /pro /privacy /faq /support; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' "https://pulse.phobos-cc.be$path")
             echo "  $path -> $code"
             test "$code" = "200"

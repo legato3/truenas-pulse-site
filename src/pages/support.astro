@@ -1,0 +1,224 @@
+---
+import BaseLayout from "~/components/BaseLayout.astro";
+import Section from "~/components/Section.astro";
+import { site } from "~/data/site";
+---
+
+<BaseLayout
+  title="Support"
+  description="Report a bug or send feedback for TrueNAS Pulse. We read every submission."
+>
+  <Section eyebrow="Get help" heading="Report a bug or send feedback." width="narrow">
+    <div class="space-y-8">
+
+      <!-- Form -->
+      <form
+        id="support-form"
+        class="space-y-5 rounded-2xl border border-stroke-soft bg-surface p-7"
+        novalidate
+      >
+        <!-- Category -->
+        <div>
+          <label for="category" class="mb-1.5 block text-sm font-medium text-text">
+            Category <span class="text-accent">*</span>
+          </label>
+          <select
+            id="category"
+            name="category"
+            required
+            class="w-full rounded-lg border border-stroke-soft bg-bg px-3 py-2.5 text-sm text-text transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+          >
+            <option value="" disabled selected>Choose a category…</option>
+            <option value="bug">Bug report — something is broken</option>
+            <option value="feature-request">Feature request — something I'd love to see</option>
+            <option value="feedback">General feedback</option>
+            <option value="question">Question about the app</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="mb-1.5 block text-sm font-medium text-text">
+            Description <span class="text-accent">*</span>
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            rows="6"
+            required
+            minlength="10"
+            maxlength="4000"
+            placeholder="Describe the issue or feedback in as much detail as you like. For bugs: what you expected, what happened, and steps to reproduce help a lot."
+            class="w-full resize-y rounded-lg border border-stroke-soft bg-bg px-3 py-2.5 text-sm text-text placeholder:text-text-secondary/50 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+          ></textarea>
+          <p id="char-count" class="mt-1 text-right text-xs text-text-secondary">0 / 4000</p>
+        </div>
+
+        <!-- Two-column optional fields -->
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label for="email" class="mb-1.5 block text-sm font-medium text-text">
+              Email <span class="text-text-secondary font-normal">(optional)</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              class="w-full rounded-lg border border-stroke-soft bg-bg px-3 py-2.5 text-sm text-text placeholder:text-text-secondary/50 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+            />
+            <p class="mt-1 text-xs text-text-secondary">Only if you want a reply.</p>
+          </div>
+          <div>
+            <label for="app_version" class="mb-1.5 block text-sm font-medium text-text">
+              App version <span class="text-text-secondary font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              id="app_version"
+              name="app_version"
+              placeholder={`e.g. ${site.latestVersion}`}
+              maxlength="20"
+              class="w-full rounded-lg border border-stroke-soft bg-bg px-3 py-2.5 text-sm text-text placeholder:text-text-secondary/50 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+            />
+            <p class="mt-1 text-xs text-text-secondary">Settings → About in the app.</p>
+          </div>
+        </div>
+
+        <!-- Error banner -->
+        <div
+          id="form-error"
+          role="alert"
+          class="hidden rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400"
+        ></div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          id="submit-btn"
+          class="inline-flex items-center gap-2 rounded-lg bg-text px-5 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <span id="submit-label">Send</span>
+          <svg id="submit-spinner" class="hidden h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Success state (hidden until submit) -->
+      <div
+        id="success-panel"
+        class="hidden rounded-2xl border border-green-500/30 bg-green-500/10 px-7 py-8 text-center"
+      >
+        <div class="mb-3 text-3xl">✓</div>
+        <h2 class="mb-2 text-lg font-semibold text-text">Received — thank you.</h2>
+        <p class="text-sm text-text-secondary">
+          Every submission gets read. If you left an email, expect a reply within a couple of days.
+        </p>
+        <button
+          id="send-another"
+          class="mt-5 text-sm text-accent transition-colors hover:text-accent-hover"
+        >
+          Send another
+        </button>
+      </div>
+
+      <!-- Tips card -->
+      <div class="rounded-xl border border-stroke-soft bg-surface p-7">
+        <h3 class="mb-3 text-base font-semibold tracking-tight text-text">
+          For bugs — this helps a lot
+        </h3>
+        <ul class="space-y-1.5 text-sm text-text-secondary">
+          <li>iOS version + device model (Settings → General → About).</li>
+          <li>TrueNAS Pulse version (Settings → About in the app).</li>
+          <li>TrueNAS SCALE version of the affected server.</li>
+          <li>Whether it reproduces in <em>Demo Mode</em> (Settings → Demo → Enter Demo Mode).</li>
+          <li>A short description of steps to reproduce — even rough steps cut debug time in half.</li>
+        </ul>
+      </div>
+
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("support-form") as HTMLFormElement;
+  const successPanel = document.getElementById("success-panel") as HTMLDivElement;
+  const errorBanner = document.getElementById("form-error") as HTMLDivElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const submitLabel = document.getElementById("submit-label") as HTMLSpanElement;
+  const submitSpinner = document.getElementById("submit-spinner") as SVGElement;
+  const charCount = document.getElementById("char-count") as HTMLParagraphElement;
+  const textarea = document.getElementById("description") as HTMLTextAreaElement;
+  const sendAnother = document.getElementById("send-another") as HTMLButtonElement;
+
+  textarea?.addEventListener("input", () => {
+    const len = textarea.value.length;
+    charCount.textContent = `${len} / 4000`;
+    charCount.classList.toggle("text-red-400", len > 3800);
+  });
+
+  function showError(msg: string) {
+    errorBanner.textContent = msg;
+    errorBanner.classList.remove("hidden");
+    errorBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function clearError() {
+    errorBanner.textContent = "";
+    errorBanner.classList.add("hidden");
+  }
+
+  function setLoading(on: boolean) {
+    submitBtn.disabled = on;
+    submitLabel.textContent = on ? "Sending…" : "Send";
+    submitSpinner.classList.toggle("hidden", !on);
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearError();
+
+    const data = new FormData(form);
+    const category = (data.get("category") as string)?.trim();
+    const description = (data.get("description") as string)?.trim();
+    const email = (data.get("email") as string)?.trim();
+    const app_version = (data.get("app_version") as string)?.trim();
+
+    if (!category) { showError("Please choose a category."); return; }
+    if (!description || description.length < 10) { showError("Description must be at least 10 characters."); return; }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category, description, email: email || undefined, app_version: app_version || undefined }),
+      });
+
+      const json = await res.json() as { ok: boolean; error?: string };
+
+      if (!res.ok || !json.ok) {
+        showError(json.error ?? "Something went wrong. Please try again.");
+        return;
+      }
+
+      // Success
+      form.classList.add("hidden");
+      successPanel.classList.remove("hidden");
+    } catch {
+      showError("Network error — please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  sendAnother?.addEventListener("click", () => {
+    form.reset();
+    charCount.textContent = "0 / 4000";
+    clearError();
+    successPanel.classList.add("hidden");
+    form.classList.remove("hidden");
+  });
+</script>

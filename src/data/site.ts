@@ -22,7 +22,7 @@ export const site = {
   appStoreId: "6759870893",
   testFlightUrl: "https://testflight.apple.com/join/r3xzH5eE",
   supportEmail: "chris@phobos-cc.be",
-  supportUrl: "https://github.com/legato3/TrueNAS-Pulse-App/issues",
+  supportUrl: "https://pulse.phobos-cc.be/support",
   bundleId: "Phobos.TrueNAS-Pulse",
   trademarkLine:
     "TrueNAS® is a registered trademark of iXsystems, Inc. TrueNAS Pulse is an independent third-party application and is not affiliated with, endorsed by, or sponsored by iXsystems.",
@@ -35,6 +35,7 @@ export const navLinks = [
   { href: "/pro", label: "Pro" },
   { href: "/changelog", label: "Changelog" },
   { href: "/faq", label: "FAQ" },
+  { href: "/support", label: "Support" },
 ] as const;
 
 export const footerLinks = [
